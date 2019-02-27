@@ -6,11 +6,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import springfox.documentation.spring.web.json.Json;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 
 import static com.tkp.tkpole.starter.utils.Assert.notNull;
 
@@ -28,12 +25,12 @@ public enum GsonBuilderStrategy {
      * 空对象属性在序列化时移除
      * */
     REMOVE_NULLS( new GsonBuilder()
-            //处理Swagger在使用Gson作HttpMessageConverter的情况下不能正常使用的问题
-            .registerTypeAdapter(
-                    Json.class,
-                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
-                        final JsonParser parser = new JsonParser();
-                        return parser.parse( json.value());})
+//            //处理Swagger在使用Gson作HttpMessageConverter的情况下不能正常使用的问题
+//            .registerTypeAdapter(
+//                    Json.class,
+//                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
+//                        final JsonParser parser = new JsonParser();
+//                        return parser.parse( json.value());})
             //使用项目自定义的序列化和反序列化策略
             .addSerializationExclusionStrategy( new TkpoleGsonDefaultSerializationExclusionStrategy())
             .addDeserializationExclusionStrategy( new TkpoleGsonDefaultDeserializationExclusionStrategy())
@@ -44,11 +41,11 @@ public enum GsonBuilderStrategy {
      * */
     NULLS_TO_NULL( new GsonBuilder()
             //处理Swagger在使用Gson作HttpMessageConverter的情况下不能正常使用的问题
-            .registerTypeAdapter(
-                    Json.class,
-                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
-                        final JsonParser parser = new JsonParser();
-                        return parser.parse( json.value());})
+//            .registerTypeAdapter(
+//                    Json.class,
+//                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
+//                        final JsonParser parser = new JsonParser();
+//                        return parser.parse( json.value());})
             //使用项目自定义的序列化和反序列化策略
             .addSerializationExclusionStrategy( new TkpoleGsonDefaultSerializationExclusionStrategy())
             .addDeserializationExclusionStrategy( new TkpoleGsonDefaultDeserializationExclusionStrategy())
@@ -61,11 +58,11 @@ public enum GsonBuilderStrategy {
      * */
     NULLS_STRING_TO_EMPTY( new GsonBuilder()
             //处理Swagger在使用Gson作HttpMessageConverter的情况下不能正常使用的问题
-            .registerTypeAdapter(
-                    Json.class,
-                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
-                        final JsonParser parser = new JsonParser();
-                        return parser.parse( json.value()); })
+//            .registerTypeAdapter(
+//                    Json.class,
+//                    ( JsonSerializer<Json>)( Json json, Type type, JsonSerializationContext context) -> {
+//                        final JsonParser parser = new JsonParser();
+//                        return parser.parse( json.value()); })
             //处理Null的String类型
             .registerTypeAdapter(
                     String.class,

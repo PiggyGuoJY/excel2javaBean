@@ -44,14 +44,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
 
         <!-- [google相关] -->
         <!-- Json处理 -->
@@ -86,27 +78,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
-        </dependency>
-        <!-- Swagger相关 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.6.1</version>
-        </dependency>
-        <!-- redis缓存 -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency><!--使用内建使用项目内建仓库-->
-            <groupId>com.tkyl.bigcache</groupId>
-            <artifactId>bigcache-spring-boot-starter</artifactId>
-            <version>2.1.0-SNAPSHOT</version>
         </dependency>
         <!-- SFTP -->
         <dependency>
@@ -143,18 +114,6 @@
             <artifactId>oro</artifactId>
             <version>2.0.8</version>
         </dependency>
-        <!-- 摘要算法 -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.60</version>
-        </dependency>
-        <!-- 系统信息采集 -->
-        <dependency>
-            <groupId>org.fusesource</groupId>
-            <artifactId>sigar</artifactId>
-            <version>1.6.4</version>
-        </dependency>
         <!-- Excel解析生产 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -165,17 +124,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.0.0</version>
-        </dependency>
-        <!-- 二维码生成解析 -->
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-            <version>3.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <!-- 内存文件系统 -->
         <dependency>

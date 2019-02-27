@@ -7,8 +7,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
-import org.aspectj.lang.JoinPoint;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -31,9 +29,7 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.Assert.isNul;
-import static com.tkp.tkpole.starter.utils.Assert.isNull;
-import static com.tkp.tkpole.starter.utils.Assert.notNul;
+import static com.tkp.tkpole.starter.utils.Assert.*;
 
 /**
  * 类工具
@@ -67,15 +63,6 @@ public final class ClassUtil {
             log.warn( " 方法参数数目与传入参数的数目不一致!");
             return " 方法参数数目与传入参数的数目不一致!";
         }
-    }
-    /**
-     * <p> 获取全限定类名和方法名(即: 包名(不含com.tkp.guojy24.tkpole).类名.方法名)
-     *
-     * @param joinPoint 目标连接点
-     * @return _&acute;方法名&acute;_(_表示空格)
-     * */
-    public static String getClassAndMethodName(@NonNull JoinPoint joinPoint) {
-        return joinPoint.getTarget().getClass().getCanonicalName() + "." + joinPoint.getSignature().getName();
     }
 
     public static <T> Set<Class<? extends T>> getClassesExtendClass( @NonNull Class<T> tClass, @NonNull String packagePath, boolean recursive) {

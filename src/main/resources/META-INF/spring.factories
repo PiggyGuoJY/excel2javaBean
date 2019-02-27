@@ -1,8 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.tkp.tkpole.starter.utils.configuration.SoapAutoConfiguration,\
   com.tkp.tkpole.starter.utils.configuration.RestAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.FtpAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.misc.EcmAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.misc.EdmAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.misc.OaAuthenticationAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.misc.SmsAutoConfiguration
+  com.tkp.tkpole.starter.utils.configuration.FtpAutoConfiguration
