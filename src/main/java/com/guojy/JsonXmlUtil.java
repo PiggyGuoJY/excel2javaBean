@@ -164,7 +164,7 @@ public final class JsonXmlUtil {
      * @author guojy24
      * @version 1.0
      * */
-    public static class TkpoleMapAdapter extends XmlAdapter<MapEntity[],Map<?,?>> {
+    public static class MapAdapter extends XmlAdapter<MapEntity[],Map<?,?>> {
         @Override
         public MapEntity[] marshal( Map<?,?> map) {
             List<MapEntity> mapEntities = new ArrayList<>();

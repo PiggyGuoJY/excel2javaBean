@@ -2,7 +2,6 @@ package com.guojy.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.guojy.ExceptionUtil;
 import com.guojy.gson.GsonBean;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -149,9 +148,7 @@ public final class Msg<T> implements Serializable {
     public Msg( Exception e) {
         this.code = CODE_RAW_EXCEPTION;
         this.msg = e.getMessage();
-        StringBuilder stringBuilder = new StringBuilder();
-        ExceptionUtil.printSimpleStackTrace( e, stringBuilder);
-        this.detail = stringBuilder.toString();
+        this.detail = e.toString();
         this.t = null;
     }
 

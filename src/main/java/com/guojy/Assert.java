@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -35,13 +34,9 @@ public final class Assert{
     public static boolean notNul( Collection<?> collection) {
         return !CollectionUtils.isEmpty( collection);
     }
-    public static boolean isNul( Collection<?> collection) {
-        return CollectionUtils.isEmpty( collection);
-    }
     public static boolean notNul( byte[] bytes) { return notNull( bytes)&&bytes.length!=0; }
-    public static boolean isNul( byte[] bytes) { return notNull( bytes)&&bytes.length==0; }
-    public static boolean isNul( int[] ints) { return notNull( ints)&&ints.length==0;}
     public static boolean notNul( short[] shorts) { return notNull( shorts)&&shorts.length!=0; }
+    public static boolean isNul( int[] ints) { return notNull( ints)&&ints.length==0;}
     public static boolean notNul( int[] ints) { return notNull( ints)&&ints.length!=0; }
     public static boolean notNul( long[] longs) { return notNull( longs)&&longs.length!=0; }
     public static boolean notNul( float[] floats) { return notNull( floats)&&floats.length!=0; }
