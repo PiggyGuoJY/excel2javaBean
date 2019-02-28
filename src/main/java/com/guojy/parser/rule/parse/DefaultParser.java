@@ -1,14 +1,10 @@
 package com.guojy.parser.rule.parse;
 
 import com.guojy.model.Msg;
+import com.guojy.parser.rule.structure.StructureHandler;
 import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.StructureHandler;
-import com.tkp.tkpole.starter.utils.parser.rule.type.AbstractDataTypeTransformerRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
 
 /**
  * 默认实现解析器

@@ -1,7 +1,7 @@
 package com.guojy.configuration;
 
-import com.tkp.tkpole.starter.utils.ftp.FtpFactory;
-import com.tkp.tkpole.starter.utils.ftp.model.FtpConfigData;
+import com.guojy.ftp.FtpFactory;
+import com.guojy.ftp.model.FtpConfigData;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

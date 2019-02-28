@@ -2,8 +2,6 @@ package com.guojy.parser.excel.rule.parse;
 
 import com.guojy.parser.rule.structure.StructureHandler;
 import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.StructureHandler;
-import com.tkp.tkpole.starter.utils.parser.rule.type.AbstractDataTypeTransformerRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -29,7 +29,10 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.Assert.*;
+import static com.guojy.Assert.isNul;
+import static com.guojy.Assert.isNull;
+import static com.guojy.Assert.notNul;
+
 
 /**
  * 类工具

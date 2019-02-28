@@ -4,19 +4,14 @@ import com.guojy.model.Msg;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.guojy.parser.rule.structure.BiInheritableRule;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.excel.rule.parse.ExcelParser;
-import com.tkp.tkpole.starter.utils.parser.excel.rule.structure.annotation.ExcelBean;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.BiInheritableRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 
-import static com.tkp.tkpole.starter.utils.Assert.isNull;
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
+import static com.guojy.Assert.isNull;
+import static com.guojy.Assert.notNull;
 import static java.lang.String.format;
 
 /**

@@ -17,7 +17,7 @@ import java.io.Reader;
 import java.nio.file.Path;
 import java.util.Vector;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
+import static com.guojy.Assert.notNull;
 
 /**
  * 文件服务的sftp协议实现

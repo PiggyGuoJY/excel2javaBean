@@ -1,18 +1,15 @@
 package com.guojy.parser.rule.parse;
 
 import com.guojy.model.Msg;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.StructureHandler;
-import com.tkp.tkpole.starter.utils.parser.rule.type.AbstractDataTypeTransformerRule;
-import com.tkp.tkpole.starter.utils.parser.rule.type.Transformable;
+import com.guojy.parser.rule.structure.StructureHandler;
+import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 import java.util.function.Function;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNul;
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
+import static com.guojy.Assert.notNul;
 
 /**
  * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭

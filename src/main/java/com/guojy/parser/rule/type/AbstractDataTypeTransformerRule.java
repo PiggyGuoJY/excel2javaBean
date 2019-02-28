@@ -1,6 +1,5 @@
 package com.guojy.parser.rule.type;
 
-import com.tkp.tkpole.starter.utils.model.Msg;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

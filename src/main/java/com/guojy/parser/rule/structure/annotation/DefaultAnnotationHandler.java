@@ -2,15 +2,11 @@ package com.guojy.parser.rule.structure.annotation;
 
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.parse.AbstractParser;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.rule.parse.AbstractParser;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.OverrideRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.lang.annotation.Annotation;
 
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
 import static java.lang.String.format;
 
 /**

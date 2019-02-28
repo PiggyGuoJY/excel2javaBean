@@ -2,14 +2,12 @@ package com.guojy.ftp;
 
 import com.google.common.base.Charsets;
 import com.guojy.ftp.model.FtpConfigData;
+import com.guojy.ftp.model.FtpMetaConfigData;
+import com.guojy.model.Msg;
 import com.guojy.soap.TkpoleFunction;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.tkp.tkpole.starter.utils.ftp.model.FtpConfigData;
-import com.tkp.tkpole.starter.utils.ftp.model.FtpMetaConfigData;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.soap.TkpoleFunction;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
@@ -20,7 +18,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
+import static com.guojy.model.Msg.msg;
 import static java.lang.String.format;
 
 /**

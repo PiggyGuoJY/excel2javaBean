@@ -3,8 +3,6 @@ package com.guojy;
 import com.google.common.base.Charsets;
 import com.guojy.ftp.AbstractFtpService;
 import com.guojy.model.Msg;
-import com.tkp.tkpole.starter.utils.ftp.AbstractFtpService;
-import com.tkp.tkpole.starter.utils.model.Msg;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -27,7 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.Assert.*;
+import static com.guojy.Assert.*;
 
 /**
  * 1.文件工具类(这里主要是一些杂七杂八的工具)

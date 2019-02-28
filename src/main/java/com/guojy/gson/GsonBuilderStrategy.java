@@ -9,7 +9,7 @@ import lombok.Getter;
 
 import java.io.IOException;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
+import static com.guojy.Assert.notNull;
 
 /**
  * Gson序列化策略
@@ -121,8 +121,8 @@ public enum GsonBuilderStrategy {
 
         @Override
         public boolean shouldSkipField( FieldAttributes f) {
-            TkpoleGsonBean tkpoleGsonBean =  f.getDeclaringClass().getAnnotation( TkpoleGsonBean.class);
-            if ( notNull(tkpoleGsonBean)) {
+            GsonBean gsonBean =  f.getDeclaringClass().getAnnotation( GsonBean.class);
+            if ( notNull(gsonBean)) {
                 Expose expose = f.getAnnotation( Expose.class);
                 return !( notNull( expose) && expose.serialize());
             } else {
@@ -149,8 +149,8 @@ public enum GsonBuilderStrategy {
 
         @Override
         public boolean shouldSkipField( FieldAttributes fieldAttributes) {
-            TkpoleGsonBean tkpoleGsonBean =  fieldAttributes.getDeclaringClass().getAnnotation( TkpoleGsonBean.class);
-            if ( notNull(tkpoleGsonBean)) {
+            GsonBean gsonBean =  fieldAttributes.getDeclaringClass().getAnnotation( GsonBean.class);
+            if ( notNull(gsonBean)) {
                 Expose expose = fieldAttributes.getAnnotation( Expose.class);
                 return !( notNull( expose) && expose.deserialize());
             } else {

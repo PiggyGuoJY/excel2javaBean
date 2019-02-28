@@ -2,7 +2,6 @@ package com.guojy.parser.excel.rule.type;
 
 
 import com.guojy.parser.rule.type.AbstractSingleDataTypeTransformerRule;
-import com.tkp.tkpole.starter.utils.parser.rule.type.AbstractSingleDataTypeTransformerRule;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;

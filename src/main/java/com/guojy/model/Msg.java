@@ -2,9 +2,9 @@ package com.guojy.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.tkp.tkpole.starter.utils.ExceptionUtil;
-import com.tkp.tkpole.starter.utils.exception.TkpoleException;
-import com.tkp.tkpole.starter.utils.gson.TkpoleGsonBean;
+import com.guojy.ExceptionUtil;
+import com.guojy.exception.TkpoleException;
+import com.guojy.gson.GsonBean;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +33,7 @@ import java.util.Set;
  * */
 
 @Slf4j @ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode
-@TkpoleGsonBean
+@GsonBean
 @XmlRootElement @XmlAccessorType( XmlAccessType.FIELD)
 public final class Msg<T> implements Serializable {
 

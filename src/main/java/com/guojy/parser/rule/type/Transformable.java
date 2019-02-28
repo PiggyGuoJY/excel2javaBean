@@ -1,7 +1,6 @@
 package com.guojy.parser.rule.type;
 
 import com.guojy.model.Msg;
-import com.tkp.tkpole.starter.utils.model.Msg;
 
 /**
  * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭

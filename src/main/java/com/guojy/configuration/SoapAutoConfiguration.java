@@ -1,7 +1,7 @@
 package com.guojy.configuration;
 
-import com.tkp.tkpole.starter.utils.soap.SoapFactory;
-import com.tkp.tkpole.starter.utils.soap.model.soap.SoapConfigData;
+import com.guojy.soap.SoapFactory;
+import com.guojy.soap.model.soap.SoapConfigData;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

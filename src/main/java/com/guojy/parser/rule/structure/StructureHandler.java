@@ -2,10 +2,6 @@ package com.guojy.parser.rule.structure;
 
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.parse.AbstractParser;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.rule.parse.AbstractParser;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 /**
  * 规则处理器(用于处理定义数据来源的规则.一般而言,需要使用解析器传递某些中间参数)

@@ -5,12 +5,6 @@ import com.guojy.exception.TkpoleExceptionPredictable;
 import com.guojy.soap.model.rest.RestConfigData;
 import com.guojy.soap.model.rest.RestMetaConfigData;
 import com.guojy.soap.model.rest.RestSubConfigData;
-import com.tkp.tkpole.starter.utils.Assert;
-import com.tkp.tkpole.starter.utils.exception.TkpoleException;
-import com.tkp.tkpole.starter.utils.exception.TkpoleExceptionPredictable;
-import com.tkp.tkpole.starter.utils.soap.model.rest.RestConfigData;
-import com.tkp.tkpole.starter.utils.soap.model.rest.RestMetaConfigData;
-import com.tkp.tkpole.starter.utils.soap.model.rest.RestSubConfigData;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -36,7 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
+import static com.guojy.Assert.notNul;
+import static com.guojy.Assert.notNull;
 import static java.lang.String.format;
 
 /**
@@ -196,7 +191,7 @@ public final class RestFactory {
         URIBuilder uriBuilder = new URIBuilder()
                 .setCharset( Charset.forName( restSubConfigData.getUrlCharset()))
                 .setScheme( restMetaConfigData.getScheme())
-                .setHost( Assert.notNul( restMetaConfigData.getHost()) ? restMetaConfigData.getHost() : restConfigData.getHost())
+                .setHost( notNul( restMetaConfigData.getHost()) ? restMetaConfigData.getHost() : restConfigData.getHost())
                 .setPort( notNull( restMetaConfigData.getPort()) ? getPort(restMetaConfigData) : restConfigData.getPort())
                 .setPath( restSubConfigData.getPath());
         restMetaConfigData.getParameters().forEach( (parameterKey, parameterValues) ->  parameterValues.forEach( parameterValue -> uriBuilder.addParameter( parameterKey, parameterValue)));

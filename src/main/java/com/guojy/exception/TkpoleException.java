@@ -1,8 +1,8 @@
 package com.guojy.exception;
 
-import com.tkp.tkpole.starter.utils.Assert;
 import lombok.Getter;
 
+import static com.guojy.Assert.notNul;
 import static java.lang.String.format;
 
 /**
@@ -61,6 +61,6 @@ public class TkpoleException extends RuntimeException {
         super( format( "%s [ %s ]", tkpoleExceptionPredictable.getDesc(), detail), null, true, false);
         this.tkpoleExceptionPredictable = tkpoleExceptionPredictable;
         this.detail = detail;
-        this.tips = Assert.notNul( tips) ? tips : tkpoleExceptionPredictable.getTips();
+        this.tips = notNul( tips) ? tips : tkpoleExceptionPredictable.getTips();
     }
 }

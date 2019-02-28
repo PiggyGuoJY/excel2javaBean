@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
+import static com.guojy.Assert.notNull;
 import static java.lang.String.format;
 
 /**

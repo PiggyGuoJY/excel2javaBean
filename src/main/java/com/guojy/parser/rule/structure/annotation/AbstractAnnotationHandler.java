@@ -1,15 +1,10 @@
 package com.guojy.parser.rule.structure.annotation;
 
+import com.guojy.ClassUtil;
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.parse.AbstractParser;
 import com.guojy.parser.rule.structure.OverrideRule;
 import com.guojy.parser.rule.structure.StructureHandler;
-import com.tkp.tkpole.starter.utils.ClassUtil;
-import com.tkp.tkpole.starter.utils.model.Msg;
-import com.tkp.tkpole.starter.utils.parser.rule.parse.AbstractParser;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.Inheritable;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.OverrideRule;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.StructureHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.tkp.tkpole.starter.utils.Assert.*;
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
-import static java.lang.String.format;
+import static com.guojy.Assert.*;
 
 /**
  * 注解形式规则处理器基类

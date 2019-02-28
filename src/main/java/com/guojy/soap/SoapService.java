@@ -3,8 +3,6 @@ package com.guojy.soap;
 import com.guojy.Assert;
 import com.guojy.exception.TkpoleException;
 import com.guojy.exception.TkpoleExceptionPredictable;
-import com.tkp.tkpole.starter.utils.exception.TkpoleException;
-import com.tkp.tkpole.starter.utils.exception.TkpoleExceptionPredictable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.axis.client.Call;
 import org.apache.axis.message.RPCElement;
@@ -12,8 +10,6 @@ import org.apache.axis.message.RPCElement;
 import javax.xml.namespace.QName;
 import java.rmi.RemoteException;
 import java.util.Arrays;
-
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
 
 /**
  * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭

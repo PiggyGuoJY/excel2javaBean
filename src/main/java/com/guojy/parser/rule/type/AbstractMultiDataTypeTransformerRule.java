@@ -1,7 +1,6 @@
 package com.guojy.parser.rule.type;
 
 import com.guojy.model.Msg;
-import com.tkp.tkpole.starter.utils.model.Msg;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
+import static com.guojy.Assert.notNull;
 
 /**
  * 多数据源类型转换器基类

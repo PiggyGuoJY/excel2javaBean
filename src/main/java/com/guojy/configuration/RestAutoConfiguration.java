@@ -1,9 +1,8 @@
 package com.guojy.configuration;
 
 import com.guojy.soap.HttpClientUtils;
-import com.tkp.tkpole.starter.utils.soap.HttpClientUtils;
-import com.tkp.tkpole.starter.utils.soap.RestFactory;
-import com.tkp.tkpole.starter.utils.soap.model.rest.RestConfigData;
+import com.guojy.soap.RestFactory;
+import com.guojy.soap.model.rest.RestConfigData;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

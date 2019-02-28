@@ -1,6 +1,6 @@
 package com.guojy.soap.model.soap;
 
-import com.tkp.tkpole.starter.utils.HostInfoUtil;
+import com.guojy.HostInfoUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

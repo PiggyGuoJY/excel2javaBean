@@ -1,6 +1,6 @@
 package com.guojy.ftp;
 
-import com.tkp.tkpole.starter.utils.model.Msg;
+import com.guojy.model.Msg;
 
 import java.net.URI;
 import java.nio.file.FileSystem;
@@ -41,7 +41,7 @@ public interface FtpAccessible extends AutoCloseable {
      * @param args 可选操作
      * @return 是否上传成功
      * */
-    Msg<Boolean> upload( Path localFilePath, FileSystem fileSystem, Path remoteDirectoryPath, String ... args);
+    Msg<Boolean> upload(Path localFilePath, FileSystem fileSystem, Path remoteDirectoryPath, String ... args);
     /**
      * <p> 文件上传
      *

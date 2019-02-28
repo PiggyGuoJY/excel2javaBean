@@ -1,7 +1,6 @@
 package com.guojy.parser.excel.rule.structure.annotation;
 
 import com.guojy.parser.rule.structure.OverrideRule;
-import com.tkp.tkpole.starter.utils.parser.rule.structure.OverrideRule;
 
 import java.lang.annotation.*;
 

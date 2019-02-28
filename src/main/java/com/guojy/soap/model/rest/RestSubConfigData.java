@@ -1,7 +1,6 @@
 package com.guojy.soap.model.rest;
 
 import com.guojy.soap.model.ProxyConfig;
-import com.tkp.tkpole.starter.utils.soap.model.ProxyConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

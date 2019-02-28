@@ -1,9 +1,8 @@
 package com.guojy.ftp;
 
 import com.google.common.base.Charsets;
+import com.guojy.model.Msg;
 import com.jcraft.jsch.ChannelSftp;
-import com.tkp.tkpole.starter.utils.Assert;
-import com.tkp.tkpole.starter.utils.model.Msg;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +20,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.tkp.tkpole.starter.utils.Assert.notNul;
-import static com.tkp.tkpole.starter.utils.Assert.notNull;
-import static com.tkp.tkpole.starter.utils.model.Msg.msg;
+import static com.guojy.Assert.notNul;
+import static com.guojy.Assert.notNull;
+import static com.guojy.model.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -57,7 +56,7 @@ public abstract class AbstractFtpService implements FtpAccessible{
     public Msg<Boolean> upload(Path localFilePath, FileSystem fileSystem, Path remoteDirectoryPath, String... args) {
         CommandLine commandLine;
         if ( !notNull(commandLine = CliHelper.parse( CliHelper.getOPTIONS_UPLOAD(), args))) { return msg( false, TIP1); }
-        final boolean useExternalFileSystem = Assert.notNull( fileSystem) && fileSystem.isOpen();
+        final boolean useExternalFileSystem = notNull( fileSystem) && fileSystem.isOpen();
         //1. 判断本地文件是否存在, 如果存在, 或虽然不存在但有标志 createFlagFile:[namePatternClass](默认使用时间戳)的话继续, 否则失败
         boolean flag;
         Path tempPath = null;
@@ -90,7 +89,7 @@ public abstract class AbstractFtpService implements FtpAccessible{
         // 2.1 不存在, 如果有命令-createDirectory, 创建这些路径; 否则返回失败
         // 2.2. 存在, 继续执行
         // 外源文件系统标志( 当fileSystem不存在时, 使用本地环境否则使用外源环境)
-        final boolean useExternalFileSystem = Assert.notNull( fileSystem) && fileSystem.isOpen();
+        final boolean useExternalFileSystem = notNull( fileSystem) && fileSystem.isOpen();
         Set<Path> pathNotExistSet =
                 Stream.of( commandLine.getOptionValues( COMMAND_PATH)).parallel()
                         .map( stringPath ->  useExternalFileSystem ? fileSystem.getPath( stringPath) : Paths.get( URI.create( stringPath)))
@@ -287,7 +286,7 @@ public abstract class AbstractFtpService implements FtpAccessible{
     }
     private boolean download( Path localFilePath, boolean append , FileSystem fileSystem, Path remoteFilePath, Path path, Set<Path> result) {
         InputStream inputStream;
-        final boolean useExternalFileSystem = Assert.notNull( fileSystem) && fileSystem.isOpen();
+        final boolean useExternalFileSystem = notNull( fileSystem) && fileSystem.isOpen();
         try (
                 BufferedWriter bufferedWriter = Files.newBufferedWriter(
                         ( useExternalFileSystem ? fileSystem.getPath( localFilePath.toString()) : localFilePath),
