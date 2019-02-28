@@ -3,9 +3,9 @@ package com.guojy;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.Collection;
@@ -49,7 +49,7 @@ public final class Assert{
     public static boolean notNul( char[] chars) { return notNull( chars)&&chars.length!=0; }
     public static boolean notNul( boolean[] booleans) { return notNull( booleans)&&booleans.length!=0; }
     public static boolean notNul( Object[] objects) {
-        return !ObjectUtils.isEmpty( objects);
+        return (objects == null || objects.length == 0);
     }
     public static boolean notNul( File file) {
         return file!=null &&

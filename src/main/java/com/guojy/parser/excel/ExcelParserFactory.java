@@ -1,6 +1,5 @@
 package com.guojy.parser.excel;
 
-import com.guojy.ResourceUtil;
 import com.guojy.model.Msg;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.parse.XlsExcelParser;
@@ -9,6 +8,8 @@ import com.guojy.parser.excel.rule.structure.annotation.handler.ExcelAnnotationH
 import com.guojy.parser.excel.rule.type.ExcelDataTypeTransformRule;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.compressors.FileNameUtil;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -53,12 +54,12 @@ public class ExcelParserFactory {
         File srcFile = null;
         boolean getFileSuccessfully = true;
         try { srcFile = srcPath.toFile(); } catch ( Exception e) { log.error( e.getMessage(), e); getFileSuccessfully = false; }
-        switch ( ResourceUtil.getExtensionName( fileName)) {
+        switch (FilenameUtils.getExtension(fileName)) {
             case FORMAT_XLS: return new Msg<>( getFileSuccessfully ?
                     new XlsExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
             case FORMAT_XLSX: return new Msg<>( getFileSuccessfully ?
                     new XlsxExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsxExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
-            default: return msg( new IllegalStateException(format( "不能识别的格式: [%s]", ResourceUtil.getExtensionName( fileName))));
+            default: return msg( new IllegalStateException(format( "不能识别的格式: [%s]", FilenameUtils.getExtension( fileName))));
         }
     }
 }

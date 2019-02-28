@@ -31,7 +31,8 @@ import java.util.Set;
  * @version 1.1
  * */
 
-@Slf4j @ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode
+@Slf4j
+@ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode
 @GsonBean
 @XmlRootElement @XmlAccessorType( XmlAccessType.FIELD)
 public final class Msg<T> implements Serializable {

@@ -14,7 +14,6 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +28,7 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.guojy.Assert.isNul;
-import static com.guojy.Assert.isNull;
-import static com.guojy.Assert.notNul;
+import static com.guojy.Assert.*;
 
 
 /**
@@ -46,27 +43,6 @@ import static com.guojy.Assert.notNul;
 public final class ClassUtil {
 
     public static String getTopPackageName() { return ClassUtil.class.getPackage().getName(); }
-    /**
-     * <p> 打印方法入参
-     *
-     * @param method 方法
-     * @param parameterValues 入参
-     * @return 描述返回值
-     * */
-    public static String printCallParams(@NonNull Method method, Object ... parameterValues) {
-        List<String> parameterNames = new LinkedList<>();
-        Collections.addAll( parameterNames, LOCAL_VARIABLE_TABLE_PARAMETER_NAME_DISCOVERER.getParameterNames( method));
-        if ( parameterNames.size()==parameterValues.length) {
-            StringBuilder stringBuilder = new StringBuilder().append( ' ').append( method.getDeclaringClass().getCanonicalName()).append( '.').append( method.getName()).append("<<=[");
-            for( int i=0, length=parameterValues.length; i<length; i++) { stringBuilder = stringBuilder.append( parameterNames.get( i)).append( ':').append(parameterValues[i]).append(','); }
-            if ( parameterValues.length>=1) { stringBuilder.deleteCharAt( stringBuilder.length() - 1); }
-            stringBuilder.append( "]");
-            return stringBuilder.toString();
-        } else {
-            log.warn( " 方法参数数目与传入参数的数目不一致!");
-            return " 方法参数数目与传入参数的数目不一致!";
-        }
-    }
 
     public static <T> Set<Class<? extends T>> getClassesExtendClass( @NonNull Class<T> tClass, @NonNull String packagePath, boolean recursive) {
         return true ?
@@ -150,7 +126,6 @@ public final class ClassUtil {
         return annotationClass;
     }
 
-    private static final LocalVariableTableParameterNameDiscoverer LOCAL_VARIABLE_TABLE_PARAMETER_NAME_DISCOVERER = new LocalVariableTableParameterNameDiscoverer();
     private static final String EXTENSION_CLASS = ".class";
     private static final String REGEX_CLASS = "\\.class$";
     private static final String NUL = "";
