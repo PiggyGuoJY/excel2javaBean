@@ -57,17 +57,4 @@ public final class Assert{
                 file.isFile() &&
                 file.length()!=0L;
     }
-
-
-    // 环境断言
-
-    public static boolean isUatEnv() {
-        return ResourceUtil.EnvironmentType.UAT.equals( ResourceUtil.getEnvironmentType());
-    }
-    public static boolean isProEnv() {
-        return ResourceUtil.EnvironmentType.PRO.equals( ResourceUtil.getEnvironmentType());
-    }
-    public static boolean isSpringJar() {
-        return ResourceUtil.isRunWithSpringJar();
-    }
 }

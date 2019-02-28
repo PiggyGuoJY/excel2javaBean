@@ -68,7 +68,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
         if ( isNull(gClass)) { return Msg.msg(new IllegalStateException("无法获取容器泛型参数"));}
         ExcelRow excelRowParent = getAnnotationParent(ExcelRow.class,args);
         excelRow = notNull(excelRowParent) ? decideRule(excelRow, excelRowParent, excelRowParent.overideRule()) : excelRow;
-        if ( isNull(excelRow)) { return Msg.msg(new IllegalArgumentException(format("类型 {} 应该使用注解 {} 标注", gClass.getCanonicalName(), ExcelRow.class.getCanonicalName()))); }
+        if ( isNull(excelRow)) { return Msg.msg(new IllegalArgumentException(format("类型 %s 应该使用注解 %s 标注", gClass.getCanonicalName(), ExcelRow.class.getCanonicalName()))); }
         final Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelRow.sheet(), excelRow.sheetName(), excelParser.getWorkbook());
         if ( isNull( sheet)) { return Msg.msg( new IllegalStateException("无法找到Sheet")); }
         Map<String,Integer> mapping = ExcelRowHandlerHelper.getMapFromExcelRow(gClass,excelRow);

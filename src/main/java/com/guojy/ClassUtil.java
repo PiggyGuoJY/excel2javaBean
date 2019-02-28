@@ -69,12 +69,12 @@ public final class ClassUtil {
     }
 
     public static <T> Set<Class<? extends T>> getClassesExtendClass( @NonNull Class<T> tClass, @NonNull String packagePath, boolean recursive) {
-        return ResourceUtil.isRunWithSpringJar() ?
+        return true ?
                 getClassesExtendClassUseReflections( tClass, packagePath, recursive) :
                 getClassesExtendClassUseRaw( tClass, packagePath, recursive);
     }
     public static <T> Set<Class<? super T>> getClassesSuperClass( @NonNull Class<T> tClass, @NonNull String packagePath, boolean recursive) {
-        return ResourceUtil.isRunWithSpringJar() ?
+        return true ?
                 getClassesSuperClassUseReflections( tClass, packagePath, recursive) :
                 getClassesSuperClassUseRaw( tClass, packagePath, recursive);
     }
@@ -93,7 +93,7 @@ public final class ClassUtil {
      * @return 类集合
      * */
     public static Set<Class<?>> getClassesWithAnnotation( @NonNull Class<? extends Annotation> annotationPara, @NonNull String packagePath, boolean recursive) {
-        return ResourceUtil.isRunWithSpringJar() ?
+        return true ?
                 getClassesWithAnnotationUseReflections( annotationPara, packagePath, recursive) :
                 getClassesWithAnnotationUseRaw( annotationPara, packagePath, recursive);
     }
@@ -106,7 +106,7 @@ public final class ClassUtil {
      * @return 类集合
      * */
     public static Set<Class<?>> getClassesWithInterface( @NonNull Class interfaceType, @NonNull String packagePath, boolean recursive) {
-        return ResourceUtil.isRunWithSpringJar() ?
+        return true ?
                 getClassesWithInterfaceUseReflections( interfaceType, packagePath, recursive) :
                 getClassesWithInterfaceUseRaw( interfaceType, packagePath, recursive);
     }
