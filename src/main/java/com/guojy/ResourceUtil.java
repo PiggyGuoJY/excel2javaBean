@@ -1,7 +1,6 @@
 package com.guojy;
 
 import com.google.common.base.Charsets;
-import com.guojy.ftp.AbstractFtpService;
 import com.guojy.model.Msg;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -38,16 +37,6 @@ import static com.guojy.Assert.*;
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)
 public final class ResourceUtil {
 
-    /**
-     * 程序员（guojy24）很懒，关于这个方法，ta什么也没写╮(╯▽╰)╭
-     *
-     * @param path 描述此参数的作用
-     * @param args 描述此参数的作用
-     * @return 描述返回值
-     * */
-    public static String changeFileSeparatorToString(Path path, boolean ... args) {
-        return AbstractFtpService.changeFileSeparator( path, args);
-    }
 
     /**
      * 获取当前项目所在的根路径

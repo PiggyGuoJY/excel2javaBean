@@ -19,7 +19,7 @@ import java.util.Map;
  *     断言类目前主要提供非空测试(notNul和notNull)和正则测试(电子邮箱地址,移动电话号码, 身份证和IP地址)两类功能
  * <p> 创建时间：2018/1/9
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)
@@ -36,7 +36,6 @@ public final class Assert{
     public static boolean notNul( String string) {
         return !StringUtils.isEmpty( string);
     }
-    public static boolean notNulLiterally( String string) { return notNul( string) && !"NULL".equalsIgnoreCase( string);}
     public static boolean notNul( Collection<?> collection) {
         return !CollectionUtils.isEmpty( collection);
     }

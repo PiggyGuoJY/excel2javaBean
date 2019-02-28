@@ -27,7 +27,7 @@ public final class ExceptionUtil {
     /**
      * 简化堆栈时, 只留下以此字符串常亮开头的堆栈信息
      * */
-    private static final String PROJECT_PACKAGE_PREFIX = HostInfoUtil.Project.BASE_PATH;
+    private static final String PROJECT_PACKAGE_PREFIX = "com.guojy";
 
     /**
      * <p> 简化的错误堆栈信息

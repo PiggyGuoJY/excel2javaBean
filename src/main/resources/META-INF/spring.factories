@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.tkp.tkpole.starter.utils.configuration.SoapAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.RestAutoConfiguration,\
-  com.tkp.tkpole.starter.utils.configuration.FtpAutoConfiguration
