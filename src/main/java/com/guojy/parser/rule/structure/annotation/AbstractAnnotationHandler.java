@@ -168,7 +168,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
                 log.error("缺少要处理的参数 {}, 直接返回son", "parent");
                 return son;
             }
-            if ( !notNul(stringObjectMap)) {
+            if ( !notNull(stringObjectMap)) {
                 log.error("缺少要处理的参数 {}, 直接返回son", "stringObjectMap");
                 return son;
             }

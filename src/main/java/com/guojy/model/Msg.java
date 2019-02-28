@@ -3,7 +3,6 @@ package com.guojy.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.guojy.ExceptionUtil;
-import com.guojy.exception.TkpoleException;
 import com.guojy.gson.GsonBean;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -147,20 +146,11 @@ public final class Msg<T> implements Serializable {
      * @param e 异常
      * */
     public Msg( Exception e) {
-        if ( e instanceof TkpoleException) {
-            // 对于自定义异常, 使用异常定义时使用的编码和异常的定义
-            TkpoleException tkpoleException = ( TkpoleException)e;
-            this.code = tkpoleException.getTkpoleExceptionPredictable().getErrCode();
-            this.msg = String.format("[%s][%s][%s]", tkpoleException.getTkpoleExceptionPredictable().getDesc(), tkpoleException.getDetail(), tkpoleException.getTips());
-            this.detail = ExceptionUtil.getSimpleStackTrace( tkpoleException);
-        } else {
-            // 对于原生异常, 使用状态码100标识
-            this.code = CODE_RAW_EXCEPTION;
-            this.msg = e.getMessage();
-            StringBuilder stringBuilder = new StringBuilder();
-            ExceptionUtil.printSimpleStackTrace( e, stringBuilder);
-            this.detail = stringBuilder.toString();
-        }
+        this.code = CODE_RAW_EXCEPTION;
+        this.msg = e.getMessage();
+        StringBuilder stringBuilder = new StringBuilder();
+        ExceptionUtil.printSimpleStackTrace( e, stringBuilder);
+        this.detail = stringBuilder.toString();
         this.t = null;
     }
 

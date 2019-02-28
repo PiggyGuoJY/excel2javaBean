@@ -16,8 +16,6 @@ import java.nio.file.Path;
 
 import static com.guojy.Assert.notNul;
 import static com.guojy.Assert.notNull;
-import static com.guojy.exception.TkpoleException.of;
-import static com.guojy.exception.TkpoleExceptionPredictable.ERR_PARAMS;
 import static com.guojy.model.Msg.msg;
 import static java.lang.String.format;
 
@@ -50,7 +48,7 @@ public class ExcelParserFactory {
                 notNull( srcPath.getFileName()) &&
                 notNul( fileName = srcPath.getFileName().toString()) &&
                 fileName.matches( REGEX_EXCEL_EXT))) {
-            return msg( of( ERR_PARAMS, format( "入参为空, 路径不存在, 路径不是一个文件或不是xls(或xlsx)格式文件: [%s]", notNull(srcPath) ? srcPath.toString() : null)));
+            return msg( new IllegalArgumentException(format( "入参为空, 路径不存在, 路径不是一个文件或不是xls(或xlsx)格式文件: [%s]", notNull(srcPath) ? srcPath.toString() : null)));
         }
         File srcFile = null;
         boolean getFileSuccessfully = true;
@@ -60,7 +58,7 @@ public class ExcelParserFactory {
                     new XlsExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
             case FORMAT_XLSX: return new Msg<>( getFileSuccessfully ?
                     new XlsxExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsxExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
-            default: return msg( of( ERR_PARAMS, format( "不能识别的格式: [%s]", ResourceUtil.getExtensionName( fileName))));
+            default: return msg( new IllegalStateException(format( "不能识别的格式: [%s]", ResourceUtil.getExtensionName( fileName))));
         }
     }
 }
