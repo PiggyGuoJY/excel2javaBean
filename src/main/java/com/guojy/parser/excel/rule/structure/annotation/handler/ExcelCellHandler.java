@@ -82,7 +82,8 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
             }
         }
         private static Cell decideCell( String columnName, int columnNo, int rowNo, Sheet sheet) {
-            Row row  = sheet.getRow( rowNo<1 ? 0 : rowNo-1);
+            if (rowNo<1) {return null;}
+            Row row  = sheet.getRow(rowNo-1);
             if ( isNull( row)) { return null; }
             return row.getCell( ExcelParser.ExcelParserHelper.decideColumnNo( columnName, columnNo)-1);
         }

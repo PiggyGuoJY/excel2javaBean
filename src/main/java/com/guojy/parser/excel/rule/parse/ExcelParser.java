@@ -75,7 +75,7 @@ public class ExcelParser extends DefaultParser<ExcelParser> implements AutoClose
         super(structureHandler, abstractDataTypeTransformerRule);
         this.file = file;
         try {
-            this.workbook = WorkbookFactory.create( this.file, null, true);
+            this.workbook = WorkbookFactory.create( this.file);
         } catch ( IOException e) {
             log.error( e.getMessage(), e);
             this.workbook = null; this.file = null;

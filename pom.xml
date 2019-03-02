@@ -84,6 +84,11 @@
             <artifactId>poi-ooxml</artifactId>
             <version>4.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>3.0.2</version>
+        </dependency>
         <!-- 内存文件系统 -->
         <dependency>
             <groupId>com.google.jimfs</groupId>
