@@ -36,7 +36,7 @@ import static com.guojy.Assert.*;
  *
  * <p> 创建时间：2018/8/10
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)
@@ -248,9 +248,9 @@ public final class ClassUtil {
             while ( dirs.hasMoreElements()) {
                 URL url = dirs.nextElement();
                 switch ( url.getProtocol()) {
-                    /*<开始>更改者: guojy24 更改时间: 2018/12/21 变更原因: 代码味道*/
+                    /*<开始>更改者: guojy 更改时间: 2018/12/21 变更原因: 代码味道*/
                     case FILE : findAndAddClassesInPackageByFile( packagePath, URLDecoder.decode( url.getFile(), "UTF-8"), recursive, classes); break;
-                    /*<结束>更改者: guojy24 更改时间: 2018/12/21 */
+                    /*<结束>更改者: guojy 更改时间: 2018/12/21 */
                     case JAR: findAndAddClassesInPackageByJar( packagePath, packageDirPath, url, recursive, classes); break;
                     default: log.warn( " 不支持的协议 : {}", url.getProtocol()); break;
                 }
@@ -297,7 +297,7 @@ public final class ClassUtil {
             }
         }
     }
-    /*<开始>更改者: guojy24 更改时间: 2018/12/21 变更原因: 代码味道*/
+    /*<开始>更改者: guojy 更改时间: 2018/12/21 变更原因: 代码味道*/
     /**
      * 以文件的形式来获取包下的所有Class
      *
@@ -331,7 +331,7 @@ public final class ClassUtil {
             }
         } else { }
     }
-    /*<结束>更改者: guojy24 更改时间: 2018/12/21 */
+    /*<结束>更改者: guojy 更改时间: 2018/12/21 */
 
     private static final Class PARAMETERIZED_TYPE_IMPL_CLASS = $Gson$Types.canonicalize(new TypeToken<Iterable<String>>(){}.getType()).getClass();
 

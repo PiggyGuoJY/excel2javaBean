@@ -25,11 +25,11 @@ import static com.guojy.Assert.isNull;
 import static java.lang.String.format;
 
 /**
- * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  * 
  * <p> 创建时间：2019/2/15
  * 
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -43,9 +43,9 @@ public class ExcelAnnotationHandler<A extends Annotation>
         return getAnnotationHandler(annotationClass).onType(gClass, gClass.getDeclaredAnnotation(annotationClass), excelParser, args[StructureHandler.ARGS_INIT], args[StructureHandler.VALUE_RETURNED]);
     }
     @Override
-    public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.IllegalState_PROC.getMsg(); }
+    public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
     @Override
-    public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.IllegalState_PROC.getMsg(); }
+    public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
 
     @Override
     public A decideRuleOnParentFirst(A son, A parent) {

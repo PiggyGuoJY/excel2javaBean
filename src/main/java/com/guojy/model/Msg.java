@@ -26,7 +26,7 @@ import java.util.Set;
  * <p> 创建时间：2018/1/4
  *
  * <p> 最近修改: 2018/5/4
- * @author guojy24
+ * @author guojy
  * @version 1.1
  * */
 
@@ -42,11 +42,11 @@ public final class Msg<T> implements Serializable {
         /**
          * 程序执行到不应该到达的位置
          * */
-        IllegalState_PROC(msg(new IllegalStateException("程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查."))),
+        ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE(msg(new IllegalStateException("程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查."))),
         /**
          * 前置校验出错导致的程序提前中断
          * */
-        IllegalState_INIT(msg(new IllegalStateException("Msg尚未赋值, 程序异常")));
+        ILLEGAL_STATE_INIT(msg(new IllegalStateException("Msg尚未赋值, 程序异常导致的提前结束")));
 
         @Getter
         Msg<?> msg;
@@ -132,7 +132,7 @@ public final class Msg<T> implements Serializable {
         }
     }
     /**
-     * 程序员（guojy24）很懒，关于这个方法，ta什么也没写╮(╯▽╰)╭
+     * 程序员（guojy）很懒，关于这个方法，ta什么也没写╮(╯▽╰)╭
      *
      * @param t 负载实体
      * @param msg 附加消息
@@ -212,12 +212,12 @@ public final class Msg<T> implements Serializable {
     @XmlElement
     private String detail;
 
-    /*<开始>更改者: guojy24 更改时间: 2019/2/15 变更原因: 泛型T的实例将不参与序列化(Java原生提供)*/
+    /*<开始>更改者: guojy 更改时间: 2019/2/15 变更原因: 泛型T的实例将不参与序列化(Java原生提供)*/
 
     @Expose @SerializedName( value = "entity", alternate = {"Entity", "E"})
     @XmlElement
     private transient T t;
-    /*<结束>更改者: guojy24 更改时间: 2019/2/15 */
+    /*<结束>更改者: guojy 更改时间: 2019/2/15 */
 
     //下面的这些变量用于解决xml化Msg时, 负载实体是容器的情况
 

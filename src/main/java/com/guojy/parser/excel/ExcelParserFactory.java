@@ -5,10 +5,8 @@ import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.parse.XlsExcelParser;
 import com.guojy.parser.excel.rule.parse.XlsxExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.handler.ExcelAnnotationHandler;
-import com.guojy.parser.excel.rule.type.ExcelDataTypeTransformRule;
-import lombok.SneakyThrows;
+import com.guojy.parser.excel.rule.type.ExcelTransformerRule;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.compressors.FileNameUtil;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -21,11 +19,11 @@ import static com.guojy.model.Msg.msg;
 import static java.lang.String.format;
 
 /**
- * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * Excel解析器的构造工厂
  *
  * <p> 创建时间：2018/10/30
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j
@@ -36,11 +34,10 @@ public class ExcelParserFactory {
     private static final String FORMAT_XLSX = "xlsx";
 
     /**
-     * <p> 程序员（guojy24）很懒，关于这个方法，ta什么也没写╮(╯▽╰)╭
+     * <p> 程序员（guojy）很懒，关于这个方法，ta什么也没写╮(╯▽╰)╭
      *
      * @return 描述返回值
      * */
-    @SneakyThrows
     public static Msg<ExcelParser> createParser(Path srcPath) {
         String fileName;
         if ( !( notNull( srcPath) &&
@@ -56,9 +53,9 @@ public class ExcelParserFactory {
         try { srcFile = srcPath.toFile(); } catch ( Exception e) { log.error( e.getMessage(), e); getFileSuccessfully = false; }
         switch (FilenameUtils.getExtension(fileName)) {
             case FORMAT_XLS: return new Msg<>( getFileSuccessfully ?
-                    new XlsExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
+                    new XlsExcelParser( srcFile, new ExcelAnnotationHandler(), ExcelTransformerRule.of()) : new XlsExcelParser( srcPath, new ExcelAnnotationHandler(), ExcelTransformerRule.of()));
             case FORMAT_XLSX: return new Msg<>( getFileSuccessfully ?
-                    new XlsxExcelParser( srcFile, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()) : new XlsxExcelParser( srcPath, new ExcelAnnotationHandler(), new ExcelDataTypeTransformRule()));
+                    new XlsxExcelParser( srcFile, new ExcelAnnotationHandler(), ExcelTransformerRule.of()) : new XlsxExcelParser( srcPath, new ExcelAnnotationHandler(), ExcelTransformerRule.of()));
             default: return msg( new IllegalStateException(format( "不能识别的格式: [%s]", FilenameUtils.getExtension( fileName))));
         }
     }

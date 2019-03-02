@@ -26,7 +26,7 @@ import static com.guojy.Assert.*;
  * 
  * <p> 创建时间：2019/2/13
  * 
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j
@@ -112,7 +112,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      *
      * <p> 创建时间：2019/2/23
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)

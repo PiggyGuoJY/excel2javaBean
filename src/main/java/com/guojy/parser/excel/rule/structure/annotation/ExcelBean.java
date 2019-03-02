@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  *
  * <p> 创建时间：2018/10/29
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Documented
@@ -42,7 +42,7 @@ public @interface ExcelBean {
     OverrideRule overideRule() default OverrideRule.PARENT_FORCE;
 
     /**
-     * 程序员（guojy24）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
+     * 程序员（guojy）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
      * */
     Class<? extends Runnable> after() default DefaultAfterRunnableImpl.class;
 
@@ -51,7 +51,7 @@ public @interface ExcelBean {
      *
      * <p> 创建时间：2019/2/13
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     @Retention( RetentionPolicy.RUNTIME)
@@ -70,7 +70,7 @@ public @interface ExcelBean {
      *
      * <p> 创建时间：2019/2/13
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     @Retention( RetentionPolicy.RUNTIME)

@@ -4,7 +4,7 @@ import com.google.common.math.IntMath;
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.parse.DefaultParser;
 import com.guojy.parser.rule.structure.StructureHandler;
-import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
+import com.guojy.parser.rule.type.TransformableAndRuleAddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ import static com.guojy.Assert.notNull;
  *
  * <p> 创建时间：2018/10/30
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -51,7 +51,7 @@ public class ExcelParser extends DefaultParser<ExcelParser> implements AutoClose
     protected ExcelParser(
             final Path path,
             final StructureHandler<ExcelParser> structureHandler,
-            final AbstractDataTypeTransformerRule abstractDataTypeTransformerRule) {
+            final TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         super(structureHandler, abstractDataTypeTransformerRule);
         this.path = path;
         try {
@@ -71,7 +71,7 @@ public class ExcelParser extends DefaultParser<ExcelParser> implements AutoClose
     protected ExcelParser(
             final File file,
             final StructureHandler<ExcelParser> structureHandler,
-            final AbstractDataTypeTransformerRule abstractDataTypeTransformerRule) {
+            final TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         super(structureHandler, abstractDataTypeTransformerRule);
         this.file = file;
         try {

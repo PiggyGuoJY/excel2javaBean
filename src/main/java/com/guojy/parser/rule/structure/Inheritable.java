@@ -1,11 +1,11 @@
 package com.guojy.parser.rule.structure;
 
 /**
- * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  * 
  * <p> 创建时间：2019/2/23
  * 
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 public interface Inheritable<X> {

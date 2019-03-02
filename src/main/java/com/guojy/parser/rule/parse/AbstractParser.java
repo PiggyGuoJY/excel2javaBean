@@ -2,7 +2,7 @@ package com.guojy.parser.rule.parse;
 
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.structure.StructureHandler;
-import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
+import com.guojy.parser.rule.type.TransformableAndRuleAddable;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,21 +12,21 @@ import java.util.function.Function;
 import static com.guojy.Assert.notNul;
 
 /**
- * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  * 
  * <p> 创建时间：2019/2/18
  * 
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractParser<P extends AbstractParser> extends AbstractDataTypeTransformerRule<AbstractParser> implements Parseable {
+public abstract class AbstractParser<P extends AbstractParser> implements TransformableAndRuleAddable<AbstractParser> , Parseable {
 
     // 1. 组合公共资源
 
     protected AbstractParser(
             StructureHandler<P> structureHandler,
-            AbstractDataTypeTransformerRule abstractDataTypeTransformerRule) {
+            TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         this.structureHandler = structureHandler;
         this.abstractDataTypeTransformerRule = abstractDataTypeTransformerRule;
     }
@@ -38,7 +38,7 @@ public abstract class AbstractParser<P extends AbstractParser> extends AbstractD
     }
 
     protected StructureHandler<P> structureHandler;
-    protected AbstractDataTypeTransformerRule abstractDataTypeTransformerRule;
+    protected TransformableAndRuleAddable abstractDataTypeTransformerRule;
 
     private LinkedList<Process> processes = new LinkedList<>();
     {
@@ -59,7 +59,7 @@ public abstract class AbstractParser<P extends AbstractParser> extends AbstractD
      * */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> parse(Class<G> gClass, Object ... args) {
-        Msg<?> msg = Msg.MsgError.IllegalState_INIT.getMsg();
+        Msg<?> msg = Msg.MsgError.ILLEGAL_STATE_INIT.getMsg();
         Object[] params = new Object[]{gClass,this,args,msg};
         for( Process process : processes) {
             log.info("执行过程 {}", process.name);
@@ -73,9 +73,9 @@ public abstract class AbstractParser<P extends AbstractParser> extends AbstractD
     }
 
     @Override @SuppressWarnings("unchecked")
-    public <G> AbstractParser addCustomerDataTypeTransformRule(
+    public <G> AbstractParser addRule4Transformer(
             @NonNull Class<G> gClass, @NonNull Class zlass, @NonNull Function<?, G> ogFunction) {
-        abstractDataTypeTransformerRule = abstractDataTypeTransformerRule.addCustomerDataTypeTransformRule(gClass, zlass, ogFunction);
+        abstractDataTypeTransformerRule = abstractDataTypeTransformerRule.addRule4Transformer(gClass, zlass, ogFunction);
         return this;
     }
 

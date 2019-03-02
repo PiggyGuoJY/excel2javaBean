@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * <p> 创建时间：2018/8/9
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)
@@ -161,7 +161,7 @@ public final class JsonXmlUtil {
      *
      * <p> 创建时间：2018/10/12
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     public static class MapAdapter extends XmlAdapter<MapEntity[],Map<?,?>> {
@@ -182,11 +182,11 @@ public final class JsonXmlUtil {
     }
 
     /**
-     * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+     * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
      *
      * <p> 创建时间：2018/10/12
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     @Data @AllArgsConstructor @NoArgsConstructor

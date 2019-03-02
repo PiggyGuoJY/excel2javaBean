@@ -2,7 +2,7 @@ package com.guojy.parser.rule.parse;
 
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.structure.StructureHandler;
-import com.guojy.parser.rule.type.AbstractDataTypeTransformerRule;
+import com.guojy.parser.rule.type.TransformableAndRuleAddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  *
  * <p> 创建时间：2019/2/23
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,7 +19,7 @@ public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
 
     protected DefaultParser(
             StructureHandler<P> structureHandler,
-            AbstractDataTypeTransformerRule abstractDataTypeTransformerRule) {
+            TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         super(structureHandler, abstractDataTypeTransformerRule);
     }
 

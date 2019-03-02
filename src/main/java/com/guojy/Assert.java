@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 
 /**
@@ -51,5 +52,10 @@ public final class Assert{
                 file.exists() &&
                 file.isFile() &&
                 file.length()!=0L;
+    }
+
+    public static boolean isPaht(Path path) {
+
+        return false;
     }
 }

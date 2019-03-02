@@ -22,11 +22,11 @@ import static com.guojy.Assert.notNul;
 import static com.guojy.Assert.notNull;
 
 /**
- * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  *
  * <p> 创建时间：2019/2/15
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -65,11 +65,11 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
     }
 
     /**
-     * 程序员（guojy24）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+     * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
      *
      * <p> 创建时间：2019/2/20
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
     private static class ExcelCellHandlerHelper {

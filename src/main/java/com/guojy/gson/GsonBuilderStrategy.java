@@ -16,7 +16,7 @@ import static com.guojy.Assert.notNull;
  *
  * <p> 创建时间：2018/8/9
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 public enum GsonBuilderStrategy {
@@ -26,8 +26,8 @@ public enum GsonBuilderStrategy {
      * */
     REMOVE_NULLS( new GsonBuilder()
             //使用项目自定义的序列化和反序列化策略
-            .addSerializationExclusionStrategy( new TkpoleGsonDefaultSerializationExclusionStrategy())
-            .addDeserializationExclusionStrategy( new TkpoleGsonDefaultDeserializationExclusionStrategy())
+            .addSerializationExclusionStrategy( new GsonDefaultSerializationExclusionStrategy())
+            .addDeserializationExclusionStrategy( new GsonDefaultDeserializationExclusionStrategy())
             //禁用Html编码转义
             .disableHtmlEscaping()),
     /**
@@ -35,8 +35,8 @@ public enum GsonBuilderStrategy {
      * */
     NULLS_TO_NULL( new GsonBuilder()
             //使用项目自定义的序列化和反序列化策略
-            .addSerializationExclusionStrategy( new TkpoleGsonDefaultSerializationExclusionStrategy())
-            .addDeserializationExclusionStrategy( new TkpoleGsonDefaultDeserializationExclusionStrategy())
+            .addSerializationExclusionStrategy( new GsonDefaultSerializationExclusionStrategy())
+            .addDeserializationExclusionStrategy( new GsonDefaultDeserializationExclusionStrategy())
             //禁用Html编码转义
             .disableHtmlEscaping()
             //对空对象进行序列和反序列化
@@ -66,8 +66,8 @@ public enum GsonBuilderStrategy {
                             writer.value(value);
                         }})
             //使用项目自定义的序列化和反序列化策略
-            .addSerializationExclusionStrategy( new TkpoleGsonDefaultSerializationExclusionStrategy())
-            .addDeserializationExclusionStrategy( new TkpoleGsonDefaultDeserializationExclusionStrategy())
+            .addSerializationExclusionStrategy( new GsonDefaultSerializationExclusionStrategy())
+            .addDeserializationExclusionStrategy( new GsonDefaultDeserializationExclusionStrategy())
             //禁用Html编码转义
             .disableHtmlEscaping()
             //对空对象进行序列和反序列化
@@ -96,10 +96,10 @@ public enum GsonBuilderStrategy {
      * <p> 创建时间：2018/8/1
      * <p> 最近修改: 2019/2/15
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
-    private static final class TkpoleGsonDefaultSerializationExclusionStrategy implements ExclusionStrategy {
+    private static final class GsonDefaultSerializationExclusionStrategy implements ExclusionStrategy {
 
         @Override
         public boolean shouldSkipField( FieldAttributes f) {
@@ -124,10 +124,10 @@ public enum GsonBuilderStrategy {
      * <p> 创建时间：2018/8/1
      * <p> 最近修改: 2019/2/15
      *
-     * @author guojy24
+     * @author guojy
      * @version 1.0
      * */
-    private static final class TkpoleGsonDefaultDeserializationExclusionStrategy implements ExclusionStrategy {
+    private static final class GsonDefaultDeserializationExclusionStrategy implements ExclusionStrategy {
 
         @Override
         public boolean shouldSkipField( FieldAttributes fieldAttributes) {

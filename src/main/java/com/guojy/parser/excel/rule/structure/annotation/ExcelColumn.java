@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  *
  * <p> 创建时间：2018/10/29
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Documented
@@ -69,11 +69,11 @@ public @interface ExcelColumn {
     @Target( {ElementType.FIELD})
     @interface Skip{
         /**
-         * 程序员（guojy24）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
+         * 程序员（guojy）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
          * */
         int skip() default -1;
         /**
-         * 程序员（guojy24）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
+         * 程序员（guojy）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
          * */
         int skipTo() default -1;
     }

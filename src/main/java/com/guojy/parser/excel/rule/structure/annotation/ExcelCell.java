@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  *
  * <p> 创建时间：2018/10/29
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 @Documented

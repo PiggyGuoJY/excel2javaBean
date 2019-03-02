@@ -8,7 +8,7 @@ import com.guojy.parser.rule.parse.AbstractParser;
  *
  * <p> 创建时间：2019/2/15
  *
- * @author guojy24
+ * @author guojy
  * @version 1.0
  * */
 public interface StructureHandler<P extends AbstractParser> {
