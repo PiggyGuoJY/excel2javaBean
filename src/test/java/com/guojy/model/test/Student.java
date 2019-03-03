@@ -10,22 +10,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
-@GsonBean
+@Data
 @ExcelRow
 public class Student {
-
-    @Expose private String name;
-
-    @Expose private String idType;
-
-    @Expose private String idNo;
-
-    @Expose private LocalDate birthDate;
-
-    @Expose private String gender;
-
-    @Expose private String phoneNo;
-
-    @Expose private String address;
+    private String name;
+    private String idType;
+    private String idNo;
+    private LocalDate birthDate;
+    private String gender;
+    private String phoneNo;
+    private String address;
 }

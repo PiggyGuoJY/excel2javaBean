@@ -1,5 +1,6 @@
 package com.guojy.parser.excel;
 
+import com.guojy.JsonXmlUtil;
 import com.guojy.model.Msg;
 import com.guojy.model.test.StudentRecordTable;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
@@ -32,7 +33,7 @@ public class ExcelParserFactoryTest {
         ExcelParser excelParser = excelParserMsg.getT();
         Msg<StudentRecordTable> studentRecordTableMsg = excelParser.parse(StudentRecordTable.class);
         assertFalse(studentRecordTableMsg.isException());
-        log.info(studentRecordTableMsg.getT().toString());
+        log.info(JsonXmlUtil.javaBean2Json(studentRecordTableMsg.getT()));
     }
 
 }

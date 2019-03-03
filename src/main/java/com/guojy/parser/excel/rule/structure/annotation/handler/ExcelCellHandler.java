@@ -99,6 +99,8 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
     }
     private static final Map<String,Object> INHERITABLE_FIELD =
             ImmutableMap.<String,Object>builder()
+                    .put("sheetName","")
+                    .put("sheet",-1)
                     .put("columnName", "")
                     .put("column", -1)
                     .put("row", -1)

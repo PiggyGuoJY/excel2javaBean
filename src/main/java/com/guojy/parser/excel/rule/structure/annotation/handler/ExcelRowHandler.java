@@ -145,6 +145,8 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
     }
     private static final Map<String,Object> INHERITABLE_FIELD =
             ImmutableMap.<String,Object>builder()
+                    .put("sheetName","")
+                    .put("sheet",-1)
                     .put("rowBegin", -1)
                     .put("rowEnd", -1)
                     .put("map", "")
