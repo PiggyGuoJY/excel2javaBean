@@ -1,7 +1,10 @@
 package com.guojy;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import com.guojy.gson.GsonBuilderStrategy;
+import com.guojy.model.Msg;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,15 +15,17 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.guojy.Assert.notNul;
+import static com.guojy.Assert.notNull;
 
 /**
  * 序列化/反序列化工具
@@ -42,8 +47,17 @@ public final class JsonXmlUtil {
      * @param t 实体实例
      * @return xml格式字符串
      * */
-    public static <T> String javaBean2Xml(@NonNull T t) {
+    public static <T> String javaBean2Xml(@NonNull T t, Class ... xmlSeeAlsoValueAdded) {
         log.debug( "<<=" + t.toString());
+        XmlSeeAlso xmlSeeAlso = t.getClass().getDeclaredAnnotation(XmlSeeAlso.class);
+        if (notNull(xmlSeeAlso)&&notNul(xmlSeeAlsoValueAdded)){
+            Set<Class> classes = Sets.newHashSet(xmlSeeAlso.value());
+            classes.addAll(Sets.newHashSet(xmlSeeAlsoValueAdded));
+            ClassUtil.changeAnnotationFieldValue(
+                    t.getClass().getDeclaredAnnotation(XmlSeeAlso.class),
+                    "value",
+                    classes.toArray(new Class[]{}));
+        }
         try (
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
         ) {
@@ -70,12 +84,24 @@ public final class JsonXmlUtil {
      * @return 实体实例
      * */
     @SuppressWarnings("unchecked")
-    public static <T> T xml2JavaBean(@NonNull Class<T> tClass, @NonNull String xml) {
+    public static <T> T xml2JavaBean(@NonNull Class<T> tClass, @NonNull String xml, Class ... xmlSeeAlsoValueAdded) {
         log.debug( "<<=" + tClass.getName() + "," + xml);
+        XmlSeeAlso xmlSeeAlso = tClass.getDeclaredAnnotation(XmlSeeAlso.class);
+        if (notNull(xmlSeeAlso)&&notNul(xmlSeeAlsoValueAdded)){
+            Set<Class> classes = Sets.newHashSet(xmlSeeAlso.value());
+            classes.addAll(Sets.newHashSet(xmlSeeAlsoValueAdded));
+            ClassUtil.changeAnnotationFieldValue(
+                    tClass.getDeclaredAnnotation(XmlSeeAlso.class),
+                    "value",
+                    classes.toArray(new Class[]{}));
+        }
         try {
             Unmarshaller unmarshaller = JAXBContext.newInstance( tClass).createUnmarshaller();
             T t = ( T)unmarshaller.unmarshal( new StringReader( xml));
             log.debug( "=>>" + t.toString());
+            if ( t instanceof Msg) {
+                ((Msg) t).setT(((Msg) t).getT4Xml());
+            }
             return t;
         } catch ( JAXBException e) {
             log.error( e.getMessage(), e);
@@ -164,6 +190,7 @@ public final class JsonXmlUtil {
      * @author guojy
      * @version 1.0
      * */
+    @NoArgsConstructor
     public static class MapAdapter extends XmlAdapter<MapEntity[],Map<?,?>> {
         @Override
         public MapEntity[] marshal( Map<?,?> map) {

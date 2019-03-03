@@ -17,9 +17,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import static com.guojy.Assert.isNull;
-import static com.guojy.Assert.notNul;
-import static com.guojy.Assert.notNull;
+import static com.guojy.Assert.*;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭

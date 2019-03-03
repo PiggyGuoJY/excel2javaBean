@@ -19,7 +19,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.guojy.Assert.*;
+import static com.guojy.Assert.isNull;
+import static com.guojy.Assert.notNull;
 
 /**
  * 注解形式规则处理器基类
@@ -116,7 +117,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      * @version 1.0
      * */
     @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    protected static class AbstractAnnotationHandlerHelper {
+    public static class AbstractAnnotationHandlerHelper {
         /**
          * 判断某个对象是否有且只有一个注解集合中的注解
          *
@@ -185,20 +186,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
 
         @SuppressWarnings("unchecked")
         public static <G, A extends Annotation> A changeAnnotationFieldValue(A a, String fieldName, G gValue) {
-            Field aMemberValues;
-            Map<String,Object> aMap;
-            try {
-                InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(a);
-                aMemberValues = aInvocationHandler.getClass().getDeclaredField("memberValues");
-                aMemberValues.setAccessible(true);
-                aMap = (Map<String,Object>)aMemberValues.get(aInvocationHandler);
-            } catch ( NoSuchFieldException | IllegalAccessException e) {
-                log.error(e.getMessage(),e);
-                return a;
-            }
-            aMap.put(fieldName, gValue);
-            aMemberValues.setAccessible(false);
-            return a;
+            return ClassUtil.changeAnnotationFieldValue(a,fieldName,gValue);
         }
 
         @SuppressWarnings("unchecked")

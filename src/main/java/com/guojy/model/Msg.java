@@ -2,16 +2,14 @@ package com.guojy.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.guojy.ClassUtil;
 import com.guojy.gson.GsonBean;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -30,10 +28,9 @@ import java.util.Set;
  * @version 1.1
  * */
 
-@Slf4j
-@ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode
+@Slf4j @ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode(of = {"code","msg","detail","t"})
 @GsonBean
-@XmlRootElement @XmlAccessorType( XmlAccessType.FIELD)
+@XmlRootElement @XmlAccessorType( XmlAccessType.FIELD) @XmlSeeAlso({})
 public final class Msg<T> implements Serializable {
 
     @AllArgsConstructor
@@ -121,6 +118,7 @@ public final class Msg<T> implements Serializable {
             this.detail = "无详细信息";
             this.t = t;
             if ( t instanceof List<?>) {
+//                ClassUtil.changeAnnotationFieldValue(Msg.class.getDeclaredAnnotation(XmlSeeAlso.class),"value",);
                 this.listEntities =( List<?>) t;
             } else if ( t instanceof Object[]) {
                 this.arrayEntities = ( ( Object[]) t).clone();
@@ -216,17 +214,17 @@ public final class Msg<T> implements Serializable {
 
     @Expose @SerializedName( value = "entity", alternate = {"Entity", "E"})
     @XmlElement
-    private transient T t;
+    private T t;
     /*<结束>更改者: guojy 更改时间: 2019/2/15 */
 
     //下面的这些变量用于解决xml化Msg时, 负载实体是容器的情况
 
     @XmlElementWrapper( name = "listEntities") @XmlElement( name = "list")
-    private transient List<?> listEntities;
-    @XmlElementWrapper( name = "setEntities") @XmlElement( name = "set")
+    private List<?> listEntities;
+//    @XmlElementWrapper( name = "setEntities") @XmlElement( name = "set")
     private transient Set<?> setEntities;
     private transient Map<?,?> mapEntities;
-    @XmlElementWrapper( name = "arrayEntities") @XmlElement( name = "array")
+//    @XmlElementWrapper( name = "arrayEntities") @XmlElement( name = "array")
     private transient Object[] arrayEntities;
 
     private static final String CODE_SUCCESS = "0";

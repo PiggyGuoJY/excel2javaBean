@@ -19,9 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-import static com.guojy.Assert.isNull;
-import static com.guojy.Assert.notNul;
-import static com.guojy.Assert.notNull;
+import static com.guojy.Assert.*;
 
 
 /**

@@ -7,7 +7,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Collection;
 
 /**
@@ -23,18 +22,9 @@ public final class Assert{
 
     // 非空断言
 
-    public static boolean notNull( Object object) {
-        return object!=null;
-    }
-    public static boolean isNull( Object object) {
-        return object==null;
-    }
-    public static boolean notNul( String string) {
-        return !StringUtils.isEmpty( string);
-    }
-    public static boolean notNul( Collection<?> collection) {
-        return !CollectionUtils.isEmpty( collection);
-    }
+    public static boolean notNull( Object object) { return object!=null; }
+    public static boolean isNull( Object object) { return object==null; }
+
     public static boolean notNul( byte[] bytes) { return notNull( bytes)&&bytes.length!=0; }
     public static boolean notNul( short[] shorts) { return notNull( shorts)&&shorts.length!=0; }
     public static boolean isNul( int[] ints) { return notNull( ints)&&ints.length==0;}
@@ -44,18 +34,13 @@ public final class Assert{
     public static boolean notNul( double[] doubles) { return notNull( doubles)&&doubles.length!=0; }
     public static boolean notNul( char[] chars) { return notNull( chars)&&chars.length!=0; }
     public static boolean notNul( boolean[] booleans) { return notNull( booleans)&&booleans.length!=0; }
-    public static boolean notNul( Object[] objects) {
-        return (objects == null || objects.length == 0);
-    }
-    public static boolean notNul( File file) {
-        return file!=null &&
-                file.exists() &&
-                file.isFile() &&
-                file.length()!=0L;
-    }
+    public static boolean notNul( Object[] objects) { return notNull(objects)&&objects.length!=0; }
 
-    public static boolean isPaht(Path path) {
-
-        return false;
+    public static boolean notNul( String string) {
+        return !StringUtils.isEmpty( string);
     }
+    public static boolean notNul( Collection<?> collection) {
+        return !CollectionUtils.isEmpty( collection);
+    }
+    public static boolean notNul( File file) { return file!=null && file.exists() && file.isFile() && file.length()!=0L; }
 }

@@ -3,7 +3,7 @@ package com.guojy.model.test;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelCell;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelRow;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
