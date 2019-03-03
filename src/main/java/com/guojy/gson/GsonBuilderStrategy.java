@@ -18,6 +18,8 @@ import static com.guojy.Assert.notNull;
  *
  * @author guojy
  * @version 1.0
+ *
+ * Copyright 2019 Guo JinYang. All Rights Reserved.
  * */
 public enum GsonBuilderStrategy {
 
