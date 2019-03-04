@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 @ExcelBean(sheetName = "First")
+@Marked(ia = {1,2,3}, sa = {"a","b","c"})
 public class StudentRecordTable {
 
     @ExcelCell(columnName = "B", row = 3)

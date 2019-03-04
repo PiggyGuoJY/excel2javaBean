@@ -53,7 +53,6 @@ public @interface ExcelCell {
     /**
      * 设置继承属性(默认冲突时优先使用子配置)
      * */
-    OverrideRule overideRule() default OverrideRule.PARENT_FORCE;
+    OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
 
-    Class<?> after() default DefaultAfterRunnableImpl.class;
 }

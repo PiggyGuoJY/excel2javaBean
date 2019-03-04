@@ -48,14 +48,14 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
     private <G> void onFieldHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
         // 1.ExcelCell只有可能从属性所在类的ExcelBean上继承属性
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
-        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overideRule()) : excelCell;
+        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overrideRule()) : excelCell;
         Msg<?> msg = onTypeHandler( gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser,args);
         if ( msg.isException()) { return;}
         ClassUtil.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
     }
     private <G> Msg<G> onTypeHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
         ExcelCell excelCellParent = getAnnotationParent(ExcelCell.class,args);
-        excelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overideRule()) : excelCell;
+        excelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
         Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelCell.sheet(), excelCell.sheetName(), excelParser.getWorkbook());
         if ( isNull( sheet)) { return Msg.msg(new IllegalStateException("无法找到Sheet"));}
         Cell cell = ExcelCellHandlerHelper.decideCell(excelCell, sheet);

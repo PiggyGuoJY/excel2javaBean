@@ -1,16 +1,22 @@
 package com.guojy;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.primitives.Ints;
 import com.google.gson.reflect.TypeToken;
 import com.guojy.gson.GsonBean;
 import com.guojy.model.Msg;
+import com.guojy.model.test.Marked;
+import com.guojy.model.test.Student;
+import com.guojy.model.test.StudentRecordTable;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.guojy.parser.excel.rule.structure.annotation.handler.ExcelAnnotationHandler;
 import com.guojy.parser.excel.rule.structure.annotation.handler.ExcelBeanHandler;
 import com.guojy.parser.excel.rule.structure.annotation.handler.ExcelColumnHandler;
 import com.guojy.parser.rule.parse.Parseable;
 import com.guojy.parser.rule.structure.BiInheritableRule;
 import com.guojy.parser.rule.structure.Inheritable;
+import com.guojy.parser.rule.structure.OverrideRule;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -18,9 +24,7 @@ import org.junit.Test;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.guojy.ClassUtil.*;
 import static org.junit.Assert.*;
@@ -146,6 +150,39 @@ public class ClassUtilTest {
         assertEquals(getGenericClass(
                 new TypeToken<Map<List<Map<String,Long>>,Set<Map<Map<BigDecimal,Msg>,Set<Integer>>>>>(){},
                 1,0,1,0),Integer.class);
+    }
+
+    @Test
+    public void test8() {
+        ExcelBean excelBean = StudentRecordTable.class.getDeclaredAnnotation(ExcelBean.class);
+        log.info(excelBean.toString());
+        assertEquals(OverrideRule.PARENT_FORCE,excelBean.overrideRule());
+        ClassUtil.changeAnnotationFieldValue(excelBean,"overrideRule",OverrideRule.SON_FIRST);
+        log.info(excelBean.toString());
+        assertEquals(OverrideRule.SON_FIRST,excelBean.overrideRule());
+    }
+
+    @Test
+    public void test9() {
+        Marked marked = StudentRecordTable.class.getDeclaredAnnotation(Marked.class);
+        log.info(marked.toString());
+        assertArrayEquals(new int[]{1,2,3}, marked.ia());
+        assertArrayEquals(new String[]{"a","b","c"}, marked.sa());
+        ClassUtil.addValueToAnnotation(marked,"ia",4);
+        ClassUtil.addValueToAnnotation(marked,"sa","d");
+        log.info(marked.toString());
+        assertArrayEquals(new int[]{1,2,3,4}, marked.ia());
+        assertArrayEquals(new String[]{"a","b","c","d"}, marked.sa());
+    }
+
+    @Test
+    public void test10() {
+
+    }
+
+    @Test
+    public void test11() {
+
     }
 
     private static class InnerClassUtilTest {

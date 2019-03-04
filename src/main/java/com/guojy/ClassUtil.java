@@ -1,6 +1,7 @@
 package com.guojy;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.primitives.*;
 import com.google.gson.reflect.TypeToken;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import lombok.AccessLevel;
@@ -164,7 +165,6 @@ public final class ClassUtil {
         aMemberValues.setAccessible(false);
         return annotation;
     }
-
     @SuppressWarnings("unchecked")
     public static <G,A extends Annotation> A addValueToAnnotation(
             A annotation,
@@ -194,6 +194,49 @@ public final class ClassUtil {
                     annotation.getClass().getCanonicalName(),
                     fieldName);
             return annotation;
+        }
+        try {
+            Object finalValue;
+            if(value instanceof int[]){
+                finalValue = Ints.concat((int[])value, (new int[]{(Integer) gValue}));
+            } else if(value instanceof float[]){
+                finalValue = Floats.concat((float[])value, (new float[]{(Float) gValue}));
+            } else if(value instanceof boolean[]){
+                finalValue = Booleans.concat((boolean[])value, (new boolean[]{(Boolean) gValue}));
+            } else if(value instanceof byte[]){
+                finalValue = Bytes.concat((byte[])value, (new byte[]{(Byte) gValue}));
+            } else if(value instanceof double[]){
+                finalValue = Doubles.concat((double[])value, (new double[]{(Double) gValue}));
+            } else if(value instanceof char[]){
+                finalValue = Chars.concat((char[])value, (new char[]{(Character) gValue}));
+            } else if(value instanceof long[]){
+                finalValue = Longs.concat((long[])value, (new long[]{(Long) gValue}));
+            } else if(value instanceof short[]){
+                finalValue = Shorts.concat((short[])value, (new short[]{(Short) gValue}));
+            } else if(value instanceof String[]){
+                finalValue = new ArrayList(Arrays.asList((String[])value));
+                ((List<String>)finalValue).add((String) gValue);
+                finalValue =((List<String>)finalValue).toArray(new String[]{});
+            } else if(value instanceof Class<?>[]){
+                finalValue = new ArrayList(Arrays.asList((Class<?>[])value));
+                ((List<Class<?>>)finalValue).add((Class<?>)gValue);
+                finalValue =((List<Class<?>>)finalValue).toArray(new Class<?>[]{});
+            } else if(value instanceof Enum<?>[]){
+                finalValue = new ArrayList(Arrays.asList((Enum<?>[])value));
+                ((List<Enum<?>>)finalValue).add((Enum<?>)gValue);
+                finalValue =((List<Enum<?>>)finalValue).toArray(new Enum<?>[]{});
+            } else if(value instanceof Annotation[]){
+                finalValue = new ArrayList(Arrays.asList((Annotation[])value));
+                ((List<Annotation>)finalValue).add((Annotation) gValue);
+                finalValue =((List<Annotation>)finalValue).toArray(new Annotation[]{});
+            } else {
+                aMemberValues.setAccessible(false);
+                return annotation;
+            }
+            aMap.put(fieldName,finalValue);
+        } catch (ClassCastException e){
+            log.error(e.getMessage(),e);
+            log.error("值 {} 发生类型转换异常, 直接返回原注解", gValue);
         }
         aMemberValues.setAccessible(false);
         return annotation;
@@ -232,6 +275,7 @@ public final class ClassUtil {
             return null;
         }
     }
+
 
 
     private static final Predicate<Class<? extends Annotation>> RUNTIME_ANNOTATION_CHECKER

@@ -52,7 +52,7 @@ public final class ExcelColumnHandler extends ExcelAnnotationHandler<ExcelColumn
     @SuppressWarnings("unchecked")
     private <E, G extends Collection<E>> void onFieldHandler(Class<G> gClass, ExcelColumn excelColumn, ExcelParser excelParser, Object ... args) {
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
-        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelColumn, excelBeanParent, excelBeanParent.overideRule()) : excelColumn;
+        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelColumn, excelBeanParent, excelBeanParent.overrideRule()) : excelColumn;
         if ( !Collection.class.isAssignableFrom(gClass)) {
             log.warn("属性的类型不是 {} 的实现, 不予解析", Collection.class.getCanonicalName());
             return;
@@ -66,7 +66,7 @@ public final class ExcelColumnHandler extends ExcelAnnotationHandler<ExcelColumn
     private <G> Msg<Collection<G>> onTypeHandler(Class<G> gClass, ExcelColumn excelColumn, ExcelParser excelParser, Object ... args) {
         if ( isNull(gClass)) { return Msg.msg(new IllegalStateException("无法获取容器泛型参数"));}
         ExcelColumn excelColumnParent = getAnnotationParent(ExcelColumn.class,args);
-        excelColumn = notNull(excelColumnParent) ? decideRule(excelColumn, excelColumnParent, excelColumnParent.overideRule()) : excelColumn;
+        excelColumn = notNull(excelColumnParent) ? decideRule(excelColumn, excelColumnParent, excelColumnParent.overrideRule()) : excelColumn;
         if ( isNull(excelColumn)) {
             return Msg.msg(
                     new IllegalArgumentException(

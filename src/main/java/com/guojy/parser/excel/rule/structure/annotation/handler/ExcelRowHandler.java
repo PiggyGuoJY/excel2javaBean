@@ -53,7 +53,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
     @SuppressWarnings("unchecked")
     private <E, G extends Collection<E>> void onFieldHandler(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
-        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelRow, excelBeanParent, excelBeanParent.overideRule()) : excelRow;
+        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelRow, excelBeanParent, excelBeanParent.overrideRule()) : excelRow;
         if ( !Collection.class.isAssignableFrom(gClass)) {
             log.warn("属性的类型不是 {} 的实现, 不予解析", Collection.class.getCanonicalName());
             return;
@@ -67,7 +67,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
     private <G> Msg<Collection<G>> onTypeHandler(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
         if ( isNull(gClass)) { return Msg.msg(new IllegalStateException("无法获取容器泛型参数"));}
         ExcelRow excelRowParent = getAnnotationParent(ExcelRow.class,args);
-        excelRow = notNull(excelRowParent) ? decideRule(excelRow, excelRowParent, excelRowParent.overideRule()) : excelRow;
+        excelRow = notNull(excelRowParent) ? decideRule(excelRow, excelRowParent, excelRowParent.overrideRule()) : excelRow;
         if ( isNull(excelRow)) { return Msg.msg(new IllegalArgumentException(format("类型 %s 应该使用注解 %s 标注", gClass.getCanonicalName(), ExcelRow.class.getCanonicalName()))); }
         final Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelRow.sheet(), excelRow.sheetName(), excelParser.getWorkbook());
         if ( isNull( sheet)) { return Msg.msg( new IllegalStateException("无法找到Sheet")); }

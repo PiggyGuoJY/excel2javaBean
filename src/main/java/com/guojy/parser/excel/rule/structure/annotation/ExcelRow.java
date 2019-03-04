@@ -48,10 +48,8 @@ public @interface ExcelRow {
     /**
      * 设置继承属性(默认冲突时优先使用子配置)
      * */
-    OverrideRule overideRule() default OverrideRule.PARENT_FORCE;
+    OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
 
-    Class<?> after() default DefaultAfterRunnableImpl.class;
-    Class<?> afterAll() default DefaultAfterRunnableImpl.class;
 
     int columnBegin() default -1;
     String columnNameBegin() default "";

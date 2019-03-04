@@ -39,12 +39,8 @@ public @interface ExcelBean {
     /**
      * 设置继承属性(默认冲突时优先使用子配置)
      * */
-    OverrideRule overideRule() default OverrideRule.PARENT_FORCE;
+    OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
 
-    /**
-     * 程序员（guojy）很懒，关于这个属性，ta什么也没写╮(╯▽╰)╭
-     * */
-    Class<? extends Runnable> after() default DefaultAfterRunnableImpl.class;
 
     /**
      * 忽略特定的属性

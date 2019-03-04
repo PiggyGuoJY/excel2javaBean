@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-@XmlRootElement @XmlAccessorType( XmlAccessType.FIELD)
 @ExcelRow
 public class Student {
     @XmlElement

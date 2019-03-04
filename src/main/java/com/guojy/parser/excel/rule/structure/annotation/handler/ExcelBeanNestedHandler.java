@@ -43,7 +43,7 @@ public final class ExcelBeanNestedHandler extends ExcelAnnotationHandler<ExcelBe
                 args[VALUE_RETURNED],
                 args[GOAL_INST],
                 args[FIELD_REF],
-                notNull(excelBeanParent) ? decideBiRule(nested, excelBeanParent, excelBeanParent.overideRule()) : nested);
+                notNull(excelBeanParent) ? decideBiRule(nested, excelBeanParent, excelBeanParent.overrideRule()) : nested);
         if ( !msg.isException()) {
             ClassUtil.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
         }
