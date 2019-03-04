@@ -1,5 +1,6 @@
 package com.guojy.parser.excel.rule.structure.annotation.handler;
 
+import com.guojy.ClassUtil;
 import com.guojy.model.Msg;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
@@ -44,7 +45,7 @@ public final class ExcelBeanNestedHandler extends ExcelAnnotationHandler<ExcelBe
                 args[FIELD_REF],
                 notNull(excelBeanParent) ? decideBiRule(nested, excelBeanParent, excelBeanParent.overideRule()) : nested);
         if ( !msg.isException()) {
-            AbstractAnnotationHandlerHelper.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
+            ClassUtil.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
         }
         return Msg.msg();
     }

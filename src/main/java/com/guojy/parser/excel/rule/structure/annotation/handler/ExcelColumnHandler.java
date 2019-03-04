@@ -60,7 +60,7 @@ public final class ExcelColumnHandler extends ExcelAnnotationHandler<ExcelColumn
         Class<E> rawClass = (Class<E>) ClassUtil.getGenericClass((Field) args[FIELD_REF],0);
         Msg<Collection<E>> msg = onTypeHandler(rawClass,notNull(rawClass)?rawClass.getDeclaredAnnotation(ExcelColumn.class):null,excelParser,args);
         if ( msg.isException()) { return; }
-        AbstractAnnotationHandlerHelper.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
+        ClassUtil.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
     }
     @SuppressWarnings("unchecked")
     private <G> Msg<Collection<G>> onTypeHandler(Class<G> gClass, ExcelColumn excelColumn, ExcelParser excelParser, Object ... args) {
@@ -81,7 +81,7 @@ public final class ExcelColumnHandler extends ExcelAnnotationHandler<ExcelColumn
              columnEnd = expectantColumnEnd<0?Integer.MAX_VALUE:expectantColumnEnd; columnIndex<=columnEnd; columnIndex++) {
 //            // todo ... 也可以不这么停止, 具体可以看以后的情况
             // 准备泛型参数的实例
-            final Object gInstance = AbstractAnnotationHandlerHelper.instanceT( gClass);
+            final Object gInstance = ClassUtil.instanceT( gClass);
             if ( isNull( gInstance)) {
                 objectCollection.clear();
                 return Msg.msg(new IllegalStateException("无法通过反射实例化泛型参数的实例"));
@@ -92,7 +92,7 @@ public final class ExcelColumnHandler extends ExcelAnnotationHandler<ExcelColumn
                     Field field = gClass.getDeclaredField( fieldNameSelf);
                     Cell cell = ExcelParser.ExcelParserHelper.decideCell(finalColumnIndex, rowNoSelf, sheet);
                     if ( isNull( cell)) { log.warn("未能获取到Cell"); return;}
-                    AbstractAnnotationHandlerHelper.set(field, gInstance, excelParser.transform(cell, field.getType()).getT());
+                    ClassUtil.set(field, gInstance, excelParser.transform(cell, field.getType()).getT());
                 } catch ( NoSuchFieldException e) { log.error(e.getMessage(), e);}
             });
             objectCollection.add( gInstance);

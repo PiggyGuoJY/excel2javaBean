@@ -10,13 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.guojy.Assert.isNull;
@@ -31,82 +29,8 @@ import static com.guojy.Assert.notNull;
  * @version 1.0
  * */
 @Slf4j
-public abstract class AbstractAnnotationHandler<A extends Annotation, P extends AbstractParser> implements StructureHandler<P> {
-
-    private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER = new HashMap<>();
-    private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
-    static { init( ClassUtil.getTopPackageName()); }
-
-    /**
-     * 用于TYPE类型的注解处理器
-     *
-     * @param <G> 目标泛型
-     * @param gClass 目标类型
-     * @param a 注解
-     * @param p 解析器
-     * @param args 附加参数
-     * @return 消息实体(具体包含什么要看具体的使用场景)
-     * */
-    public abstract <G> Msg onType(Class<G> gClass, A a, P p, Object ... args);
-    /**
-     * 用于FIELD类型的注解处理器
-     *
-     * @param <G> 目标泛型
-     * @param gClass 目标类型
-     * @param a 注解
-     * @param p 解析器
-     * @param args 附加参数
-     * @return 消息实体(具体包含什么要看具体的使用场景)
-     * */
-    public abstract <G> Msg onField(Class<G> gClass, A a, P p, Object ... args);
-
-    /**
-     * 注册一定区域内的注解处理器
-     *
-     * @param packagePath 包路径
-     * */
-    private static void init(String packagePath) {
-        if (ATOMIC_INTEGER.addAndGet(1)<=2) {
-            ClassUtil
-                    .getClassesExtendClass(AbstractAnnotationHandler.class, packagePath, true)
-                    .forEach(
-                            selfClass-> {
-                                String className = selfClass.getCanonicalName();
-                                // 静态内部类需要特别处理(下面的处理不够强)
-                                if (className.matches("^.+(\\.[A-Z_$][a-zA-Z_$]*){2}$")) {
-                                    className = className.replaceAll("(^.+\\.[A-Z_$][a-zA-Z_$]*)\\.([A-Z_$][a-zA-Z_$]*$)","$1\\$$2");
-                                }
-                                try {
-                                    Class.forName(className, true, Thread.currentThread().getContextClassLoader());
-                                } catch ( ClassNotFoundException e) {
-                                    log.error( e.getMessage(), e);
-                                }
-                            });
-        } else { log.warn("达到最大更新次数, 禁止再次更新"); }
-    }
-    /**
-     * 获取注解处理器
-     *
-     * @param annotationClass 注解类型
-     * @return 对应的注解处理器或默认注解处理器(当找不到时)
-     * */
-    protected static AbstractAnnotationHandler getAnnotationHandler(Class<? extends Annotation> annotationClass) {
-        return MAP_ANNOTATION_HANDLER.getOrDefault(annotationClass,DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);
-    }
-    /**
-     * 注册注解类型处理器
-     *
-     * @param <A> 注解泛型
-     * @param <P> 解析器泛型
-     * @param annotationClass 要处理的注解
-     * @param abstractAnnotationHandler 对应的注解处理器
-     * */
-    protected static <A extends Annotation, P extends AbstractParser> void register(
-            Class<A> annotationClass,
-            AbstractAnnotationHandler<A,P> abstractAnnotationHandler) {
-        AbstractAnnotationHandler previous = MAP_ANNOTATION_HANDLER.put(annotationClass, abstractAnnotationHandler);
-        if ( notNull( previous)) { log.warn("注解 {} 的处理器已由 {} 替换为 {}", annotationClass.getCanonicalName(), previous.getClass().getCanonicalName(), abstractAnnotationHandler.getClass().getCanonicalName()); }
-    }
+public abstract class AbstractAnnotationHandler<A extends Annotation, P extends AbstractParser>
+        implements StructureHandler<P> {
 
     /**
      * 注解处理器帮助类
@@ -118,53 +42,14 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      * */
     @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class AbstractAnnotationHandlerHelper {
-        /**
-         * 判断某个对象是否有且只有一个注解集合中的注解
-         *
-         * @param annotatedElement 判定对象
-         * @param annotationClassesSet 注解集合
-         * @return 当成功找到时, 返回唯一注解; 否则返回null
-         * */
-        public static Class<? extends Annotation> getTheOnlyOneAnnotation(AnnotatedElement annotatedElement, Set<Class< ? extends Annotation>> annotationClassesSet) {
-            return ClassUtil.getTheOnlyOneAnnotation(annotatedElement, annotationClassesSet);
-        }
-        /**
-         * 向对象中的属性注入值
-         *
-         * @param field 属性
-         * @param target 目标对象
-         * @param value 注入值
-         * */
-        public static void set(Field field, Object target, Object value) {
-            try {
-                if ( field.isAccessible()) {
-                    field.set( target, value);
-                } else {
-                    field.setAccessible( true);
-                    field.set( target, value);
-                    field.setAccessible( false);
-                }
-            } catch ( IllegalAccessException e) {
-                log.error( e.getMessage(), e);
-            }
-        }
-        /**
-         * 使用指定的类型初始化一个实例
-         *
-         * @param tClass 指定类型
-         * @return 实例
-         * */
-        public static <T> T instanceT(Class<T> tClass) {
-            try {  return tClass.newInstance(); } catch ( IllegalAccessException | InstantiationException e) {
-                log.error( e.getMessage(), e);
-                log.warn( "未能生产 {} 的实例", tClass.getCanonicalName());
-                return null;
-            }
-        }
 
         @SuppressWarnings("unchecked")
         public static  <A extends Annotation, B extends Annotation> A decideAnnotationRule(
-                A son, B parent, Map<String,Object> stringObjectMap, OverrideRule overrideRule) {
+                A son,
+                B parent,
+                Map<String,Object> stringObjectMap,
+                OverrideRule overrideRule
+        ) {
             if ( isNull(parent)) {
                 log.error("缺少要处理的参数 {}, 直接返回son", "parent");
                 return son;
@@ -183,20 +68,14 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             }
             return a;
         }
-
         @SuppressWarnings("unchecked")
-        public static <G, A extends Annotation> A changeAnnotationFieldValue(A a, String fieldName, G gValue) {
-            return ClassUtil.changeAnnotationFieldValue(a,fieldName,gValue);
-        }
-
-        @SuppressWarnings("unchecked")
-        private static  <G, A extends Annotation, B extends Annotation> A decideAnnotationRule(
+        public static  <G, A extends Annotation, B extends Annotation> A decideAnnotationRule(
                 A son,
                 B parent,
                 String fieldName,
                 G gDefaultValue,
-                OverrideRule overrideRule) {
-
+                OverrideRule overrideRule
+        ) {
             Field sonMemberValues, parentMemberValues;
             Map<String,Object> sonMap, parentMap;
             G sonGValue, parentGValue;
@@ -242,4 +121,85 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             return son;
         }
     }
+
+    /**
+     * 用于TYPE类型的注解处理器
+     *
+     * @param <G> 目标泛型
+     * @param gClass 目标类型
+     * @param a 注解
+     * @param p 解析器
+     * @param args 附加参数
+     * @return 消息实体(具体包含什么要看具体的使用场景)
+     * */
+    public abstract <G> Msg onType(Class<G> gClass, A a, P p, Object ... args);
+    /**
+     * 用于FIELD类型的注解处理器
+     *
+     * @param <G> 目标泛型
+     * @param gClass 目标类型
+     * @param a 注解
+     * @param p 解析器
+     * @param args 附加参数
+     * @return 消息实体(具体包含什么要看具体的使用场景)
+     * */
+    public abstract <G> Msg onField(Class<G> gClass, A a, P p, Object ... args);
+
+
+
+    /**
+     * 获取注解处理器
+     *
+     * @param annotationClass 注解类型
+     * @return 对应的注解处理器或默认注解处理器(当找不到时)
+     * */
+    protected static AbstractAnnotationHandler getAnnotationHandler(Class<? extends Annotation> annotationClass) {
+        return MAP_ANNOTATION_HANDLER.getOrDefault(annotationClass,DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);
+    }
+    /**
+     * 注册注解类型处理器
+     *
+     * @param <A> 注解泛型
+     * @param <P> 解析器泛型
+     * @param annotationClass 要处理的注解
+     * @param abstractAnnotationHandler 对应的注解处理器
+     * */
+    protected static <A extends Annotation, P extends AbstractParser> void register(
+            Class<A> annotationClass,
+            AbstractAnnotationHandler<A,P> abstractAnnotationHandler
+    ) {
+        AbstractAnnotationHandler previous = MAP_ANNOTATION_HANDLER.put(annotationClass, abstractAnnotationHandler);
+        if ( notNull( previous)) { log.warn("注解 {} 的处理器已由 {} 替换为 {}", annotationClass.getCanonicalName(), previous.getClass().getCanonicalName(), abstractAnnotationHandler.getClass().getCanonicalName()); }
+    }
+
+
+
+    private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER = new HashMap<>();
+    private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
+    static { init( ClassUtil.getTopPackageName()); }
+    /**
+     * 注册一定区域内的注解处理器
+     *
+     * @param packagePath 包路径
+     * */
+    private static void init(String packagePath) {
+        if (ATOMIC_INTEGER.addAndGet(1)<=2) {
+            ClassUtil
+                    .getClassesExtendClass(AbstractAnnotationHandler.class, packagePath, true)
+                    .forEach(
+                            selfClass-> {
+                                String className = selfClass.getCanonicalName();
+                                // todo ... 静态内部类需要特别处理(下面的处理不够强)
+                                if (className.matches("^.+(\\.[A-Z_$][a-zA-Z_$]*){2}$")) {
+                                    className = className.replaceAll("(^.+\\.[A-Z_$][a-zA-Z_$]*)\\.([A-Z_$][a-zA-Z_$]*$)","$1\\$$2");
+                                }
+                                try {
+                                    Class.forName(className, true, Thread.currentThread().getContextClassLoader());
+                                } catch ( ClassNotFoundException e) {
+                                    log.error( e.getMessage(), e);
+                                }
+                            });
+        } else { log.error("达到最大更新次数({}次), 禁止再次更新", 2); }
+    }
+
 }

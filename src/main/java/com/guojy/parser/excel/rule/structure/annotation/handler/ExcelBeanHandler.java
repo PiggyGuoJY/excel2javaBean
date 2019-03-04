@@ -1,6 +1,7 @@
 package com.guojy.parser.excel.rule.structure.annotation.handler;
 
 import com.google.common.collect.ImmutableSet;
+import com.guojy.ClassUtil;
 import com.guojy.model.Msg;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
@@ -37,7 +38,7 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
         final ExcelBean.Nested nestedParent = getAnnotationParent(ExcelBean.Nested.class, args);
         final ExcelBean finalExcelBean = notNull(nestedParent) ?
                 (nestedParent.stepBy() > 0 ?
-                        AbstractAnnotationHandlerHelper.changeAnnotationFieldValue(
+                        ClassUtil.changeAnnotationFieldValue(
                                 AbstractAnnotationHandlerHelper.decideAnnotationRule(
                                         excelBean, nestedParent, INHERITABLE_FIELD, nestedParent.overideRule()),
                                 "sheet",
@@ -54,13 +55,13 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
         Stream.of(gClass.getDeclaredFields())
                 .parallel()
                 // 处理含有特定注解的属性
-                .filter(fieldSelf -> notNull(AbstractAnnotationHandlerHelper.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD)))
+                .filter(fieldSelf -> notNull(ClassUtil.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD)))
                 // 不处理标注ExcelBean.Skip.class的属性
                 .filter(fieldSelf -> isNull(fieldSelf.getDeclaredAnnotation(ExcelBean.Skip.class)))
                 // 最后处理标注ExcelBean.Nested.class的属性
                 .filter(fieldSelf -> isNull(fieldSelf.getDeclaredAnnotation(ExcelBean.Nested.class)))
                 .forEach(fieldSelf -> {
-                    Class<? extends Annotation> annotationClass = AbstractAnnotationHandlerHelper.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD);
+                    Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD);
                     // 具体根据注解分发
                     Msg<?> msg = ExcelAnnotationHandler.getAnnotationHandler(annotationClass).onField(
                             fieldSelf.getType(), fieldSelf.getDeclaredAnnotation(annotationClass), excelParser,
@@ -76,7 +77,7 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
                 .parallel()
                 .filter(fieldSelf -> notNull(fieldSelf.getDeclaredAnnotation(ExcelBean.Nested.class)))
                 .forEach(fieldSelf -> {
-                    Class<? extends Annotation> annotationClass = AbstractAnnotationHandlerHelper.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD);
+                    Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(fieldSelf,ANNOTATIONS_ON_FIELD);
                     // 具体根据注解分发
                     Msg<?> msg = ExcelAnnotationHandler.getAnnotationHandler(annotationClass).onField(
                             fieldSelf.getType(), fieldSelf.getDeclaredAnnotation(annotationClass), excelParser,

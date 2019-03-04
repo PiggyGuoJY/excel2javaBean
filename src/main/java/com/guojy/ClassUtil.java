@@ -138,43 +138,99 @@ public final class ClassUtil {
         return getGenericClass(((ParameterizedType)oTypeToken.getType()), pos);
     }
 
-    public static Set<Class<?>> getAllGenericClasses(final Field field) {
-        return null;
-    }
-
-    public static <O> Set<Class<?>> getAllGenericClasses(final TypeToken<O> oTypeToken) {
-        if (!(oTypeToken.getType() instanceof ParameterizedType)) { log.warn("类型 {} 没有泛型参数", oTypeToken.getType()); return Collections.emptySet();}
-
-        ImmutableSet.Builder<Class<?>> builder = ImmutableSet.<Class<?>>builder();
-
-        ParameterizedType parameterizedType = (ParameterizedType)oTypeToken.getType();
-        for(Type type : parameterizedType.getActualTypeArguments()) {
-
-        }
-
-        return null;
-    }
-
     @SuppressWarnings("unchecked")
     public static <G, A extends Annotation> A changeAnnotationFieldValue(
-            A a,
+            A annotation,
             String fieldName,
             G gValue
     ) {
         Field aMemberValues;
         Map<String,Object> aMap;
         try {
-            InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(a);
+            InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(annotation);
             aMemberValues = aInvocationHandler.getClass().getDeclaredField("memberValues");
             aMemberValues.setAccessible(true);
             aMap = (Map<String,Object>)aMemberValues.get(aInvocationHandler);
         } catch ( NoSuchFieldException | IllegalAccessException e) {
             log.error(e.getMessage(),e);
-            return a;
+            log.error(
+                    "未能修改注解 {} 参数 {} 的值到 {}, 直接返回原注解",
+                    annotation.getClass().getCanonicalName(),
+                    fieldName,
+                    gValue);
+            return annotation;
         }
         aMap.put(fieldName, gValue);
         aMemberValues.setAccessible(false);
-        return a;
+        return annotation;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <G,A extends Annotation> A addValueToAnnotation(
+            A annotation,
+            String fieldName,
+            G gValue
+    ) {
+        Field aMemberValues;
+        Map<String,Object> aMap;
+        try {
+            InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(annotation);
+            aMemberValues = aInvocationHandler.getClass().getDeclaredField("memberValues");
+            aMemberValues.setAccessible(true);
+            aMap = (Map<String,Object>)aMemberValues.get(aInvocationHandler);
+        } catch ( NoSuchFieldException | IllegalAccessException e) {
+            log.error(e.getMessage(),e);
+            log.error(
+                    "未能为注解 {} 参数 {} 添加值 {}, 直接返回原注解",
+                    annotation.getClass().getCanonicalName(),
+                    fieldName,
+                    gValue);
+            return annotation;
+        }
+        Object value = aMap.get(fieldName);
+        if ( !value.getClass().isArray()) {
+            log.error(
+                    "注解 {} 的参数 {} 类型不是数组， 不能进行值的添加. 直接返回原注解",
+                    annotation.getClass().getCanonicalName(),
+                    fieldName);
+            return annotation;
+        }
+        aMemberValues.setAccessible(false);
+        return annotation;
+    }
+
+    /**
+     * 向对象中的属性注入值
+     *
+     * @param field 属性
+     * @param target 目标对象
+     * @param value 注入值
+     * */
+    public static void set(Field field, Object target, Object value) {
+        try {
+            if ( field.isAccessible()) {
+                field.set( target, value);
+            } else {
+                field.setAccessible( true);
+                field.set( target, value);
+                field.setAccessible( false);
+            }
+        } catch ( IllegalAccessException e) {
+            log.error( e.getMessage(), e);
+        }
+    }
+    /**
+     * 使用指定的类型初始化一个实例
+     *
+     * @param tClass 指定类型
+     * @return 实例
+     * */
+    public static <T> T instanceT(Class<T> tClass) {
+        try {  return tClass.newInstance(); } catch ( IllegalAccessException | InstantiationException e) {
+            log.error( e.getMessage(), e);
+            log.warn( "未能生产 {} 的实例", tClass.getCanonicalName());
+            return null;
+        }
     }
 
 

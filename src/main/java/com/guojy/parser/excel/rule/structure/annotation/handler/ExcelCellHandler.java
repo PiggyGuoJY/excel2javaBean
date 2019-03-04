@@ -1,6 +1,7 @@
 package com.guojy.parser.excel.rule.structure.annotation.handler;
 
 import com.google.common.collect.ImmutableMap;
+import com.guojy.ClassUtil;
 import com.guojy.model.Msg;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
@@ -50,7 +51,7 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
         args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overideRule()) : excelCell;
         Msg<?> msg = onTypeHandler( gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser,args);
         if ( msg.isException()) { return;}
-        AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
+        ClassUtil.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
     }
     private <G> Msg<G> onTypeHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
         ExcelCell excelCellParent = getAnnotationParent(ExcelCell.class,args);

@@ -61,7 +61,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
         Class<E> rawClass = (Class<E>)ClassUtil.getGenericClass((Field) args[FIELD_REF],0);
         Msg<Collection<E>> msg = onTypeHandler(rawClass, notNull(rawClass)?rawClass.getDeclaredAnnotation(ExcelRow.class):null, excelParser,args);
         if ( msg.isException()) { return; }
-        AbstractAnnotationHandlerHelper.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
+        ClassUtil.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
     }
     @SuppressWarnings("unchecked")
     private <G> Msg<Collection<G>> onTypeHandler(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
@@ -78,7 +78,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
             Row row = sheet.getRow( rowIndex-1);
             if ( isNull( row )) { log.warn("检测到空行, 停止解析..."); break; }
             // 准备泛型参数的实例
-            final Object gInstance = AbstractAnnotationHandlerHelper.instanceT( gClass);
+            final Object gInstance = ClassUtil.instanceT( gClass);
             if ( isNull( gInstance)) {
                 objectCollection.clear();
                 return Msg.msg(new IllegalStateException("无法通过反射实例化泛型参数的实例"));
@@ -89,7 +89,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
                     Field field = gClass.getDeclaredField( fieldNameSelf);
                     Cell cell = ExcelParser.ExcelParserHelper.decideCell(columnNoSelf, finalRowIndex, sheet);
                     if ( isNull( cell)) { log.warn("未能获取到Cell"); return;}
-                    AbstractAnnotationHandlerHelper.set(field, gInstance, excelParser.transform(cell, field.getType()).getT());
+                    ClassUtil.set(field, gInstance, excelParser.transform(cell, field.getType()).getT());
                 } catch ( NoSuchFieldException e) { log.error(e.getMessage(), e);}
             });
             objectCollection.add( gInstance);
