@@ -69,16 +69,19 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             return a;
         }
         @SuppressWarnings("unchecked")
-        public static  <G, A extends Annotation, B extends Annotation> A decideAnnotationRule(
+        static  <G, A extends Annotation, B extends Annotation> A decideAnnotationRule(
                 A son,
                 B parent,
                 String fieldName,
                 G gDefaultValue,
                 OverrideRule overrideRule
         ) {
-            Field sonMemberValues, parentMemberValues;
-            Map<String,Object> sonMap, parentMap;
-            G sonGValue, parentGValue;
+            Field sonMemberValues;
+            Field parentMemberValues;
+            Map<String,Object> sonMap;
+            Map<String,Object> parentMap;
+            G sonGValue;
+            G parentGValue;
             try {
                 InvocationHandler sonInvocationHandler = Proxy.getInvocationHandler(son);
                 InvocationHandler parentInvocationHandler = Proxy.getInvocationHandler(parent);
@@ -154,7 +157,9 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      * @return 对应的注解处理器或默认注解处理器(当找不到时)
      * */
     protected static AbstractAnnotationHandler getAnnotationHandler(Class<? extends Annotation> annotationClass) {
-        return MAP_ANNOTATION_HANDLER.getOrDefault(annotationClass,DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);
+        return MAP_ANNOTATION_HANDLER.getOrDefault(
+                annotationClass,
+                DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);
     }
     /**
      * 注册注解类型处理器
@@ -169,7 +174,13 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             AbstractAnnotationHandler<A,P> abstractAnnotationHandler
     ) {
         AbstractAnnotationHandler previous = MAP_ANNOTATION_HANDLER.put(annotationClass, abstractAnnotationHandler);
-        if ( notNull( previous)) { log.warn("注解 {} 的处理器已由 {} 替换为 {}", annotationClass.getCanonicalName(), previous.getClass().getCanonicalName(), abstractAnnotationHandler.getClass().getCanonicalName()); }
+        if ( notNull( previous)) {
+            log.warn(
+                    "注解 {} 的处理器已由 {} 替换为 {}",
+                    annotationClass.getCanonicalName(),
+                    previous.getClass().getCanonicalName(),
+                    abstractAnnotationHandler.getClass().getCanonicalName());
+        }
     }
 
 

@@ -22,12 +22,15 @@ public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
             TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         super(structureHandler, abstractDataTypeTransformerRule);
     }
-
     @Override
     protected <T> Msg<T> beforeParse(Object... args) { return Msg.msg(); }
     @Override @SuppressWarnings("unchecked")
     protected <T> Msg<T> doParse(Object... args) {
-        Msg<?> msg = structureHandler.handle((Class<T>) args[GOAL_CLASS], (P) args[PARSER_SELF], args[ARGS_INIT], args[VALUE_RETURNED]);
+        Msg<?> msg = structureHandler.handle(
+                (Class<T>) args[GOAL_CLASS],
+                (P) args[PARSER_SELF],
+                args[ARGS_INIT],
+                args[VALUE_RETURNED]);
         return (Msg<T>)msg;
     }
     @Override @SuppressWarnings("unchecked")

@@ -1,5 +1,6 @@
 package com.guojy.parser.rule.parse;
 
+import com.google.common.collect.ImmutableSet;
 import com.guojy.model.Msg;
 import com.guojy.parser.rule.structure.StructureHandler;
 import com.guojy.parser.rule.type.TransformableAndRuleAddable;
@@ -7,6 +8,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.function.Function;
 
 import static com.guojy.Assert.notNul;
@@ -20,34 +22,8 @@ import static com.guojy.Assert.notNul;
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractParser<P extends AbstractParser> implements TransformableAndRuleAddable<AbstractParser> , Parseable {
-
-    // 1. 组合公共资源
-
-    protected AbstractParser(
-            StructureHandler<P> structureHandler,
-            TransformableAndRuleAddable abstractDataTypeTransformerRule) {
-        this.structureHandler = structureHandler;
-        this.abstractDataTypeTransformerRule = abstractDataTypeTransformerRule;
-    }
-
-    @AllArgsConstructor(access = AccessLevel.PRIVATE) @EqualsAndHashCode(exclude = {"processor"}) @ToString(of = {"name"})
-    private static class Process {
-        private String name;
-        private Function<Object[],Msg<?>> processor;
-    }
-
-    protected StructureHandler<P> structureHandler;
-    protected TransformableAndRuleAddable abstractDataTypeTransformerRule;
-
-    private LinkedList<Process> processes = new LinkedList<>();
-    {
-        processes.addLast(new Process("beforeParse", this::beforeParse));
-        processes.addLast(new Process("doParse", this::doParse));
-        processes.addLast(new Process("afterParse", this::afterParse));
-    }
-
-    // 2. 暴露API
+public abstract class AbstractParser<P extends AbstractParser>
+        implements TransformableAndRuleAddable<AbstractParser> , Parseable {
 
     /**
      * 解析入口
@@ -58,7 +34,10 @@ public abstract class AbstractParser<P extends AbstractParser> implements Transf
      * @return 含有目标实例的消息
      * */
     @Override @SuppressWarnings("unchecked")
-    public <G> Msg<G> parse(Class<G> gClass, Object ... args) {
+    public <G> Msg<G> parse(
+            Class<G> gClass,
+            Object ... args
+    ) {
         Msg<?> msg = Msg.MsgError.ILLEGAL_STATE_INIT.getMsg();
         Object[] params = new Object[]{gClass,this,args,msg};
         for( Process process : processes) {
@@ -71,69 +50,68 @@ public abstract class AbstractParser<P extends AbstractParser> implements Transf
         }
         return (Msg<G>)msg;
     }
-
     @Override @SuppressWarnings("unchecked")
     public <G> AbstractParser addRule4Transformer(
-            @NonNull Class<G> gClass, @NonNull Class zlass, @NonNull Function<?, G> ogFunction) {
-        abstractDataTypeTransformerRule = abstractDataTypeTransformerRule.addRule4Transformer(gClass, zlass, ogFunction);
+            Class<G> gClass,
+            Class zlass,
+            Function<?, G> ogFunction
+    ) {
+        abstractDataTypeTransformerRule =
+                abstractDataTypeTransformerRule.addRule4Transformer(gClass, zlass, ogFunction);
         return this;
     }
-
     @Override @SuppressWarnings("unchecked")
-    public <G> Msg<G> transform(Object object, @NonNull Class<G> gClass) {
+    public <G> Msg<G> transform(Object object,  Class<G> gClass) {
         return abstractDataTypeTransformerRule.transform(object,gClass);
     }
-
     @SuppressWarnings("unchecked")
     public P addProcessorBefore(
-            @NonNull String processorName,
-            @NonNull Function<Object[],Msg<?>> processor,
+            String processorName,
+            Function<Object[],Msg<?>> processor,
             String beforeProcessorName,
-            boolean force) {
+            boolean force
+    ) {
         if ( processorName.equals(beforeProcessorName)) {
-            log.warn("processorName {} 不能和 beforeProcessorName {}", processorName, beforeProcessorName);
+            log.warn("processorName {} 不能和 beforeProcessorName {} 相同", processorName, beforeProcessorName);
             return (P)this;
         }
         Process beforeProcess = new Process(beforeProcessorName,null);
         Process process = new Process(processorName, processor);
-        boolean forceFlag = processes.contains(process) && force;
-        if ( notNul(beforeProcessorName) && processes.contains(beforeProcess)) {
-            processes.add(processes.indexOf(beforeProcess), process);
-            if (forceFlag) {
-                processes.removeLastOccurrence( process);
-            } else {
-                log.warn("未指定强制替换, 不予添加和替换处理器");
-                return (P)this;
-            }
-        } else {
-            processes.addLast(process);
-            if ( forceFlag) {
-                processes.removeFirstOccurrence( process);
-            } else {
-                log.warn("未指定强制替换, 不予添加和替换处理器");
-                return (P)this;
-            }
+        if (!processes.contains(beforeProcess)) {
+            log.warn("处理器 {} 不存在", beforeProcessorName);
+            return (P)this;
+        }
+        boolean exist = processes.contains(process);
+        processes.add(processes.indexOf(beforeProcess), process);
+        if ( exist && force) {
+            processes.removeFirstOccurrence( process);
+        }
+        return (P)this;
+    }
+    public P addProcessor(
+            String processorName,
+            Function<Object[],Msg<?>> processor
+    ) {
+        return addProcessorBefore(processorName, processor, null, false);
+    }
+    @SuppressWarnings("unchecked")
+    public P removeProcess( String processorName) {
+        if (PROCESS_CANT_BE_REMORED.contains(processorName)) {
+            log.error("处理器 {} 只能被替换,不能被移除", processorName);
+            return (P)this;
+        }
+        if ( !processes.remove( new Process( processorName, null))) {
+            log.warn("处理器 {} 不存在", processorName);
         }
         return (P)this;
     }
 
-    public P addProcessor(@NonNull String processorName, @NonNull Function<Object[],Msg<?>> processor) {
-        return addProcessorBefore(processorName, processor, null, false);
-    }
 
-    @SuppressWarnings("unchecked")
-    public P removeProcess(@NonNull String processorName) {
-        if ( !processes.remove( new Process( processorName, null))) { log.warn("处理器 {} 不存在", processorName);}
-        return (P)this;
-    }
-
-    // 3. 提供公共工具
 
     protected static final int GOAL_CLASS = 0;
     protected static final int PARSER_SELF = 1;
     protected static final int ARGS_INIT = 2;
     protected static final int VALUE_RETURNED = 3;
-
     /**
      * 解析前置处理
      *
@@ -149,4 +127,28 @@ public abstract class AbstractParser<P extends AbstractParser> implements Transf
      *
      * */
     protected abstract <T> Msg<T> afterParse(Object... args);
+    protected StructureHandler<P> structureHandler;
+    protected TransformableAndRuleAddable abstractDataTypeTransformerRule;
+    protected AbstractParser(
+            StructureHandler<P> structureHandler,
+            TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
+        this.structureHandler = structureHandler;
+        this.abstractDataTypeTransformerRule = abstractDataTypeTransformerRule;
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @EqualsAndHashCode(exclude = {"processor"}) @ToString(of = {"name"})
+    private static class Process {
+        private String name;
+        private Function<Object[],Msg<?>> processor;
+    }
+    private LinkedList<Process> processes = new LinkedList<>();
+    private static final Set<String> PROCESS_CANT_BE_REMORED
+            = ImmutableSet.<String>builder().add("beforeParse").add("doParse").add("afterParse").build();
+    {
+        processes.addLast(new Process("beforeParse", this::beforeParse));
+        processes.addLast(new Process("doParse", this::doParse));
+        processes.addLast(new Process("afterParse", this::afterParse));
+    }
 }

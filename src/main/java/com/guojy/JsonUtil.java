@@ -45,7 +45,7 @@ public final class JsonUtil {
      * @param t 实体实例
      * @return json格式字符串
      * */
-    public static <T> String javaBean2Json(@NonNull T t) {
+    public static <T> String javaBean2Json( T t) {
         return javaBean2Json( t, GsonBuilderStrategy.NULLS_STRING_TO_EMPTY);
     }
 
@@ -57,7 +57,7 @@ public final class JsonUtil {
      * @param gsonBuilderStrategy 序列化策略
      * @return json格式字符串
      * */
-    public static <T> String javaBean2Json(@NonNull T t, @NonNull GsonBuilderStrategy gsonBuilderStrategy) {
+    public static <T> String javaBean2Json( T t,  GsonBuilderStrategy gsonBuilderStrategy) {
         return gsonBuilderStrategy.getGson().toJson( t, t.getClass());
     }
 
@@ -69,7 +69,7 @@ public final class JsonUtil {
      * @param json json格式字符串
      * @return 实体实例
      * */
-    public static <T> T json2JavaBean(@NonNull Class<T> tClass, @NonNull String json) {
+    public static <T> T json2JavaBean( Class<T> tClass,  String json) {
         return json2JavaBean( tClass, json, GsonBuilderStrategy.NULLS_STRING_TO_EMPTY);
     }
 
@@ -82,7 +82,7 @@ public final class JsonUtil {
      * @param gsonBuilderStrategy 序列化策略
      * @return 实体实例
      * */
-    public static <T> T json2JavaBean(@NonNull Class<T> tClass, @NonNull String json,@NonNull GsonBuilderStrategy gsonBuilderStrategy) {
+    public static <T> T json2JavaBean( Class<T> tClass,  String json, GsonBuilderStrategy gsonBuilderStrategy) {
         return gsonBuilderStrategy.getGson().fromJson( json, tClass);
     }
 
@@ -94,7 +94,7 @@ public final class JsonUtil {
      * @param json json格式字符串
      * @return 实体实例
      * */
-    public static <T> T json2JavaBean(@NonNull Type type,@NonNull String json) {
+    public static <T> T json2JavaBean( Type type, String json) {
         return GsonBuilderStrategy.NULLS_STRING_TO_EMPTY.getGson().fromJson( json, type);
     }
 
@@ -107,7 +107,7 @@ public final class JsonUtil {
      * @param gsonBuilderStrategy 序列化策略
      * @return 实体实例
      * */
-    public static <T> T json2JavaBean(@NonNull Type type,@NonNull String json,@NonNull GsonBuilderStrategy gsonBuilderStrategy) {
+    public static <T> T json2JavaBean( Type type, String json, GsonBuilderStrategy gsonBuilderStrategy) {
         return gsonBuilderStrategy.getGson().fromJson( json, type);
     }
 
