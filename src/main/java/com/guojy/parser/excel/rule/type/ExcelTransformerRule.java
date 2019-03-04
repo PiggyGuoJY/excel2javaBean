@@ -7,10 +7,13 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaError;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -18,6 +21,8 @@ import static com.guojy.Assert.isNull;
 
 /**
  * 基于Excel单元格类型的类型转换类
+ *
+ * todo ... 还得完善基本数据类型和其数组类型; 公式类型得支持计算
  *
  * <p> 创建时间：2018/11/10
  *
@@ -34,15 +39,32 @@ public final class ExcelTransformerRule
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER_DEFAULT = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     private static final ExcelTransformerRule DEFAULT_EXCEL_TRANSFORMER_RULE = new ExcelTransformerRule();
-
     private ExcelTransformerRule() { initSuperDefaultRule(); }
     private ExcelTransformerRule(Map<Class<?>,Function<Cell,?>> defaultTransformerRule) {
         super.setDefaultTransformerRule(defaultTransformerRule);
     }
-
     private static final String DEFAULT_STRING = null;
-
     private void initSuperDefaultRule() {
+        super.addDefaultRule4Transformer( int.class, cell -> null);
+        super.addDefaultRule4Transformer( int[].class, cell -> null);
+        super.addDefaultRule4Transformer( float.class, cell -> null);
+        super.addDefaultRule4Transformer( float[].class, cell -> null);
+        super.addDefaultRule4Transformer( boolean.class, cell -> null);
+        super.addDefaultRule4Transformer( boolean[].class, cell -> null);
+        super.addDefaultRule4Transformer( byte.class, cell -> null);
+        super.addDefaultRule4Transformer( byte[].class, cell -> null);
+        super.addDefaultRule4Transformer( double.class, cell -> null);
+        super.addDefaultRule4Transformer( double[].class, cell -> null);
+        super.addDefaultRule4Transformer( char.class, cell -> null);
+        super.addDefaultRule4Transformer( char[].class, cell -> null);
+        super.addDefaultRule4Transformer( long.class, cell -> null);
+        super.addDefaultRule4Transformer( long[].class, cell -> null);
+        super.addDefaultRule4Transformer( short.class, cell -> null);
+        super.addDefaultRule4Transformer( short[].class, cell -> null);
+        super.addDefaultRule4Transformer( void.class, cell -> null);
+        super.addDefaultRule4Transformer( Object.class, cell -> null);
+        super.addDefaultRule4Transformer( Object[].class, cell -> null);
+
         super.addDefaultRule4Transformer( String.class, cell -> {
             if(isNull(cell)) {return DEFAULT_STRING;}
             switch ( cell.getCellType()) {
@@ -66,6 +88,7 @@ public final class ExcelTransformerRule
                 case ERROR: log.warn( FormulaError.forInt( cell.getErrorCellValue()).getString()); try { return (int)cell.getNumericCellValue(); } catch ( NumberFormatException e) { log.error( e.getMessage(), e); return null; }
                 default: return null;
             }});
+        super.addDefaultRule4Transformer( BigInteger.class, cell -> null);
         super.addDefaultRule4Transformer( Double.class, cell -> {
             if(isNull(cell)) {return 0D;}
             switch ( cell.getCellType()) {
@@ -78,6 +101,7 @@ public final class ExcelTransformerRule
                 case ERROR: log.warn( FormulaError.forInt( cell.getErrorCellValue()).getString()); try { return cell.getNumericCellValue(); } catch ( NumberFormatException e) { log.error( e.getMessage(), e); return null; }
                 default: return null;
             }});
+        super.addDefaultRule4Transformer( BigDecimal.class, cell -> null);
         super.addDefaultRule4Transformer( Boolean.class, cell -> {
             if(isNull(cell)) {return false;}
             switch ( cell.getCellType()) {
@@ -88,6 +112,7 @@ public final class ExcelTransformerRule
                 case ERROR: return false;
                 default: return null;
             }});
+        super.addDefaultRule4Transformer( Date.class, cell -> null);
         super.addDefaultRule4Transformer( LocalDate.class, cell -> {
             if(isNull(cell)) {return null;}
             switch ( cell.getCellType()) {
@@ -99,6 +124,7 @@ public final class ExcelTransformerRule
                 case ERROR:
                 default: return null;
             }});
+
         super.addDefaultRule4Transformer( Class.class, cell -> {
             if(isNull(cell)) {return null;}
             switch ( cell.getCellType()) {

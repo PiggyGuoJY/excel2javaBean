@@ -31,72 +31,8 @@ import static com.guojy.Assert.*;
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExcelParser extends DefaultParser<ExcelParser> implements AutoCloseable {
-
-    /**
-     * 支持使用Path来初始化Workbook
-     * */
-    private Path path = null;
-
-    private InputStream inputStream = null;
-
-    /**
-     * 全局持有的Workbook, 不要主动关闭, 使用close()进行关闭
-     * */
-    @Getter
-    private Workbook workbook = null;
-
-    protected ExcelParser(
-            final Path path,
-            final StructureHandler<ExcelParser> structureHandler,
-            final TransformableAndRuleAddable abstractDataTypeTransformerRule) {
-        super(structureHandler, abstractDataTypeTransformerRule);
-        this.path = path;
-        try {
-            this.inputStream = Files.newInputStream( path, StandardOpenOption.READ);
-            // todo 之后考虑询问密码的情况
-            this.workbook = WorkbookFactory.create( this.inputStream, null);
-        } catch ( IOException e) {
-            log.error( e.getMessage(), e);
-            this.workbook = null; try { this.close();} catch ( IOException e2) { log.error( e2.getMessage(), e2); this.inputStream = null;}
-        }
-    }
-
-    /**
-     * 支持使用文件对象初始化Workbook
-     * */
-    private File file = null;
-    protected ExcelParser(
-            final File file,
-            final StructureHandler<ExcelParser> structureHandler,
-            final TransformableAndRuleAddable abstractDataTypeTransformerRule) {
-        super(structureHandler, abstractDataTypeTransformerRule);
-        this.file = file;
-        try {
-            this.workbook = WorkbookFactory.create( this.file);
-        } catch ( IOException e) {
-            log.error( e.getMessage(), e);
-            this.workbook = null; this.file = null;
-        }
-    }
-
-    @Override
-    public void close() throws IOException {
-        if ( notNull( workbook)) { workbook.close(); this.workbook = null; }
-        if ( notNul( file)) { file = null;}
-        if ( notNull( inputStream)) { inputStream.close(); this.inputStream = null; }
-        if ( notNull( path)) { this.path = null; }
-    }
-
-    @Override @SuppressWarnings("unchecked")
-    protected <T> Msg<T> afterParse(Object... args) {
-        try {
-            ((ExcelParser)args[PARSER_SELF]).close();
-        } catch (IOException e) {
-            log.error(e.getMessage(),e);
-        }
-        return (Msg<T>)args[VALUE_RETURNED];
-    }
+public class ExcelParser extends DefaultParser<ExcelParser>
+        implements AutoCloseable {
 
     public static class ExcelParserHelper {
         public static int decideSheetNo(int parent, int son) {
@@ -143,4 +79,70 @@ public class ExcelParser extends DefaultParser<ExcelParser> implements AutoClose
             return row.getCell( decideColumnNo( "", columnNo)-1);
         }
     }
+    @Override
+    public void close() throws IOException {
+        if ( notNull( workbook)) { workbook.close(); this.workbook = null; }
+        if ( notNul( file)) { file = null;}
+        if ( notNull( inputStream)) { inputStream.close(); this.inputStream = null; }
+        if ( notNull( path)) { this.path = null; }
+    }
+
+
+
+    @Override @SuppressWarnings("unchecked")
+    protected <T> Msg<T> afterParse(Object... args) {
+        try {
+            ((ExcelParser)args[PARSER_SELF]).close();
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+        return (Msg<T>)args[VALUE_RETURNED];
+    }
+    protected ExcelParser(
+            final Path path,
+            final StructureHandler<ExcelParser> structureHandler,
+            final TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
+        super(structureHandler, abstractDataTypeTransformerRule);
+        this.path = path;
+        try {
+            this.inputStream = Files.newInputStream( path, StandardOpenOption.READ);
+            // todo 之后考虑询问密码的情况
+            this.workbook = WorkbookFactory.create( this.inputStream, null);
+        } catch ( IOException e) {
+            log.error( e.getMessage(), e);
+            this.workbook = null; try { this.close();} catch ( IOException e2) { log.error( e2.getMessage(), e2); this.inputStream = null;}
+        }
+    }
+    protected ExcelParser(
+            final File file,
+            final StructureHandler<ExcelParser> structureHandler,
+            final TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
+        super(structureHandler, abstractDataTypeTransformerRule);
+        this.file = file;
+        try {
+            this.workbook = WorkbookFactory.create( this.file);
+        } catch ( IOException e) {
+            log.error( e.getMessage(), e);
+            this.workbook = null; this.file = null;
+        }
+    }
+
+
+
+    /**
+     * 支持使用Path来初始化Workbook
+     * */
+    private Path path = null;
+    private InputStream inputStream = null;
+    /**
+     * 全局持有的Workbook, 不要主动关闭, 使用close()进行关闭
+     * */
+    @Getter
+    private Workbook workbook = null;
+    /**
+     * 支持使用文件对象初始化Workbook
+     * */
+    private File file = null;
 }

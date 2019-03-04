@@ -37,6 +37,7 @@ import static java.lang.String.format;
 public class ExcelAnnotationHandler<A extends Annotation>
         extends AbstractAnnotationHandler<A, ExcelParser>
         implements Inheritable<A>, BiInheritableRule<A, ExcelBean> {
+
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> handle(Class<G> gClass, ExcelParser excelParser, Object... args) {
         Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(gClass,ANNOTATIONS_ON_TYPE);
@@ -47,7 +48,6 @@ public class ExcelAnnotationHandler<A extends Annotation>
     public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
     @Override
     public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
-
     @Override
     public A decideRuleOnParentFirst(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.PARENT_FIRST);
@@ -64,7 +64,6 @@ public class ExcelAnnotationHandler<A extends Annotation>
     public A decideRuleOnSonForce(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.SON_FORCE);
     }
-
     @Override
     public A decideBiRuleOnParentFirst(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.PARENT_FIRST);
@@ -81,6 +80,8 @@ public class ExcelAnnotationHandler<A extends Annotation>
     public A decideBiRuleOnSonForce(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.SON_FORCE);
     }
+
+
 
     protected Map<String,Object> getCustomerInheritableField() {
         return null;
@@ -99,6 +100,8 @@ public class ExcelAnnotationHandler<A extends Annotation>
                     .put("sheet", -1)
                     .put("sheetName", "")
                     .build();
+
+
 
     private static final Set<Class<? extends Annotation>> ANNOTATIONS_ON_TYPE = ImmutableSet.of(ExcelCell.class, ExcelRow.class, ExcelColumn.class, ExcelBean.class);
 }

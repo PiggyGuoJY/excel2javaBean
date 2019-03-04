@@ -19,6 +19,7 @@ import java.nio.file.Path;
  * */
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)
 public class XlsxExcelParser extends ExcelParser {
+
     public XlsxExcelParser(
             Path path,
             StructureHandler<ExcelParser> structureHandler,

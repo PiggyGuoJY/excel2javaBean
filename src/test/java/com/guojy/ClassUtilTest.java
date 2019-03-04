@@ -17,6 +17,7 @@ import com.guojy.parser.rule.parse.Parseable;
 import com.guojy.parser.rule.structure.BiInheritableRule;
 import com.guojy.parser.rule.structure.Inheritable;
 import com.guojy.parser.rule.structure.OverrideRule;
+import javassist.runtime.Inner;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -175,14 +176,12 @@ public class ClassUtilTest {
         assertArrayEquals(new String[]{"a","b","c","d"}, marked.sa());
     }
 
-    @Test
+    @Test @SneakyThrows
     public void test10() {
-
     }
 
     @Test
     public void test11() {
-
     }
 
     private static class InnerClassUtilTest {
@@ -207,5 +206,6 @@ public class ClassUtilTest {
                         >
                     >
                 > f3;
+        private int f4;
     }
 }
