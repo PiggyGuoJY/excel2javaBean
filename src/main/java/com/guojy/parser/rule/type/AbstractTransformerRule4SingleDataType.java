@@ -30,7 +30,9 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
 
     @Override @SuppressWarnings("unchecked")
     public <G> AbstractTransformerRule4SingleDataType addRule4Transformer(
-            Class<G> gClass, Class zlass, Function<?, G> ogFunction
+            Class<G> gClass,
+            Class zlass,
+            Function<?, G> ogFunction
     ) {
         if(notNull(customerTransformerRule.put(gClass,(Function<O,?>)ogFunction))) {
             log.debug("类 {} 的自定义转换规则已被替换", gClass);
@@ -38,7 +40,10 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
         return this;
     }
     @Override @SuppressWarnings("unchecked")
-    public <G> Msg<G> transform(Object object, Class<G> gClass) {
+    public <G> Msg<G> transform(
+            Object object,
+            Class<G> gClass
+    ) {
         if (isNull(object)||isNull(gClass)) {
             return transform(gClass);
         }
@@ -64,16 +69,23 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
                 "未能在默认转换规则和自定义转换规则中找到对应类型 %s 的转换规则或虽找到规则但解析过程异常", 
                 gClass.getName())));
     }
-    
+
+
+
     protected  <G> void addDefaultRule4Transformer(
-            Class<G> gClass, Function<O,G> ogFunction
+            Class<G> gClass,
+            Function<O,G> ogFunction
     ) {
         if (notNull(defaultTransformerRule.put(gClass,ogFunction))) {
             log.debug("类 {} 的默认转换规则已被替换", gClass);
         }
     }
 
+
+
     @Setter(AccessLevel.PROTECTED) @Getter(AccessLevel.PROTECTED)
-    private Map<Class<?>,Function<O,?>> defaultTransformerRule = new HashMap<>(8);
-    private Map<Class<?>,Function<O,?>> customerTransformerRule = new HashMap<>(4);
+    private Map<Class<?>,Function<O,?>> defaultTransformerRule
+            = new HashMap<>(8);
+    private Map<Class<?>,Function<O,?>> customerTransformerRule
+            = new HashMap<>(4);
 }

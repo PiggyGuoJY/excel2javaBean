@@ -12,6 +12,7 @@ import java.util.function.Function;
  * */
 public interface TransformableAndRuleAddable<T extends TransformableAndRuleAddable>
         extends Transformable {
+
     /**
      * 增加自定义规则
      *

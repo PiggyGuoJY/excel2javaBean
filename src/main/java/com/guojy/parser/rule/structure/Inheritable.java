@@ -1,7 +1,7 @@
 package com.guojy.parser.rule.structure;
 
 /**
- * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * 可继承的
  * 
  * <p> 创建时间：2019/2/23
  * 
@@ -9,11 +9,47 @@ package com.guojy.parser.rule.structure;
  * @version 1.0
  * */
 public interface Inheritable<X> {
-    X decideRuleOnParentFirst(X son, X parent);
-    X decideRuleOnParentForce(X son, X parent);
-    X decideRuleOnSonFirst(X son, X parent);
-    X decideRuleOnSonForce(X son, X parent);
 
+    /**
+     * 优先使用父类规则
+     *
+     * @param son 子规则
+     * @param parent 父规则
+     * @return 最终规则
+     */
+    X decideRuleOnParentFirst(X son, X parent);
+    /**
+     * 强制使用父类规则
+     *
+     * @param son 子规则
+     * @param parent 父规则
+     * @return 最终规则
+     */
+    X decideRuleOnParentForce(X son, X parent);
+    /**
+     * 优先使用子类规则
+     *
+     * @param son 子规则
+     * @param parent 父规则
+     * @return 最终规则
+     */
+    X decideRuleOnSonFirst(X son, X parent);
+    /**
+     * 强制使用子类规则
+     *
+     * @param son 子规则
+     * @param parent 父规则
+     * @return 最终规则
+     */
+    X decideRuleOnSonForce(X son, X parent);
+    /**
+     * 决定规则
+     *
+     * @param son 子规则
+     * @param parent 父规则
+     * @param overrideRule 继承规则
+     * @return 最终规则
+     */
     default X decideRule(X son, X parent, OverrideRule overrideRule) {
         switch (overrideRule) {
             case PARENT_FIRST: return decideRuleOnParentFirst(son, parent);
