@@ -2,14 +2,15 @@ package com.guojy.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.guojy.ClassUtil;
 import com.guojy.gson.GsonBean;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -28,9 +29,8 @@ import java.util.*;
  * @version 1.1
  * */
 
-@Slf4j @ToString( exclude = {"listEntities","setEntities","mapEntities","arrayEntities"}) @EqualsAndHashCode(of = {"code","msg","detail","t"})
+@Slf4j @Data
 @GsonBean
-@XmlRootElement @XmlAccessorType( XmlAccessType.FIELD) @XmlSeeAlso({})
 public final class Msg<T> implements Serializable {
 
     @AllArgsConstructor
@@ -39,11 +39,13 @@ public final class Msg<T> implements Serializable {
         /**
          * 程序执行到不应该到达的位置
          * */
-        ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE(msg(new IllegalStateException("程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查."))),
+        ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE(msg(new IllegalStateException(
+                "程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查."))),
         /**
          * 前置校验出错导致的程序提前中断
          * */
-        ILLEGAL_STATE_INIT(msg(new IllegalStateException("Msg尚未赋值, 程序异常导致的提前结束")));
+        ILLEGAL_STATE_INIT(msg(new IllegalStateException(
+                "Msg尚未赋值, 程序异常导致的提前结束")));
 
         @Getter
         Msg<?> msg;
@@ -62,16 +64,6 @@ public final class Msg<T> implements Serializable {
         this.msg = msg;
         this.detail = detail;
         this.t = t;
-        // 序列化为xml格式时, 针对容器化负载实体的特殊处理
-        if ( t instanceof List<?>) {
-            this.listEntities =( List<?>) t;
-        } else if ( t instanceof Object[]) {
-            this.arrayEntities = ( ( Object[]) t).clone();
-        } else if ( t instanceof Set<?>) {
-            this.setEntities = ( Set<?>) t;
-        } else if ( t instanceof Map<?,?>) {
-            this.mapEntities = ( Map<?,?>) t;
-        }
     }
     /**
      * 默认创建一个代表成功返回的消息
@@ -91,15 +83,6 @@ public final class Msg<T> implements Serializable {
             this.msg = "成功访问";
             this.detail = "无详细信息";
             this.t = (T)msgInstance.getT();
-            if ( t instanceof List<?>) {
-                this.listEntities =( List<?>) t;
-            } else if ( t instanceof Object[]) {
-                this.arrayEntities = ( ( Object[]) t).clone();
-            } else if ( t instanceof Set<?>) {
-                this.setEntities = ( Set<?>) t;
-            } else if ( t instanceof Map<?,?>) {
-                this.mapEntities = ( Map<?,?>) t;
-            }
         }
     }
     /**
@@ -117,16 +100,6 @@ public final class Msg<T> implements Serializable {
             this.msg = "成功访问";
             this.detail = "无详细信息";
             this.t = t;
-            if ( t instanceof List<?>) {
-//                ClassUtil.changeAnnotationFieldValue(Msg.class.getDeclaredAnnotation(XmlSeeAlso.class),"value",);
-                this.listEntities =( List<?>) t;
-            } else if ( t instanceof Object[]) {
-                this.arrayEntities = ( ( Object[]) t).clone();
-            } else if ( t instanceof Set<?>) {
-                this.setEntities = ( Set<?>) t;
-            } else if ( t instanceof Map<?,?>) {
-                this.mapEntities = ( Map<?,?>) t;
-            }
         }
     }
     /**
@@ -170,66 +143,21 @@ public final class Msg<T> implements Serializable {
             return false;
         }
     }
-    public T getT() {
-        return t;
-    }
-    public void setT( T t) {
-        if ( t instanceof List<?>) {
-            this.listEntities =( List<?>) t;
-        } else if ( t instanceof Object[]) {
-            this.arrayEntities = ( ( Object[]) t).clone();
-        } else if ( t instanceof Set<?>) {
-            this.setEntities = ( Set<?>) t;
-        } else if ( t instanceof Map<?,?>) {
-            this.mapEntities = ( Map<?,?>) t;
-        }
-        this.t = t;
-    }
-    public Msg<T> clearT(){ this.t = null; return this;}
-    /**
-     * 用于从xml反序列化为msg时, 获取负荷实体
-     *
-     * @return 负荷
-     * */
-    public Object getT4Xml() {
-        return listEntities!=null ? listEntities : ( setEntities!=null ? setEntities : ( mapEntities!=null ? mapEntities : ( arrayEntities!=null ? arrayEntities : t)));
-    }
 
     //==== 华丽的分割线 === 私有资源
 
-    @Getter @Setter
     @Expose @SerializedName( value = "code", alternate = {"Code"})
-    @XmlElement
     private String code;
-    @Getter @Setter
     @Expose @SerializedName( value = "msg", alternate = {"Msg", "message", "Message"})
-    @XmlElement
     private String msg;
-    @Getter @Setter
     @Expose @SerializedName( value = "detail", alternate = {"Detail"})
-    @XmlElement
     private String detail;
-
-    /*<开始>更改者: guojy 更改时间: 2019/2/15 变更原因: 泛型T的实例将不参与序列化(Java原生提供)*/
-
     @Expose @SerializedName( value = "entity", alternate = {"Entity", "E"})
-    @XmlElement
     private T t;
-    /*<结束>更改者: guojy 更改时间: 2019/2/15 */
-
-    //下面的这些变量用于解决xml化Msg时, 负载实体是容器的情况
-
-    @XmlElementWrapper( name = "listEntities") @XmlElement( name = "list")
-    private List<?> listEntities;
-//    @XmlElementWrapper( name = "setEntities") @XmlElement( name = "set")
-    private transient Set<?> setEntities;
-    private transient Map<?,?> mapEntities;
-//    @XmlElementWrapper( name = "arrayEntities") @XmlElement( name = "array")
-    private transient Object[] arrayEntities;
 
     private static final String CODE_SUCCESS = "0";
     private static final String CODE_RAW_EXCEPTION = "100";
-    private static final Set<String> CODE_NOT_EXCEPTION = new HashSet<>(1);
+    private static final Set<String> CODE_NOT_EXCEPTION = new HashSet<>(2);
     static {
         CODE_NOT_EXCEPTION.add( CODE_SUCCESS);
     }
