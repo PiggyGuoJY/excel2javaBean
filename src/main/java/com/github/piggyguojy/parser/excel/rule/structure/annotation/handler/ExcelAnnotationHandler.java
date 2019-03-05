@@ -1,28 +1,19 @@
-package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
+package com.guojy.parser.excel.rule.structure.annotation.handler;
 
-import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
-import com.github.piggyguojy.parser.rule.structure.Inheritable;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelColumn;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelRow;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
-import com.github.piggyguojy.parser.rule.structure.Inheritable;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
+import com.guojy.ClassUtil;
+import com.guojy.model.Msg;
+import com.guojy.parser.excel.rule.parse.ExcelParser;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelCell;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelColumn;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelRow;
+import com.guojy.parser.rule.structure.BiInheritableRule;
+import com.guojy.parser.rule.structure.Inheritable;
+import com.guojy.parser.rule.structure.OverrideRule;
+import com.guojy.parser.rule.structure.StructureHandler;
+import com.guojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +22,7 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 import java.util.Set;
 
-import static com.github.piggyguojy.Assert.isNull;
+import static com.guojy.Assert.isNull;
 import static java.lang.String.format;
 
 /**
@@ -50,8 +41,8 @@ public class ExcelAnnotationHandler<A extends Annotation>
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> handle(Class<G> gClass, ExcelParser excelParser, Object... args) {
         Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(gClass,ANNOTATIONS_ON_TYPE);
-        if ( Assert.isNull(annotationClass)) { return Msg.msg(new IllegalArgumentException(format("%s 应使用下列注解之一标注 %s", gClass.getCanonicalName(), ANNOTATIONS_ON_TYPE.toString()))); }
-        return getAnnotationHandler(annotationClass).onType(gClass, gClass.getDeclaredAnnotation(annotationClass), excelParser, args[StructureHandler.ARGS_INIT], args[StructureHandler.VALUE_RETURNED]);
+        if ( isNull(annotationClass)) { return Msg.msg(new IllegalArgumentException(format("%s 应使用下列注解之一标注 %s", gClass.getCanonicalName(), ANNOTATIONS_ON_TYPE.toString()))); }
+        return getAnnotationHandlerRegistered(annotationClass).onType(gClass, gClass.getDeclaredAnnotation(annotationClass), excelParser, args[StructureHandler.ARGS_INIT], args[StructureHandler.VALUE_RETURNED]);
     }
     @Override
     public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }

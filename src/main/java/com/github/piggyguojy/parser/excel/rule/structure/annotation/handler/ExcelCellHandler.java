@@ -1,19 +1,13 @@
-package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
+package com.guojy.parser.excel.rule.structure.annotation.handler;
 
-import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
 import com.google.common.collect.ImmutableMap;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
+import com.guojy.ClassUtil;
+import com.guojy.model.Msg;
+import com.guojy.parser.excel.rule.parse.ExcelParser;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelCell;
+import com.guojy.parser.rule.structure.StructureHandler;
+import com.guojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +18,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import static com.github.piggyguojy.Assert.*;
+import static com.guojy.Assert.*;
+import static com.guojy.model.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
@@ -35,40 +30,68 @@ import static com.github.piggyguojy.Assert.*;
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
+public final class ExcelCellHandler
+        extends ExcelAnnotationHandler<ExcelCell> {
+
     @Override
-    public <G> Msg<?> onField(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
-        onFieldHandler(gClass,excelCell, excelParser,args);
-        return Msg.msg();
+    public <G> Msg<?> onField(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
+        onFieldHandler(gClass,excelCell,excelParser,args);
+        return msg();
     }
     @Override
-    public <G> Msg<?> onType(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object... args) {
-        return onTypeHandler(gClass,excelCell, excelParser,args);
+    public <G> Msg<?> onType(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object... args
+    ) {
+        return onTypeHandler(gClass,excelCell,excelParser,args);
     }
+
+
 
     @Override
     protected Map<String, Object> getCustomerInheritableField() { return ExcelCellHandler.INHERITABLE_FIELD; }
 
-    static { AbstractAnnotationHandler.register(ExcelCell.class, new ExcelCellHandler());}
 
-    private <G> void onFieldHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
+
+    static { register(ExcelCell.class, new ExcelCellHandler());}
+
+
+
+    private <G> void onFieldHandler(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         // 1.ExcelCell只有可能从属性所在类的ExcelBean上继承属性
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
-        args[ANNOTATION_PARENT] = Assert.notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overrideRule()) : excelCell;
-        Msg<?> msg = onTypeHandler( gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser,args);
+        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overrideRule()) : excelCell;
+        Msg<?> msg = onTypeHandler(gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser, args);
         if ( msg.isException()) { return;}
         ClassUtil.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
     }
-    private <G> Msg<G> onTypeHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
+    private <G> Msg<G> onTypeHandler(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         ExcelCell excelCellParent = getAnnotationParent(ExcelCell.class,args);
-        excelCell = Assert.notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
-        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelCell.sheet(), excelCell.sheetName(), excelParser.getWorkbook());
-        if ( Assert.isNull( sheet)) { return Msg.msg(new IllegalStateException("无法找到Sheet"));}
-        Cell cell = ExcelCellHandlerHelper.decideCell(excelCell, sheet);
-        if ( Assert.isNull( cell)) { return Msg.msg(new IllegalStateException("无法找到Cell")); }
+        ExcelCell finalExcelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
+        // todo finalExcelCell也有可能为null
+        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(finalExcelCell.sheet(), finalExcelCell.sheetName(), excelParser.getWorkbook());
+        if ( isNull( sheet)) { return msg(new IllegalStateException("无法找到Sheet"));}
+        Cell cell = ExcelCellHandlerHelper.decideCell(finalExcelCell, sheet);
+        if ( isNull( cell)) { return msg(new IllegalStateException("无法找到Cell")); }
         return excelParser.transform(cell, gClass);
     }
-
     /**
      * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
      *
@@ -80,7 +103,7 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
     private static class ExcelCellHandlerHelper {
         private static Cell decideCell(ExcelCell excelCell, Sheet sheet) {
             Cell cell = decideCell( excelCell.columnName(), excelCell.column(), excelCell.row(), sheet);
-            if ( Assert.isNull( cell) && notNul( excelCell.address())) {
+            if ( isNull( cell) && notNul( excelCell.address())) {
                 return decideCell( excelCell.address(), sheet);
             } else {
                 return cell;
@@ -89,7 +112,7 @@ public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
         private static Cell decideCell( String columnName, int columnNo, int rowNo, Sheet sheet) {
             if (rowNo<1) {return null;}
             Row row  = sheet.getRow(rowNo-1);
-            if ( Assert.isNull( row)) { return null; }
+            if ( isNull( row)) { return null; }
             return row.getCell( ExcelParser.ExcelParserHelper.decideColumnNo( columnName, columnNo)-1);
         }
         private static Cell decideCell( String address, Sheet sheet) {

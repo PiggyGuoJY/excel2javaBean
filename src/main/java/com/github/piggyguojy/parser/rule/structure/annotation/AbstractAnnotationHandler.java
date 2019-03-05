@@ -126,7 +126,6 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             return son;
         }
     }
-
     /**
      * 用于TYPE类型的注解处理器
      *
@@ -158,7 +157,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      * @param annotationClass 注解类型
      * @return 对应的注解处理器或默认注解处理器(当找不到时)
      * */
-    protected static AbstractAnnotationHandler getAnnotationHandler(Class<? extends Annotation> annotationClass) {
+    protected static AbstractAnnotationHandler getAnnotationHandlerRegistered(Class<? extends Annotation> annotationClass) {
         return MAP_ANNOTATION_HANDLER.getOrDefault(
                 annotationClass,
                 DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);
@@ -214,5 +213,4 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
                             });
         } else { log.error("达到最大更新次数({}次), 禁止再次更新", 2); }
     }
-
 }

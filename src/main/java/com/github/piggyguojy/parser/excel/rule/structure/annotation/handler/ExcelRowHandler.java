@@ -1,16 +1,11 @@
-package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
+package com.guojy.parser.excel.rule.structure.annotation.handler;
 
-import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.google.common.collect.ImmutableMap;
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelRow;
+import com.guojy.ClassUtil;
+import com.guojy.model.Msg;
+import com.guojy.parser.excel.rule.parse.ExcelParser;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
+import com.guojy.parser.excel.rule.structure.annotation.ExcelRow;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.piggyguojy.Assert.*;
+import static com.guojy.Assert.*;
 import static java.lang.String.format;
 
 /**
@@ -39,52 +34,81 @@ import static java.lang.String.format;
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
+public final class ExcelRowHandler
+        extends ExcelAnnotationHandler<ExcelRow> {
+
     @Override @SuppressWarnings("unchecked")
-    public <G> Msg<?> onField(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
+    public <G> Msg<?> onField(
+            Class<G> gClass,
+            ExcelRow excelRow,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         onFieldHandler((Class<Collection>)gClass,excelRow,excelParser,args);
         return Msg.msg();
     }
     @Override
-    public <G> Msg<?> onType(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object... args) {
+    public <G> Msg<?> onType(
+            Class<G> gClass,
+            ExcelRow excelRow,
+            ExcelParser excelParser,
+            Object... args
+    ) {
         return onTypeHandler(gClass,excelRow,excelParser,args);
     }
+
+
 
     @Override
     protected Map<String, Object> getCustomerInheritableField() { return ExcelRowHandler.INHERITABLE_FIELD; }
 
+
+
     static { register(ExcelRow.class,new ExcelRowHandler());}
 
+
+
     @SuppressWarnings("unchecked")
-    private <E, G extends Collection<E>> void onFieldHandler(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
+    private <E, G extends Collection<E>> void onFieldHandler(
+            Class<G> gClass,
+            ExcelRow excelRow,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
-        args[ANNOTATION_PARENT] = Assert.notNull(excelBeanParent) ? decideBiRule(excelRow, excelBeanParent, excelBeanParent.overrideRule()) : excelRow;
+        args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelRow, excelBeanParent, excelBeanParent.overrideRule()) : excelRow;
         if ( !Collection.class.isAssignableFrom(gClass)) {
             log.warn("属性的类型不是 {} 的实现, 不予解析", Collection.class.getCanonicalName());
             return;
         }
-        Class<E> rawClass = (Class<E>)ClassUtil.getGenericClass((Field) args[StructureHandler.FIELD_REF],0);
-        Msg<Collection<E>> msg = onTypeHandler(rawClass, Assert.notNull(rawClass)?rawClass.getDeclaredAnnotation(ExcelRow.class):null, excelParser,args);
+        Class<E> rawClass = (Class<E>)ClassUtil.getGenericClass((Field) args[FIELD_REF],0);
+        Msg<Collection<E>> msg = onTypeHandler(rawClass, notNull(rawClass)?rawClass.getDeclaredAnnotation(ExcelRow.class):null, excelParser,args);
         if ( msg.isException()) { return; }
-        ClassUtil.set((Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
+        ClassUtil.set((Field) args[FIELD_REF], args[GOAL_INST], msg.getT());
     }
     @SuppressWarnings("unchecked")
-    private <G> Msg<Collection<G>> onTypeHandler(Class<G> gClass, ExcelRow excelRow, ExcelParser excelParser, Object ... args) {
-        if ( Assert.isNull(gClass)) { return Msg.msg(new IllegalStateException("无法获取容器泛型参数"));}
+    private <G> Msg<Collection<G>> onTypeHandler(
+            Class<G> gClass,
+            ExcelRow excelRow,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
+        if ( isNull(gClass)) { return Msg.msg(new IllegalStateException("无法获取容器泛型参数"));}
         ExcelRow excelRowParent = getAnnotationParent(ExcelRow.class,args);
-        excelRow = Assert.notNull(excelRowParent) ? decideRule(excelRow, excelRowParent, excelRowParent.overrideRule()) : excelRow;
-        if ( Assert.isNull(excelRow)) { return Msg.msg(new IllegalArgumentException(format("类型 %s 应该使用注解 %s 标注", gClass.getCanonicalName(), ExcelRow.class.getCanonicalName()))); }
-        final Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelRow.sheet(), excelRow.sheetName(), excelParser.getWorkbook());
-        if ( Assert.isNull( sheet)) { return Msg.msg( new IllegalStateException("无法找到Sheet")); }
-        Map<String,Integer> mapping = ExcelRowHandlerHelper.getMapFromExcelRow(gClass,excelRow);
+        final ExcelRow finalExcelRow = notNull(excelRowParent) ? decideRule(excelRow, excelRowParent, excelRowParent.overrideRule()) : excelRow;
+        if ( isNull(finalExcelRow)) { return Msg.msg(new IllegalArgumentException(format(
+                "类型 %s 应该使用注解 %s 标注", gClass.getCanonicalName(), ExcelRow.class.getCanonicalName()))); }
+        final Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(finalExcelRow.sheet(), finalExcelRow.sheetName(), excelParser.getWorkbook());
+        if ( isNull( sheet)) { return Msg.msg( new IllegalStateException("无法找到Sheet")); }
+        Map<String,Integer> mapping = ExcelRowHandlerHelper.getMapFromExcelRow(gClass,finalExcelRow);
         Collection<Object> objectCollection = new LinkedList<>();
-        for (int rowIndex = excelRow.rowBegin(), expectantRowEnd = excelRow.rowEnd(), rowEnd = expectantRowEnd<0?Integer.MAX_VALUE:expectantRowEnd; rowIndex<=rowEnd; rowIndex++) {
+        for (int rowIndex = finalExcelRow.rowBegin(), expectantRowEnd = finalExcelRow.rowEnd(), rowEnd = expectantRowEnd<0?Integer.MAX_VALUE:expectantRowEnd; rowIndex<=rowEnd; rowIndex++) {
             // todo ... 也可以不这么停止, 具体可以看以后的情况
             Row row = sheet.getRow( rowIndex-1);
-            if ( Assert.isNull( row )) { log.warn("检测到空行, 停止解析..."); break; }
+            if ( isNull( row )) { log.warn("检测到空行, 停止解析..."); break; }
             // 准备泛型参数的实例
             final Object gInstance = ClassUtil.instanceT( gClass);
-            if ( Assert.isNull( gInstance)) {
+            if ( isNull( gInstance)) {
                 objectCollection.clear();
                 return Msg.msg(new IllegalStateException("无法通过反射实例化泛型参数的实例"));
             }
@@ -93,7 +117,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
                 try {
                     Field field = gClass.getDeclaredField( fieldNameSelf);
                     Cell cell = ExcelParser.ExcelParserHelper.decideCell(columnNoSelf, finalRowIndex, sheet);
-                    if ( Assert.isNull( cell)) { log.warn("未能获取到Cell"); return;}
+                    if ( isNull( cell)) { log.warn("未能获取到Cell"); return;}
                     ClassUtil.set(field, gInstance, excelParser.transform(cell, field.getType()).getT());
                 } catch ( NoSuchFieldException e) { log.error(e.getMessage(), e);}
             });
@@ -102,7 +126,6 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
         }
         return Msg.msg((Collection<G>) objectCollection);
     }
-
     private static class ExcelRowHandlerHelper {
         private static final String REGEX_EXCEL_ROW_MAP = "^(?!\\d)(([A-Z]+)->[_$a-zA-Z0-9]+;)*(([A-Z]+)->[_$a-zA-Z0-9]+(?=$))$";
         private static final String SEPARATOR = ";";
@@ -118,7 +141,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
         }
         private static <G> Map<String,Integer> getMapFromExcelRow(Class<G> gClass) {
             ExcelRow excelRow = gClass.getDeclaredAnnotation(ExcelRow.class);
-            if ( Assert.notNull(excelRow)) {
+            if ( notNull(excelRow)) {
                 String map = excelRow.map().trim().replaceAll("\\s","");
                 if ( map.matches(REGEX_EXCEL_ROW_MAP)) {
                     return Stream.of( map.split( SEPARATOR)).map(mapsSelf -> mapsSelf.split( MAPPER)).collect( Collectors.toMap(mapsSelf -> mapsSelf[1], mapsSelf -> ExcelParser.ExcelParserHelper.decideColumnNo( mapsSelf[0])));
@@ -128,7 +151,7 @@ public final class ExcelRowHandler extends ExcelAnnotationHandler<ExcelRow> {
                     int columnPointer = ExcelParser.ExcelParserHelper.decideColumnNo(excelRow.columnNameBegin(), excelRow.columnBegin());
                     for(Field field : gClass.getDeclaredFields()) {
                         ExcelRow.Skip skip = field.getDeclaredAnnotation(ExcelRow.Skip.class);
-                        if ( Assert.notNull(skip)) {
+                        if ( notNull(skip)) {
                             columnPointer = changeColumnPointrt(columnPointer,skip);
                         } else {
                             result.put(field.getName(), columnPointer);
