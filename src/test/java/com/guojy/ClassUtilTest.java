@@ -177,10 +177,12 @@ public class ClassUtilTest {
 
     @Test
     public void test10() {
+        //ClassUtil.set();
     }
 
     @Test
     public void test11() {
+        //ClassUtil.instanceT();
     }
 
     private static class InnerClassUtilTest {
