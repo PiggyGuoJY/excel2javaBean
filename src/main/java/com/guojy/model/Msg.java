@@ -50,7 +50,6 @@ public final class Msg<T> implements Serializable {
         @Getter
         Msg<?> msg;
     }
-
     /**
      * 全参构造器
      *
@@ -122,14 +121,12 @@ public final class Msg<T> implements Serializable {
         this.detail = e.toString();
         this.t = null;
     }
-
     public static <T> Msg<T> msg( String code, String msg, String detail, T t) { return new Msg<>( code, msg, detail, t);}
     public static <T> Msg<T> msg() { return new Msg<>(); }
     public static <T> Msg<T> msg( Msg msg) { return new Msg<>( msg); }
     public static <T> Msg<T> msg( T t) { return new Msg<>( t); }
     public static <T> Msg<T> msg( T t, String msg) { return new Msg<>( t, msg); }
     public static <T> Msg<T> msg( Exception e) { return new Msg<>( e); }
-
     /**
      * 判断消息是否代表异常
      *
@@ -144,7 +141,7 @@ public final class Msg<T> implements Serializable {
         }
     }
 
-    //==== 华丽的分割线 === 私有资源
+
 
     @Expose @SerializedName( value = "code", alternate = {"Code"})
     private String code;
@@ -154,10 +151,12 @@ public final class Msg<T> implements Serializable {
     private String detail;
     @Expose @SerializedName( value = "entity", alternate = {"Entity", "E"})
     private T t;
-
     private static final String CODE_SUCCESS = "0";
     private static final String CODE_RAW_EXCEPTION = "100";
     private static final Set<String> CODE_NOT_EXCEPTION = new HashSet<>(2);
+
+
+
     static {
         CODE_NOT_EXCEPTION.add( CODE_SUCCESS);
     }

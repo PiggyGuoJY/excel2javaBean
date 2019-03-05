@@ -1,12 +1,10 @@
 package com.guojy;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.primitives.Ints;
 import com.google.gson.reflect.TypeToken;
 import com.guojy.gson.GsonBean;
 import com.guojy.model.Msg;
 import com.guojy.model.test.Marked;
-import com.guojy.model.test.Student;
 import com.guojy.model.test.StudentRecordTable;
 import com.guojy.parser.excel.rule.parse.ExcelParser;
 import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
@@ -17,7 +15,6 @@ import com.guojy.parser.rule.parse.Parseable;
 import com.guojy.parser.rule.structure.BiInheritableRule;
 import com.guojy.parser.rule.structure.Inheritable;
 import com.guojy.parser.rule.structure.OverrideRule;
-import javassist.runtime.Inner;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -25,7 +22,9 @@ import org.junit.Test;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.guojy.ClassUtil.*;
 import static org.junit.Assert.*;
@@ -80,12 +79,12 @@ public class ClassUtilTest {
 
     @Test
     public void test6() {
-        assertNull(getTheOnlyOneAnnotation(Msg.class, XmlRootElement.class, GsonBean.class, Slf4j.class));
+        assertNull(getTheOnlyOneAnnotation(Msg.class, XmlRootElement.class, Slf4j.class));
         assertNotNull(getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class));
         assertEquals(getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class),GsonBean.class);
         assertNull(getTheOnlyOneAnnotation(
                 Msg.class,
-                ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(GsonBean.class).build()));
+                ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(Slf4j.class).build()));
         assertNotNull(getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(Deprecated.class).add(GsonBean.class).build()));
@@ -176,7 +175,7 @@ public class ClassUtilTest {
         assertArrayEquals(new String[]{"a","b","c","d"}, marked.sa());
     }
 
-    @Test @SneakyThrows
+    @Test
     public void test10() {
     }
 

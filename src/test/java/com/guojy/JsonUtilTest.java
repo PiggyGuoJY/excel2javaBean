@@ -1,6 +1,5 @@
 package com.guojy;
 
-import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.guojy.gson.GsonBuilderStrategy;
 import com.guojy.model.Msg;
@@ -9,12 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
+import static com.guojy.JsonUtil.javaBean2Json;
+import static com.guojy.JsonUtil.json2JavaBean;
 import static com.guojy.model.Msg.msg;
-import static org.junit.Assert.*;
-import static com.guojy.JsonUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @Slf4j
 public class JsonUtilTest {

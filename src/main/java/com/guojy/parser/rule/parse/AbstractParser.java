@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.function.Function;
 
-import static com.guojy.Assert.notNul;
-
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  * 

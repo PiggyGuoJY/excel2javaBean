@@ -23,13 +23,15 @@ public class XlsxExcelParser extends ExcelParser {
     public XlsxExcelParser(
             Path path,
             StructureHandler<ExcelParser> structureHandler,
-            TransformableAndRuleAddable abstractDataTypeTransformerRule) {
+            TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
         super(path, structureHandler, abstractDataTypeTransformerRule);
     }
     public XlsxExcelParser(
             File file,
             StructureHandler<ExcelParser> structureHandler,
-            TransformableAndRuleAddable abstractDataTypeTransformerRule) {
+            TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
         super(file, structureHandler, abstractDataTypeTransformerRule);
     }
 }

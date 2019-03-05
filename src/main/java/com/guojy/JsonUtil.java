@@ -1,31 +1,11 @@
 package com.guojy;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import com.guojy.gson.GsonBuilderStrategy;
-import com.guojy.model.Msg;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
-
-import static com.guojy.Assert.notNul;
-import static com.guojy.Assert.notNull;
 
 /**
  * 序列化/反序列化工具
