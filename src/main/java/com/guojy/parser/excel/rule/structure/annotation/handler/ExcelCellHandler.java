@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import static com.guojy.Assert.*;
+import static com.guojy.model.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
@@ -29,40 +30,68 @@ import static com.guojy.Assert.*;
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ExcelCellHandler extends ExcelAnnotationHandler<ExcelCell> {
+public final class ExcelCellHandler
+        extends ExcelAnnotationHandler<ExcelCell> {
+
     @Override
-    public <G> Msg<?> onField(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
-        onFieldHandler(gClass,excelCell, excelParser,args);
-        return Msg.msg();
+    public <G> Msg<?> onField(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
+        onFieldHandler(gClass,excelCell,excelParser,args);
+        return msg();
     }
     @Override
-    public <G> Msg<?> onType(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object... args) {
-        return onTypeHandler(gClass,excelCell, excelParser,args);
+    public <G> Msg<?> onType(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object... args
+    ) {
+        return onTypeHandler(gClass,excelCell,excelParser,args);
     }
+
+
 
     @Override
     protected Map<String, Object> getCustomerInheritableField() { return ExcelCellHandler.INHERITABLE_FIELD; }
 
-    static { AbstractAnnotationHandler.register(ExcelCell.class, new ExcelCellHandler());}
 
-    private <G> void onFieldHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
+
+    static { register(ExcelCell.class, new ExcelCellHandler());}
+
+
+
+    private <G> void onFieldHandler(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         // 1.ExcelCell只有可能从属性所在类的ExcelBean上继承属性
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
         args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overrideRule()) : excelCell;
-        Msg<?> msg = onTypeHandler( gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser,args);
+        Msg<?> msg = onTypeHandler(gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser, args);
         if ( msg.isException()) { return;}
         ClassUtil.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
     }
-    private <G> Msg<G> onTypeHandler(Class<G> gClass, ExcelCell excelCell, ExcelParser excelParser, Object ... args) {
+    private <G> Msg<G> onTypeHandler(
+            Class<G> gClass,
+            ExcelCell excelCell,
+            ExcelParser excelParser,
+            Object ... args
+    ) {
         ExcelCell excelCellParent = getAnnotationParent(ExcelCell.class,args);
-        excelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
-        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(excelCell.sheet(), excelCell.sheetName(), excelParser.getWorkbook());
-        if ( isNull( sheet)) { return Msg.msg(new IllegalStateException("无法找到Sheet"));}
-        Cell cell = ExcelCellHandlerHelper.decideCell(excelCell, sheet);
-        if ( isNull( cell)) { return Msg.msg(new IllegalStateException("无法找到Cell")); }
+        ExcelCell finalExcelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
+        // todo finalExcelCell也有可能为null
+        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(finalExcelCell.sheet(), finalExcelCell.sheetName(), excelParser.getWorkbook());
+        if ( isNull( sheet)) { return msg(new IllegalStateException("无法找到Sheet"));}
+        Cell cell = ExcelCellHandlerHelper.decideCell(finalExcelCell, sheet);
+        if ( isNull( cell)) { return msg(new IllegalStateException("无法找到Cell")); }
         return excelParser.transform(cell, gClass);
     }
-
     /**
      * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
      *
