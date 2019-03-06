@@ -1,19 +1,19 @@
-package com.guojy.parser.excel.rule.structure.annotation.handler;
+package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
-import com.guojy.ClassUtil;
-import com.guojy.model.Msg;
-import com.guojy.parser.excel.rule.parse.ExcelParser;
-import com.guojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.guojy.parser.rule.structure.BiInheritableRule;
+import com.github.piggyguojy.ClassUtil;
+import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
+import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
+import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 
-import static com.guojy.Assert.isNull;
-import static com.guojy.Assert.notNull;
-import static com.guojy.model.Msg.msg;
+import static com.github.piggyguojy.Assert.isNull;
+import static com.github.piggyguojy.Assert.notNull;
+import static com.github.piggyguojy.model.Msg.msg;
 import static java.lang.String.format;
 
 /**
