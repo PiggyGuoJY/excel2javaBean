@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.piggyguojy</groupId>
-    <artifactId>execl2javaBean</artifactId>
+    <artifactId>excel2javaBean</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>execl2javaBean</name>
+    <name>excel2javaBean</name>
     <description>excel解析工具</description>
-    <url>https://github.com/PiggyGuoJY/execl2javaBean</url>
+    <url>https://github.com/PiggyGuoJY/excel2javaBean</url>
 
     <properties>
         <encoding>UTF-8</encoding>
@@ -133,7 +133,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>execl2javaBean</finalName>
+        <finalName>excel2javaBean</finalName>
     </build>
 
     <profiles>
@@ -206,9 +206,9 @@
     </licenses>
     <scm>
         <tag>master</tag>
-        <url>git:https://github.com/PiggyGuoJY/execl2javaBean.git</url>
-        <connection>scm:git:https://github.com/PiggyGuoJY/execl2javaBean.git</connection>
-        <developerConnection>scm:git:https://github.com/PiggyGuoJY/execl2javaBean.git</developerConnection>
+        <url>git:https://github.com/PiggyGuoJY/excel2javaBean.git</url>
+        <connection>scm:git:https://github.com/PiggyGuoJY/excel2javaBean.git</connection>
+        <developerConnection>scm:git:https://github.com/PiggyGuoJY/excel2javaBean.git</developerConnection>
     </scm>
     <developers>
         <developer>
