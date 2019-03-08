@@ -113,16 +113,25 @@ public abstract class AbstractParser<P extends AbstractParser>
     /**
      * 解析前置处理
      *
+     * @param <T> 消息泛型
+     * @param args 参数
+     * @return 消息
      * */
     protected abstract <T> Msg<T> beforeParse(Object... args);
     /**
      * 解析处理
      *
+     * @param <T> 消息泛型
+     * @param args 参数
+     * @return 消息
      * */
     protected abstract  <T> Msg<T> doParse(Object ... args);
     /**
      * 解析后置处理
      *
+     * @param <T> 消息泛型
+     * @param args 参数
+     * @return 消息
      * */
     protected abstract <T> Msg<T> afterParse(Object... args);
     protected StructureHandler<P> structureHandler;

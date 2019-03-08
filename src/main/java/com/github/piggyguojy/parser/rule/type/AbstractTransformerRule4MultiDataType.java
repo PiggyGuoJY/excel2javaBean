@@ -66,6 +66,7 @@ public abstract class AbstractTransformerRule4MultiDataType
     /**
      * 生成单数据源转换规则的一个实现
      *
+     * @param <T> 泛型
      * @return AbstractTransformerRule4SingleDataType的实现
      * */
     protected abstract <T extends AbstractTransformerRule4SingleDataType<?>> T newTransformerRule4SingleDataType();

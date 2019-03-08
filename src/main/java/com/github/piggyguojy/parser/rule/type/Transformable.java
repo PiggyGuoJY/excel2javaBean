@@ -29,7 +29,6 @@ public interface Transformable {
      * @param <G> 目标泛型
      * @param gClass 目标类型
      * @return 包含目标实例的消息
-     * @date 2019/03/02
      * */
     default <G> Msg<G> transform(Class<G> gClass) {
         return msg((G)null);

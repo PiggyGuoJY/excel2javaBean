@@ -263,6 +263,7 @@ public final class ClassUtil {
     /**
      * 使用指定的类型初始化一个实例
      *
+     * @param <T> 源类型
      * @param tClass 指定类型
      * @return 实例
      * */

@@ -22,32 +22,32 @@ import java.lang.annotation.*;
 public @interface ExcelRow {
 
     /**
-     * sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
+     * @return sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
      * */
     String sheetName() default "";
 
     /**
-     * sheet页号码(从1开始);不设置时使用1;可继承
+     * @return sheet页号码(从1开始);不设置时使用1;可继承
      * */
     int sheet() default -1;
 
     /**
-     * 起始行行数(以1开始)
+     * @return 起始行行数(以1开始)
      * */
     int rowBegin() default -1;
 
     /**
-     * 终止行行数(以1开始, -1表示直至行内容为NULL)
+     * @return 终止行行数(以1开始, -1表示直至行内容为NULL)
      * */
     int rowEnd() default -1;
 
     /**
-     * 属性名到列的映射
+     * @return 属性名到列的映射
      * */
     String map() default  "";
 
     /**
-     * 设置继承属性(默认冲突时优先使用子配置)
+     * @return 设置继承属性(默认冲突时优先使用子配置)
      * */
     OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
 
@@ -58,9 +58,14 @@ public @interface ExcelRow {
     @Target( {ElementType.FIELD})
     @interface Skip{
         /**
-         * 优先使用
+         * @return 跳至(优先使用)
          * */
         String skipTo() default "";
+
+        /**
+         *
+         * @return 跳过
+         */
         int skip() default -1;
     }
 }

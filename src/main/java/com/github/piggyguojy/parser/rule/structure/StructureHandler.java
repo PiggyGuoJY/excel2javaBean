@@ -33,6 +33,7 @@ public interface StructureHandler<P extends AbstractParser> {
     /**
      * 处理器
      *
+     * @param <G> 源类型
      * @param gClass 实体类类型
      * @param p 解析器
      * @return 解析消息
