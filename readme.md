@@ -1,6 +1,7 @@
 # excel2javaBean
 
 ![](https://img.shields.io/badge/language-java-red.svg)
+![](https://img.shields.io/travis/PiggyGuoJY/excel2javaBean.svg)
 ![](https://img.shields.io/maven-central/v/com.github.piggyguojy/excel2javaBean.svg)
 ![](https://img.shields.io/github/license/PiggyGuoJY/excel2javaBean.svg)
 > excel2javaBean是一个便捷的Excel数据读取和处理工具. 工具的目标是让开发者能更加专注于业务逻辑和数据处理本身.

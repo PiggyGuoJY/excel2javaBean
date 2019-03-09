@@ -120,6 +120,8 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--解决reflections在maven test阶段不能正常使用的问题-->
+            <!--参考https://stackoverflow.com/questions/13576665/unit-test-using-the-reflections-google-library-fails-only-when-executed-by-maven-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
