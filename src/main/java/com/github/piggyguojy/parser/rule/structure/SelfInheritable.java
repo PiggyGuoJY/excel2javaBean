@@ -1,8 +1,9 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.structure;
 
 /**
  * 可以自继承的
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  */
 public interface SelfInheritable<X extends SelfInheritable> extends Inheritable<X> { }

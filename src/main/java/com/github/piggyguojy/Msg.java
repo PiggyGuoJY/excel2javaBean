@@ -1,8 +1,8 @@
-package com.github.piggyguojy.model;
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+package com.github.piggyguojy;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.github.piggyguojy.gson.GsonBean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -15,22 +15,24 @@ import java.util.Set;
 
 /**
  * 统一消息实体
- * <p> 该实体类主要作后台向前台传输数据的容器, 在程序中的不同层次之间也可以使用此类.
+ *
+ * 该实体类主要作后台向前台传输数据的容器, 在程序中的不同层次之间也可以使用此类.
  *
  * 关于消息实体中状态码和状态消息的约定
  *
  *  0~100
  *
  *
- * <p> 创建时间：2018/1/4
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
+ * @version 1.0
+ * @since JDK1.8
  *
- * <p> 最近修改: 2018/5/4
- * @author guojy
- * @version 1.1
+ * @see Assert
+ * @see ClassUtil
+ * @see JsonUtil
  * */
 
-@Slf4j @Data
-@GsonBean
+@Slf4j @Data @JsonUtil.GsonBean
 public final class Msg<T> implements Serializable {
 
     @AllArgsConstructor

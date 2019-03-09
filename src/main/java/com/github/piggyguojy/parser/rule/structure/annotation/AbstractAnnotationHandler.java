@@ -1,9 +1,8 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.parser.rule.parse.AbstractParser;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
 import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 import com.github.piggyguojy.parser.rule.structure.OverrideRule;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
@@ -27,7 +26,7 @@ import static com.github.piggyguojy.Assert.notNull;
  * 
  * <p> 创建时间：2019/2/13
  * 
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j
@@ -39,7 +38,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      *
      * <p> 创建时间：2019/2/23
      *
-     * @author guojy
+     * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
      * */
     @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -188,12 +187,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
 
     private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER = new HashMap<>();
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
-    static { init( ClassUtil.getTopPackageName()); }
-    /**
-     * 注册一定区域内的注解处理器
-     *
-     * @param packagePath 包路径
-     * */
+    static { init( ClassUtil.getTopPackageName());}
     private static void init(String packagePath) {
         if (ATOMIC_INTEGER.addAndGet(1)<=2) {
             ClassUtil

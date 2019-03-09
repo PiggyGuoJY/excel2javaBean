@@ -1,8 +1,8 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.type;
 
 
 import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.parser.rule.type.AbstractTransformerRule4SingleDataType;
 import com.github.piggyguojy.parser.rule.type.AbstractTransformerRule4SingleDataType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.piggyguojy.Assert.isNull;
-
 /**
  * 基于Excel单元格类型的类型转换类
  *
@@ -28,7 +26,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *
  * <p> 创建时间：2018/11/10
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j

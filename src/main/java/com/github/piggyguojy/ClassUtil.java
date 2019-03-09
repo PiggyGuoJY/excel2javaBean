@@ -1,3 +1,4 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy;
 
 import com.google.common.primitives.*;
@@ -23,52 +24,181 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.piggyguojy.Assert.*;
-
 
 /**
- * 类工具
+ *      类{@code ClassUtil}主要提供了获取特定类集合、动态修改注解参数、注解分析和泛型动态分析等工具.
+ * <p>
+ *      关于{@link ClassUtil#getGenericClass(Field, int...)}和
+ * {@link ClassUtil#getGenericClass(TypeToken, int...)}中参数pos的解释:
+ * <p>
+ *      考虑如下泛型定义:
+ * <blockquote><pre>
+ * Map&lt;Set&lt;Map&lt;List&lt;Map&lt;String,Integer&gt;&gt;,BiFunction&lt;Long,Map&lt;String,Function&lt;String,Long&gt;&gt;,Boolean&gt;&gt;&gt;,BiFunction&lt;Class&lt;Byte&gt;,Map&lt;List&lt;Boolean&gt;,Long&gt;,String&gt;&gt;
+ * </pre></blockquote>
+ * <p>
+ *      或者展开来看:
+ *  <ul>
+ *	<li>Map
+ *		<ol start="0" style="border-left:gray dashed thin;">
+ *			<li>Set <span style="position:absolute;left:400px">-&gt;[0]</span>
+ *				<ol start="0" style="border-left:gray dashed thin;">
+ *					<li>Map <span style="position:absolute;left:400px">-&gt;[0,0]</span>
+ *						<ol start="0" style="border-left:gray dashed thin;">
+ *							<li>List <span style="position:absolute;left:400px">-&gt;[0,0,0]</span>
+ *								<ol start="0" style="border-left:gray dashed thin;">
+ *									<li>Map <span style="position:absolute;left:400px">-&gt;[0,0,0,0]</span>
+ *										<ol start="0" style="border-left:gray dashed thin;">
+ *											<li>String <span style="position:absolute;left:400px">-&gt;[0,0,0,0,0]</span></li>
+ *											<li>Integer <span style="position:absolute;left:400px">-&gt;[0,0,0,0,1]</span></li>
+ *										</ol>
+ *									</li>
+ *								</ol>
+ *							</li>
+ *							<li>BiFunction <span style="position:absolute;left:400px">-&gt;[0,0,1]</span>
+ *								<ol start="0" style="border-left:gray dashed thin;">
+ *									<li>String <span style="position:absolute;left:400px">-&gt;[0,0,1,0]</span></li>
+ *									<li>Function <span style="position:absolute;left:400px">-&gt;[0,0,1,1]</span>
+ *										<ol start="0" style="border-left:gray dashed thin;">
+ *											<li>String <span style="position:absolute;left:400px">-&gt;[0,0,1,1,0]</span></li>
+ *											<li>Long <span style="position:absolute;left:400px">-&gt;[0,0,1,1,1]</span></li>
+ *										</ol>
+ *									</li>
+ *									<li>Boolean <span style="position:absolute;left:400px">-&gt;[0,0,1,2]</span></li>
+ *								</ol>
+ *							</li>
+ *						</ol>
+ *					</li>
+ *				</ol>
+ *			</li>
+ *			<li>BiFunction <span style="position:absolute;left:400px">-&gt;[1]</span>
+ *				<ol start="0" style="border-left:gray dashed thin;">
+ *					<li>Class <span style="position:absolute;left:400px">-&gt;[1,0]</span>
+ *						<ol start="0" style="border-left:gray dashed thin;">
+ *							<li>Byte <span style="position:absolute;left:400px">-&gt;[1,0,0]</span></li>
+ *						</ol>
+ *					</li>
+ *					<li>Map <span style="position:absolute;left:400px">-&gt;[1,1]</span>
+ *						<ol start="0" style="border-left:gray dashed thin;">
+ *							<li>List <span style="position:absolute;left:400px">-&gt;[1,1,0]</span>
+ *								<ol start="0" style="border-left:gray dashed thin;">
+ *									<li>Boolean <span style="position:absolute;left:400px">-&gt;[1,1,1]</span></li>
+ *								</ol>
+ *							</li>
+ *						</ol>
+ *					</li>
+ *					<li>String <span style="position:absolute;left:400px">-&gt;[1,2]</span></li>
+ *				</ol>
+ *			</li>
+ *		</ol>
+ *	</li>
+ *  </ul>
+ * <p>
+ *      则称上图右边的数列集合中数列是可以找到泛型子元素的, 举例来说:
+ * <blockquote><pre>
+ * TypeToken&lt;Map&lt;Set&lt;Map&lt;List&lt;Map&lt;String,Integer&gt;&gt;,BiFunction&lt;Long,Map&lt;String,Function&lt;String,Long&gt;&gt;,Boolean&gt;&gt;&gt;,BiFunction&lt;Class&lt;Byte&gt;,Map&lt;List&lt;Boolean&gt;,Long&gt;,String&gt;&gt;&gt; typeToken
+ *     = new TypeToken&lt;Map&lt;Set&lt;Map&lt;List&lt;Map&lt;String,Integer&gt;&gt;,BiFunction&lt;Long,Map&lt;String,Function&lt;String,Long&gt;&gt;,Boolean&gt;&gt;&gt;,BiFunction&lt;Class&lt;Byte&gt;,Map&lt;List&lt;Boolean&gt;,Long&gt;,String&gt;&gt;&gt;(){}.getType();
+ * assertNotNull(ClassUtil.getGenericClass(typeToken,1,1,1));//通过
+ * assertNotNull(ClassUtil.getGenericClass(typeToken,1,1,2));//失败
+ * assertEquals(ClassUtil.getGenericClass(typeToken,1,1,1),Boolean.class);//通过
+ * assertEquals(ClassUtil.getGenericClass(typeToken,1),BiFunction.class);//通过
+ * assertNotEquals(ClassUtil.getGenericClass(typeToken,1,1,1),BiFunction.class);//失败
+ * </pre></blockquote>
  *
- * <p> 创建时间：2018/8/10
- *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ * @since JDK1.8
+ *
+ * @see Assert
+ * @see JsonUtil
+ * @see Msg
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ClassUtil {
 
+    /**
+     * 返回项目的顶级包名
+     *
+     * @return 包名
+     */
     public static String getTopPackageName() {
         return ClassUtil.class.getPackage().getName();
     }
+
+    /**
+     * 获取指定类在特定位置下的所有子类类型
+     *
+     * @param tUpperBoundClass 父类类型
+     * @param packagePath4Seek 包位置
+     * @param isRecursive 是否迭代查找
+     * @param <T> 父类泛型
+     * @return 子类类型集合(不存在时返回空集)
+     */
     public static <T> Set<Class<? extends T>> getClassesExtendClass(
             final Class<T> tUpperBoundClass,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesExtendClassUseReflections(tUpperBoundClass, packagePath4Seek, isRecursive);
+        return getClassesExtendClassUseReflections(tUpperBoundClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive);
     }
+    /**
+     * 获取指定类在特定位置下的所有父类类型
+     *
+     * @param tLowerBoundClass 子类类型
+     * @param packagePath4Seek 包位置
+     * @param isRecursive 是否迭代查找
+     * @param <T> 子类泛型
+     * @return 父类类型集合(不存在时返回空集)
+     */
     public static <T> Set<Class<? super T>> getClassesSuperClass(
             final Class<T> tLowerBoundClass,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesSuperClassUseReflections(tLowerBoundClass, packagePath4Seek, isRecursive);
+        return getClassesSuperClassUseReflections(tLowerBoundClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive);
     }
+    /**
+     * 在特定位置下查找所有标注特定注解的类类型
+     *
+     * @param annotationClass 注解类型
+     * @param packagePath4Seek 包位置
+     * @param isRecursive 是否迭代查找
+     * @param <T> 注解泛型
+     * @return 注解类型集合(不存在时返回空集)
+     */
     public static <T extends Annotation> Set<Class<?>> getClassesWithAnnotationMarked(
             final Class<T> annotationClass,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithAnnotationUseReflections(annotationClass, packagePath4Seek, isRecursive);
+        return getClassesWithAnnotationUseReflections(annotationClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive);
     }
+    /**
+     * 在特定位置下查找所有实现特定注接口的类类型
+     *
+     * @param interfaceClass 接口类型
+     * @param packagePath4Seek 包位置
+     * @param isRecursive 是否迭代查找
+     * @return 实现类集合(不存在时返回空集)
+     */
     public static Set<Class<?>> getClassesWithInterfaceImplemented(
             final Class interfaceClass,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithInterfaceUseReflections(interfaceClass, packagePath4Seek, isRecursive);
+        return getClassesWithInterfaceUseReflections(interfaceClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive);
     }
 
+    /**
+     * 判断可注解元素上是否有且只有一个注解和测试集合元素重合
+     *
+     * @param annotatedElement 可注解元素
+     * @param annotations 测试注解集合
+     * @return 重合的注解或null(如果不存在)
+     */
     @SafeVarargs
     public static Class<? extends Annotation> getTheOnlyOneAnnotation(
             AnnotatedElement annotatedElement, 
@@ -95,6 +225,13 @@ public final class ClassUtil {
                         null;
         return annotationClass;
     }
+    /**
+     * 判断可注解元素上是否有且只有一个注解和测试集合元素重合
+     *
+     * @param annotatedElement 可注解元素
+     * @param annotationClassesSet 测试注解集合
+     * @return 重合的注解或null(如果不存在)
+     */
     public static Class<? extends Annotation> getTheOnlyOneAnnotation(
             AnnotatedElement annotatedElement,
             Set<Class< ? extends Annotation>> annotationClassesSet
@@ -120,6 +257,13 @@ public final class ClassUtil {
         return annotationClass;
     }
 
+    /**
+     * 从类属性上按指定顺序查找泛型类型
+     *
+     * @param field 类属性
+     * @param pos 泛型位置(关于泛型位置, 详见{@link ClassUtil}关于泛型位置的注释)
+     * @return 泛型类型或null(如果无法找到)
+     */
     public static Class<?> getGenericClass(
             final Field field,
             final int ... pos
@@ -130,6 +274,15 @@ public final class ClassUtil {
         }
         return getGenericClass(((ParameterizedType)field.getGenericType()), pos);
     }
+
+    /**
+     * 从{@code TypeToken}上按指定顺序查找泛型类型
+     *
+     * @param oTypeToken 类型Token
+     * @param pos 泛型位置(关于泛型位置, 详见{@link ClassUtil}关于泛型位置的注释)
+     * @param <O> 原类型泛型
+     * @return 泛型类型或null(如果无法找到)
+     */
     public static <O> Class<?> getGenericClass(
             final TypeToken<O> oTypeToken,
             final int ... pos) {
@@ -137,19 +290,29 @@ public final class ClassUtil {
         return getGenericClass(((ParameterizedType)oTypeToken.getType()), pos);
     }
 
+    /**
+     * 修改注解属性的值
+     *
+     * @param annotation 注解实例
+     * @param fieldName 注解属性名
+     * @param gValue 新属性值
+     * @param <G> 注解属性的类型(8种基本数据类型、String、Class、枚举、注解和以上类型的数组)
+     * @param <A> 注解泛型
+     * @return 修改过的注解实例
+     */
     @SuppressWarnings("unchecked")
     public static <G, A extends Annotation> A changeAnnotationFieldValue(
             A annotation,
             String fieldName,
             G gValue
     ) {
-        Field aMemberValues;
-        Map<String,Object> aMap;
+        Field memberValues;
+        Map<String,Object> map;
         try {
-            InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(annotation);
-            aMemberValues = aInvocationHandler.getClass().getDeclaredField("memberValues");
-            aMemberValues.setAccessible(true);
-            aMap = (Map<String,Object>)aMemberValues.get(aInvocationHandler);
+            InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotation);
+            memberValues = invocationHandler.getClass().getDeclaredField("memberValues");
+            memberValues.setAccessible(true);
+            map = (Map<String,Object>)memberValues.get(invocationHandler);
         } catch ( NoSuchFieldException | IllegalAccessException e) {
             log.error(e.getMessage(),e);
             log.error(
@@ -159,23 +322,33 @@ public final class ClassUtil {
                     gValue);
             return annotation;
         }
-        aMap.put(fieldName, gValue);
-        aMemberValues.setAccessible(false);
+        map.put(fieldName, gValue);
+        memberValues.setAccessible(false);
         return annotation;
     }
+    /**
+     * 增加单个值到注解的数组类型属性中
+     *
+     * @param annotation 注解实例
+     * @param fieldName 注解属性名
+     * @param gValue 新增属性值
+     * @param <G> 注解属性的类型(8种基本数据类型、String、Class、枚举、注解和以上类型的数组)
+     * @param <A> 注解泛型
+     * @return 修改过的注解实例
+     */
     @SuppressWarnings("unchecked")
-    public static <G,A extends Annotation> A addValueToAnnotation(
+    public static <G,A extends Annotation> A addValueToAnnotationArrayField(
             A annotation,
             String fieldName,
             G gValue
     ) {
-        Field aMemberValues;
-        Map<String,Object> aMap;
+        Field memberValues;
+        Map<String,Object> map;
         try {
-            InvocationHandler aInvocationHandler = Proxy.getInvocationHandler(annotation);
-            aMemberValues = aInvocationHandler.getClass().getDeclaredField("memberValues");
-            aMemberValues.setAccessible(true);
-            aMap = (Map<String,Object>)aMemberValues.get(aInvocationHandler);
+            InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotation);
+            memberValues = invocationHandler.getClass().getDeclaredField("memberValues");
+            memberValues.setAccessible(true);
+            map = (Map<String,Object>)memberValues.get(invocationHandler);
         } catch ( NoSuchFieldException | IllegalAccessException e) {
             log.error(e.getMessage(),e);
             log.error(
@@ -185,7 +358,7 @@ public final class ClassUtil {
                     gValue);
             return annotation;
         }
-        Object value = aMap.get(fieldName);
+        Object value = map.get(fieldName);
         if ( !value.getClass().isArray()) {
             log.error(
                     "注解 {} 的参数 {} 类型不是数组， 不能进行值的添加. 直接返回原注解",
@@ -228,15 +401,15 @@ public final class ClassUtil {
                 ((List<Annotation>)finalValue).add((Annotation) gValue);
                 finalValue =((List<Annotation>)finalValue).toArray(new Annotation[]{});
             } else {
-                aMemberValues.setAccessible(false);
+                memberValues.setAccessible(false);
                 return annotation;
             }
-            aMap.put(fieldName,finalValue);
+            map.put(fieldName,finalValue);
         } catch (ClassCastException e){
             log.error(e.getMessage(),e);
             log.error("值 {} 发生类型转换异常, 直接返回原注解", gValue);
         }
-        aMemberValues.setAccessible(false);
+        memberValues.setAccessible(false);
         return annotation;
     }
 
@@ -263,9 +436,9 @@ public final class ClassUtil {
     /**
      * 使用指定的类型初始化一个实例
      *
-     * @param <T> 源类型
-     * @param tClass 指定类型
-     * @return 实例
+     * @param <T> 目标泛型
+     * @param tClass 目标类型类
+     * @return 目标类型实例
      * */
     public static <T> T instanceT(Class<T> tClass) {
         try {  return tClass.newInstance(); } catch ( IllegalAccessException | InstantiationException e) {
@@ -308,7 +481,8 @@ public final class ClassUtil {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                packagePath4Seek,
+                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek,
                                 isRecursive))))
                 .getResources(resourceName -> true)
                 .stream()
@@ -326,7 +500,8 @@ public final class ClassUtil {
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(packagePath4Seek, isRecursive)
+        return getClassesUseReflections(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tUpperBoundClass.equals(selfClass) && ClassUtils.isAssignable(selfClass,tUpperBoundClass))
                 .map(selfClass -> (Class<? extends T>) selfClass)
@@ -338,7 +513,8 @@ public final class ClassUtil {
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(packagePath4Seek, isRecursive)
+        return getClassesUseReflections(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tLowerBoundClass.equals(selfClass) && ClassUtils.isAssignable(tLowerBoundClass,selfClass))
                 .map(selfClass -> (Class<? super T>)selfClass)
@@ -352,7 +528,8 @@ public final class ClassUtil {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                packagePath4Seek,
+                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek,
                                 isRecursive))))
                 .getTypesAnnotatedWith(annotationClass);
     }
@@ -365,7 +542,8 @@ public final class ClassUtil {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                packagePath4Seek,
+                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek,
                                 isRecursive))))
                 .getSubTypesOf(interfaceClass);
     }
@@ -373,7 +551,9 @@ public final class ClassUtil {
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return isRecursive ? FilterBuilder.prefix(packagePath4Seek) :  packagePath4Seek.replace(".","\\.")+"\\.[a-zA-Z0-9$_]+\\.class";
+        return isRecursive ? FilterBuilder.prefix(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek) :  /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+packagePath4Seek.replace(".","\\.")+"\\.[a-zA-Z0-9$_]+\\.class";
     }
 
     private static Class<?> getGenericClass(

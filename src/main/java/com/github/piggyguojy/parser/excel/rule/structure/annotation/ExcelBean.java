@@ -1,6 +1,6 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.structure.annotation;
 
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
 import com.github.piggyguojy.parser.rule.structure.OverrideRule;
 
 import java.lang.annotation.*;
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
  *
  * <p> 创建时间：2018/10/29
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Documented
@@ -48,7 +48,7 @@ public @interface ExcelBean {
      *
      * <p> 创建时间：2019/2/13
      *
-     * @author guojy
+     * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
      * */
     @Retention( RetentionPolicy.RUNTIME)
@@ -67,7 +67,7 @@ public @interface ExcelBean {
      *
      * <p> 创建时间：2019/2/13
      *
-     * @author guojy
+     * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
      * */
     @Retention( RetentionPolicy.RUNTIME)

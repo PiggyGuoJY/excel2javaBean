@@ -1,18 +1,15 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy;
 
-import com.github.piggyguojy.model.Msg;
-import com.google.gson.reflect.TypeToken;
-import com.github.piggyguojy.gson.GsonBuilderStrategy;
-import com.github.piggyguojy.model.Msg;
 import com.github.piggyguojy.model.test.Student;
+import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
-import static com.github.piggyguojy.JsonUtil.javaBean2Json;
-import static com.github.piggyguojy.JsonUtil.json2JavaBean;
-import static com.github.piggyguojy.model.Msg.msg;
+import static com.github.piggyguojy.JsonUtil.GsonBuilderStrategy;
+import static com.github.piggyguojy.Msg.msg;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

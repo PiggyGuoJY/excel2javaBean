@@ -1,7 +1,7 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.parser.rule.parse.AbstractParser;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import static java.lang.String.format;
  *
  * <p> 创建时间：2019/2/19
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

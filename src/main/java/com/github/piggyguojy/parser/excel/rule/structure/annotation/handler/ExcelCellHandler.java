@@ -1,13 +1,13 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
-import com.google.common.collect.ImmutableMap;
 import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
+import com.google.common.collect.ImmutableMap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +19,14 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import static com.github.piggyguojy.Assert.*;
-import static com.github.piggyguojy.model.Msg.msg;
+import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  *
  * <p> 创建时间：2019/2/15
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -97,7 +97,7 @@ public final class ExcelCellHandler
      *
      * <p> 创建时间：2019/2/20
      *
-     * @author guojy
+     * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
      * */
     private static class ExcelCellHandlerHelper {

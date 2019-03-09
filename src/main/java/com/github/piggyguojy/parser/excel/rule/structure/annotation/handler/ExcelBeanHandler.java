@@ -1,13 +1,14 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
-import com.google.common.collect.ImmutableSet;
 import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelColumn;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelRow;
+import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +19,14 @@ import java.util.stream.Stream;
 
 import static com.github.piggyguojy.Assert.isNull;
 import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.model.Msg.msg;
+import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  *
  * <p> 创建时间：2019/2/14
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -49,7 +50,7 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
         final ExcelBean finalExcelBean = notNull(nestedParent) ? AbstractAnnotationHandlerHelper.decideAnnotationRule(
                 excelBean, nestedParent, INHERITABLE_FIELD, nestedParent.overideRule()) : excelBean;
         if ( notNull(nestedParent) && nestedParent.stepBy()>0) {
-            ClassUtil.addValueToAnnotation(finalExcelBean,"sheet",finalExcelBean.sheet()+nestedParent.stepBy());
+            ClassUtil.addValueToAnnotationArrayField(finalExcelBean,"sheet",finalExcelBean.sheet()+nestedParent.stepBy());
         }
         // 3.当根据sheet和sheetName不能判断Sheet页时, 停止解析
         if ( isNull(ExcelParser.ExcelParserHelper.decideSheet(finalExcelBean.sheet(),finalExcelBean.sheetName(),excelParser.getWorkbook()))) {

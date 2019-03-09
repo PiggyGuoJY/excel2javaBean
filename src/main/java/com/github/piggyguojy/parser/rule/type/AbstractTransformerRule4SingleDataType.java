@@ -1,8 +1,8 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.type;
 
 import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.piggyguojy.Assert.isNull;
-import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.model.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -23,7 +20,7 @@ import static java.lang.String.format;
  *
  * <p> 创建时间：2019/2/19
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -1,6 +1,7 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.parse;
 
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 
 /**
  * 可解析的

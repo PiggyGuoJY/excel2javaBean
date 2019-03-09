@@ -1,7 +1,6 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.parse;
 
-import com.github.piggyguojy.parser.rule.structure.StructureHandler;
-import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import lombok.AccessLevel;
@@ -16,7 +15,7 @@ import java.nio.file.Path;
  *
  * <p> 创建时间：2018/11/9
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor( access = AccessLevel.PRIVATE)

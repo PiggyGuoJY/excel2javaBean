@@ -1,7 +1,8 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
 import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
@@ -13,7 +14,7 @@ import java.lang.reflect.Field;
 
 import static com.github.piggyguojy.Assert.isNull;
 import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.model.Msg.msg;
+import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -21,7 +22,7 @@ import static java.lang.String.format;
  *
  * <p> 创建时间：2019/2/15
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)

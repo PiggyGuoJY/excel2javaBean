@@ -1,6 +1,7 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.excel;
 
-import com.github.piggyguojy.model.Msg;
+import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.rule.parse.XlsExcelParser;
 import com.github.piggyguojy.parser.excel.rule.parse.XlsxExcelParser;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 
 import static com.github.piggyguojy.Assert.notNul;
 import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.model.Msg.msg;
+import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -23,7 +24,7 @@ import static java.lang.String.format;
  *
  * <p> 创建时间：2018/10/30
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j

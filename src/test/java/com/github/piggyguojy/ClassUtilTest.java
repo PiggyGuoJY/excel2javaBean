@@ -1,21 +1,6 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy;
 
-import com.github.piggyguojy.gson.GsonBean;
-import com.github.piggyguojy.model.Msg;
-import com.github.piggyguojy.model.test.Marked;
-import com.github.piggyguojy.model.test.StudentRecordTable;
-import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelAnnotationHandler;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelBeanHandler;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelColumnHandler;
-import com.github.piggyguojy.parser.rule.parse.Parseable;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
-import com.github.piggyguojy.parser.rule.structure.Inheritable;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
-import com.google.common.collect.ImmutableSet;
-import com.google.gson.reflect.TypeToken;
-import com.github.piggyguojy.gson.GsonBean;
-import com.github.piggyguojy.model.Msg;
 import com.github.piggyguojy.model.test.Marked;
 import com.github.piggyguojy.model.test.StudentRecordTable;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
@@ -27,6 +12,8 @@ import com.github.piggyguojy.parser.rule.parse.Parseable;
 import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
 import com.github.piggyguojy.parser.rule.structure.Inheritable;
 import com.github.piggyguojy.parser.rule.structure.OverrideRule;
+import com.google.common.collect.ImmutableSet;
+import com.google.gson.reflect.TypeToken;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -38,15 +25,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.github.piggyguojy.ClassUtil.*;
+import static com.github.piggyguojy.JsonUtil.GsonBean;
 import static org.junit.Assert.*;
+
 
 @Slf4j
 public class ClassUtilTest {
 
     @Test
     public void test() {
-        org.junit.Assert.assertEquals("com.github.piggyguojy", ClassUtil.getTopPackageName());
+        assertEquals("com.github.piggyguojy", ClassUtil.getTopPackageName());
     }
 
     @Test
@@ -93,14 +81,14 @@ public class ClassUtilTest {
     public void test6() {
         assertNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class, XmlRootElement.class, Slf4j.class));
         assertNotNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class));
-        org.junit.Assert.assertEquals(ClassUtil.getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class),GsonBean.class);
+        assertEquals(ClassUtil.getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class),GsonBean.class);
         assertNull(ClassUtil.getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(Slf4j.class).build()));
         assertNotNull(ClassUtil.getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(Deprecated.class).add(GsonBean.class).build()));
-        org.junit.Assert.assertEquals(ClassUtil.getTheOnlyOneAnnotation(
+        assertEquals(ClassUtil.getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(Deprecated.class).add(GsonBean.class).build()),GsonBean.class);
     }
@@ -112,7 +100,7 @@ public class ClassUtilTest {
                 InnerClassUtilTest.class.getDeclaredField("f"), 
                 1,2));
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f2"),0),
                 String.class);
 
@@ -128,11 +116,11 @@ public class ClassUtilTest {
                 InnerClassUtilTest.class.getDeclaredField("f2"),
                 1,0));
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f3"),0),
                 List.class);
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f3"),0,0),
                 Map.class);
 
@@ -140,11 +128,11 @@ public class ClassUtilTest {
                 InnerClassUtilTest.class.getDeclaredField("f3"),
                 0,1));
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f3"),0,0,0),
                 String.class);
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f3"),0,0,1),
                 Long.class);
 
@@ -155,11 +143,11 @@ public class ClassUtilTest {
                 InnerClassUtilTest.class.getDeclaredField("f3"),
                 0,0,0,1));
 
-        org.junit.Assert.assertEquals(
+        assertEquals(
                 ClassUtil.getGenericClass(InnerClassUtilTest.class.getDeclaredField("f3"),1,0,1,0),
                 Integer.class);
 
-        org.junit.Assert.assertEquals(ClassUtil.getGenericClass(
+        assertEquals(ClassUtil.getGenericClass(
                 new TypeToken<Map<List<Map<String,Long>>,Set<Map<Map<BigDecimal,Msg>,Set<Integer>>>>>(){},
                 1,0,1,0),Integer.class);
     }
@@ -180,8 +168,8 @@ public class ClassUtilTest {
         log.info(marked.toString());
         assertArrayEquals(new int[]{1,2,3}, marked.ia());
         assertArrayEquals(new String[]{"a","b","c"}, marked.sa());
-        ClassUtil.addValueToAnnotation(marked,"ia",4);
-        ClassUtil.addValueToAnnotation(marked,"sa","d");
+        ClassUtil.addValueToAnnotationArrayField(marked,"ia",4);
+        ClassUtil.addValueToAnnotationArrayField(marked,"sa","d");
         log.info(marked.toString());
         assertArrayEquals(new int[]{1,2,3,4}, marked.ia());
         assertArrayEquals(new String[]{"a","b","c","d"}, marked.sa());

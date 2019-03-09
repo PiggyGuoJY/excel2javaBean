@@ -1,3 +1,4 @@
+/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
 package com.github.piggyguojy.parser.rule.type;
 
 import java.util.function.Function;
@@ -7,7 +8,7 @@ import java.util.function.Function;
  *
  * <p> 创建时间：2019/2/1
  *
- * @author guojy
+ * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 public interface TransformableAndRuleAddable<T extends TransformableAndRuleAddable>
