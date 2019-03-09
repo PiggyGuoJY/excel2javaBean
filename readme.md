@@ -20,7 +20,7 @@
 - [3. 附](#3-附)
 
 ---
-## 1. 快速入门<sup>[回到目录](#目录)</sup>
+## 1. 快速入门 <sup>[回到目录](#目录)</sup>
 > 这部分我们主要简单了解@ExcelBean,@ExcelCell, @ExcelColumn和@ExcelRow注解的使用
 ### 1.1 准备Excel文件
 ![Excel数据素材](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile.JPG?raw=true)
@@ -241,7 +241,7 @@ public class ExcelParserFactoryTest {
 ```
 </details>
 
-## 2. 更多功能<sup>[回到目录](#目录)</sup>
+## 2. 更多功能 <sup>[回到目录](#目录)</sup>
 ### 2.1 注解和类的简单组合使用
 `建设中...`
 ### 2.2 更加方便的地址属性绑定方法
@@ -252,7 +252,7 @@ public class ExcelParserFactoryTest {
 `建设中...`
 ### 2.5 使用其他继承规则
 `建设中...`
-## 3. 附<sup>[回到目录](#目录)</sup>
+## 3. 附 <sup>[回到目录](#目录)</sup>
 `建设中...` 
 ***
 [![](https://img.shields.io/badge/Javadoc-%20https%3A%2F%2Fpiggyguojy.github.io%2Fexcel2javaBean--java--api%2F-brightgreen.svg)](https://piggyguojy.github.io/excel2javaBean-java-api/)
