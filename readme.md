@@ -244,6 +244,8 @@ public class ExcelParserFactoryTest {
 ```
 </details>
 
+***
+
 ## 2. 更多功能 <sup>[回到目录](#目录)</sup>
 ### 2.1 注解和类的简单组合使用
 `建设中...`
@@ -255,6 +257,8 @@ public class ExcelParserFactoryTest {
 `建设中...`
 ### 2.5 使用其他继承规则
 `建设中...`
+***
+
 ## 3. 附 <sup>[回到目录](#目录)</sup>
 `建设中...` 
 ***
