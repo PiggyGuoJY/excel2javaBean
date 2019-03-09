@@ -25,6 +25,9 @@
 ### 1.1 准备Excel文件
 ![Excel数据素材](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile.JPG?raw=true)
 ### 1.2 定义实体
+<details>
+<summary>代码较多, 点击查看</summary>
+
 ```java
 // 定义行数据的实体
 @ExcelRow
@@ -49,7 +52,12 @@ public class StudentRecordTable {
     private List<Student> students;
 }
 ```
+</details>
+
 ### 1.3 解析和结果查看
+<details>
+<summary>代码较多, 点击查看</summary>
+
 ```java
 @Slf4j
 public class ExcelParserFactoryTest {
@@ -112,8 +120,13 @@ public class ExcelParserFactoryTest {
 	]
 }
 ```
+</details>
+
 ### 1.4 另一种实体定义对应的文件, 实体定义和解析结果
 ![Excel数据素材](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile2.JPG?raw=true)
+<details>
+<summary>代码较多, 点击查看</summary>
+
 ```java
 // 定义列数据的实体
 @ExcelColumn
@@ -143,9 +156,7 @@ public class StudentRecordTable2 {
             map = "4->name;5->idType;6->idNo;7->birthDate;8->gender;9->phoneNo;10->address;11->education;12->marriage;13->page;14->remark;15->remark2")
     private List<StudentWithMoreInfo> studentWithMoreInfos;
 }
-
 ```
-
 ```java
 // 测试代码
 @Slf4j
@@ -228,6 +239,7 @@ public class ExcelParserFactoryTest {
 	]
 }
 ```
+</details>
 
 - [回到目录](#目录)
 ## 2. 更多功能 
