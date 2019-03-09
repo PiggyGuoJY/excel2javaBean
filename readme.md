@@ -1,10 +1,11 @@
 # excel2javaBean
 
-![language](https://img.shields.io/badge/language-java-red.svg)
-![travis](https://img.shields.io/travis/PiggyGuoJY/excel2javaBean.svg)
-![codecov](https://img.shields.io/codecov/c/github/PiggyGuoJY/excel2javaBean.svg)
-![maven](https://img.shields.io/maven-central/v/com.github.piggyguojy/excel2javaBean.svg)
-![license](https://img.shields.io/github/license/PiggyGuoJY/excel2javaBean.svg)
+[![language](https://img.shields.io/badge/language-java8-red.svg)](https://docs.oracle.com/javase/8/docs/api/)
+[![travis](https://img.shields.io/travis/PiggyGuoJY/excel2javaBean.svg)](https://www.travis-ci.org/)
+[![codecov](https://img.shields.io/codecov/c/github/PiggyGuoJY/excel2javaBean.svg)](https://codecov.io/gh/PiggyGuoJY)
+[![codebeat badge](https://codebeat.co/badges/c53eacdc-12cd-4081-8853-208c7f08fc39)](https://codebeat.co/projects/github-com-piggyguojy-excel2javabean-master)
+[![maven](https://img.shields.io/maven-central/v/com.github.piggyguojy/excel2javaBean.svg)](https://repo1.maven.org/maven2/com/github/piggyguojy/excel2javaBean/)
+[![license](https://img.shields.io/github/license/PiggyGuoJY/excel2javaBean.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 > excel2javaBean是一个便捷的Excel数据读取和处理工具. 工具的目标是让开发者能更加专注于业务逻辑和数据处理本身.
 
 ## 目录
