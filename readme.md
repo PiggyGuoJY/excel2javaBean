@@ -1,4 +1,4 @@
-# com.github.piggyguojy.excel2javaBean
+# excel2javaBean
 
 ![](https://img.shields.io/badge/language-java-red.svg)
 ![](https://img.shields.io/maven-central/v/com.github.piggyguojy/excel2javaBean.svg)
@@ -6,16 +6,24 @@
 > excel2javaBean是一个便捷的Excel数据读取和处理工具. 工具的目标是让开发者能更加专注于业务逻辑和数据处理本身.
 
 ## 目录
-[1. 快速入门](#1-快速入门)
-
-[2. 更多功能](#2-更多功能)
-
-[3. 附](#3-附)
+- [1. 快速入门](#1-快速入门)
+    - [1.1 准备Excel文件](#1.1-准备excel文件)
+    - [1.2 定义实体](#1.2-定义实体)
+    - [1.3 定义实体](#1.3-解析和结果查看)
+    - [1.4 另一种实体定义对应的文件,-实体定义和解析结果](#1.4-另一种实体定义对应的文件,-实体定义和解析结果)
+- [2. 更多功能](#2-更多功能)
+    - [2.1 注解和类的简单组合使用](#2.1-注解和类的简单组合使用)
+    - [2.2 更加方便的地址属性绑定方法](#2.2-更加方便的地址属性绑定方法)
+    - [2.3 自定义类型转换规则](#2.3-自定义类型转换规则)
+    - [2.4 使用嵌套注解](#2.4-使用嵌套注解)
+    - [2.5 使用其他继承规则](#2.5-使用其他继承规则)
+- [3. 附](#3-附)
 
 ---
 ## 1. 快速入门 
+> 这部分我们主要简单了解@ExcelBean,@ExcelCell, @ExcelColumn和@ExcelRow注解的使用
 ### 1.1 准备Excel文件
-![Excel数据素材](https://github.com/PiggyGuoJY/execl2javaBean/blob/master/readme/CapTestFile.JPG?raw=true)
+![Excel数据素材](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile.JPG?raw=true)
 ### 1.2 定义实体
 ```java
 // 定义行数据的实体
@@ -107,8 +115,23 @@ public class ExcelParserFactoryTest {
 	]
 }
 ```
+### 1.4 另一种实体定义对应的文件, 实体定义和解析结果
+![Excel数据素材](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile2.JPG?raw=true)
 
-## 2. 更多功能
 
-
+- [回到目录](#目录)
+## 2. 更多功能 
+### 2.1 注解和类的简单组合使用
+`建设中...`
+### 2.2 更加方便的地址属性绑定方法
+`建设中...`
+### 2.3 自定义类型转换规则
+`建设中...`
+### 2.4 使用嵌套注解
+`建设中...`
+### 2.5 使用其他继承规则
+`建设中...`
+- [回到目录](#目录)
 ## 3. 附
+`建设中...` 
+- [回到目录](#目录)

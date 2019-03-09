@@ -4,6 +4,7 @@ package com.github.piggyguojy.parser.excel;
 import com.github.piggyguojy.JsonUtil;
 import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.model.test.StudentRecordTable;
+import com.github.piggyguojy.model.test.StudentRecordTable2;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,16 @@ public class ExcelParserFactoryTest {
         Msg<StudentRecordTable> studentRecordTableMsg = excelParser.parse(StudentRecordTable.class);
         assertFalse(studentRecordTableMsg.isException());
         log.info(JsonUtil.javaBean2Json(studentRecordTableMsg.getT()));
+    }
+
+    @Test
+    public void test2() {
+        Msg<ExcelParser> excelParserMsg = ExcelParserFactory.createParser(TEST_FILE);
+        assertFalse(excelParserMsg.isException());
+        ExcelParser excelParser = excelParserMsg.getT();
+        Msg<StudentRecordTable2> studentRecordTable2Msg = excelParser.parse(StudentRecordTable2.class);
+        assertFalse(studentRecordTable2Msg.isException());
+        log.info(JsonUtil.javaBean2Json(studentRecordTable2Msg.getT()));
     }
 
 }
