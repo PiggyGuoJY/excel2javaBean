@@ -180,6 +180,10 @@ public class ExcelParserFactoryTest {
     }
 }
 ```
+<details>
+
+<details>
+<summary>解析结果较多, 点击查看</summary>
 
 ```json
 {
@@ -251,8 +255,11 @@ public class ExcelParserFactoryTest {
 `建设中...`
 ### 2.2 更加方便的地址属性绑定方法
 #### 2.2.1 准备Excel文件
-
+![](https://github.com/PiggyGuoJY/excel2javaBean/blob/master/readme/CapTestFile3.JPG?raw=true)
 #### 2.2.2 定义实体
+<details>
+<summary>代码较多, 点击查看</summary>
+
 ```java
 // 定义列数据的实体
 @ExcelRow(sheet = 3, columnBegin = 1, rowBegin = 8)
@@ -281,9 +288,13 @@ public class CensusMetaData {
 
     private Double averagePopulationPerRegistered;
 }
-
 ```
+</details>
+
 #### 2.2.3 解析和结果查看
+<details>
+<summary>代码较多, 点击查看</summary>
+
 ```java
 // 测试代码
 @Slf4j
@@ -304,6 +315,8 @@ public class ExcelParserFactoryTest {
     }
 }
 ```
+</details>
+
 > 结果请到这里查看 [解析结果](https://www.jianshu.com/p/4f49a81f5a57)
 ### 2.3 自定义类型转换规则
 `建设中...`
