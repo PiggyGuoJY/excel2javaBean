@@ -317,7 +317,7 @@ public class ExcelParserFactoryTest {
 ```
 </details>
 
-> 结果请到这里查看 [解析结果](https://www.jianshu.com/p/4f49a81f5a57)
+> 结果请到这里查看 <a href="https://www.jianshu.com/p/4f49a81f5a57" target="_blank">解析结果</a>
 ### 2.3 自定义类型转换规则
 `建设中...`
 ### 2.4 使用嵌套注解
