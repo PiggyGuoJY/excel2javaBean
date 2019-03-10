@@ -327,6 +327,16 @@ public class ExcelParserFactoryTest {
 ***
 
 ## 3. 附 <sup>[回到目录](#目录)</sup>
+### 3.1 未来建设计划
+- 进一步完善readme和测试案例 (进行中...)
+- 实现用户自定义数据处理脚本化
+- 完善对基本数据类型的自动处理
+- 实现xml式配置
+- 实现对csv格式文件的转化与解析
+- 利用ByteBuf优化底层实现
+- 攥写Wiki文档
+- 攥写github上的其他模板
+
 `建设中...` 
 ***
 [![](https://img.shields.io/badge/Javadoc-%20excel2javaBean-brightgreen.svg)](https://piggyguojy.github.io/excel2javaBean-java-api/)
