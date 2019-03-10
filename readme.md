@@ -12,7 +12,7 @@
 - [1. 快速入门](#1-快速入门-回到目录)
     - [1.1 准备Excel文件](#11-准备excel文件)
     - [1.2 定义实体](#12-定义实体)
-    - [1.3 定义实体](#13-解析和结果查看)
+    - [1.3 解析和结果查看](#13-解析和结果查看)
     - [1.4 另一种实体定义对应的文件,-实体定义和解析结果](#14-另一种实体定义对应的文件,-实体定义和解析结果)
 - [2. 更多功能](#2-更多功能-回到目录)
     - [2.1 注解和类的简单组合使用](#21-注解和类的简单组合使用)
@@ -250,7 +250,61 @@ public class ExcelParserFactoryTest {
 ### 2.1 注解和类的简单组合使用
 `建设中...`
 ### 2.2 更加方便的地址属性绑定方法
-`建设中...`
+#### 2.2.1 准备Excel文件
+
+#### 2.2.2 定义实体
+```java
+// 定义列数据的实体
+@ExcelRow(sheet = 3, columnBegin = 1, rowBegin = 8)
+public class CensusMetaData {
+    
+    private String local;
+
+    private Integer totalRegistered;
+    private Integer totalFamilyRegistered;
+    private Integer totalCollectiveRegistered;
+
+    private Integer totalPopulation;
+    private Integer totalMalePopulation;
+    private Integer totalFeMalePopulation;
+    private Double populationGenderRatio;
+
+    private Integer totalFamilyPopulation;
+    private Integer totalFamilyMalePopulation;
+    private Integer totalFamilyFemalePopulation;
+    private Double familyPopulationGenderRatio;
+
+    private Integer totalCollectivePopulation;
+    private Integer totalCollectiveMalePopulation;
+    private Integer totalCollectiveFemalePopulation;
+    private Double familyCollectiveGenderRatio;
+
+    private Double averagePopulationPerRegistered;
+}
+
+```
+#### 2.2.3 解析和结果查看
+```java
+// 测试代码
+@Slf4j
+public class ExcelParserFactoryTest {
+    private static Path TEST_FILE;
+    @BeforeClass @SneakyThrows
+    public static void beforeOnce() {
+        TEST_FILE = Paths.get(ExcelParserFactoryTest.class.getResource("/simple/TestExcelFile.xlsx").toURI());
+    }
+    @Test
+    public void test3() {
+        Msg<ExcelParser> excelParserMsg = ExcelParserFactory.createParser(TEST_FILE);
+        assertFalse(excelParserMsg.isException());
+        ExcelParser excelParser = excelParserMsg.getT();
+        Msg<CensusMetaData> censusMetaDataMsg = excelParser.parse(CensusMetaData.class);
+        assertFalse(censusMetaDataMsg.isException());
+        log.info(JsonUtil.javaBean2Json(censusMetaDataMsg.getT()));
+    }
+}
+```
+> 结果请到这里查看 [解析结果](https://www.jianshu.com/p/4f49a81f5a57)
 ### 2.3 自定义类型转换规则
 `建设中...`
 ### 2.4 使用嵌套注解

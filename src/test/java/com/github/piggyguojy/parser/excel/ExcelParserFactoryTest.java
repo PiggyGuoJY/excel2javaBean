@@ -3,6 +3,7 @@ package com.github.piggyguojy.parser.excel;
 
 import com.github.piggyguojy.JsonUtil;
 import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.model.test.CensusMetaData;
 import com.github.piggyguojy.model.test.StudentRecordTable;
 import com.github.piggyguojy.model.test.StudentRecordTable2;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
@@ -45,6 +46,16 @@ public class ExcelParserFactoryTest {
         Msg<StudentRecordTable2> studentRecordTable2Msg = excelParser.parse(StudentRecordTable2.class);
         assertFalse(studentRecordTable2Msg.isException());
         log.info(JsonUtil.javaBean2Json(studentRecordTable2Msg.getT()));
+    }
+
+    @Test
+    public void test3() {
+        Msg<ExcelParser> excelParserMsg = ExcelParserFactory.createParser(TEST_FILE);
+        assertFalse(excelParserMsg.isException());
+        ExcelParser excelParser = excelParserMsg.getT();
+        Msg<CensusMetaData> censusMetaDataMsg = excelParser.parse(CensusMetaData.class);
+        assertFalse(censusMetaDataMsg.isException());
+        log.info(JsonUtil.javaBean2Json(censusMetaDataMsg.getT()));
     }
 
 }
