@@ -39,24 +39,33 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>boolean</td>
  *            <td>false</td>
- *            <td style="background-color:lightgreen">当字符串大写格式和TRUE相同时返回ture,其他情况返回false</td>
- *            <td style="background-color:lightgreen">按字符串处理计算结果</td>
+ *            <td style="background-color:lightgreen">当单元格值大写格式和TRUE相同时返回ture,其他情况返回false</td>
+ *            <td style="background-color:lightgreen">false</td>
  *            <td>false</td>
- *            <td style="background-color:lightgreen">单元格的值</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>false</td>
  *            <td>false</td>
  *        </tr>
  *        <tr>
  *            <td>byte</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为byte,转换失败返回0</td>
+ *            <td style="background-color:lightgreen">0</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
  *        </tr>
- *        <tr><td>short</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+ *        <tr>
+ *            <td>short</td>
+ *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为short,转换失败返回0</td>
+ *            <td style="background-color:lightgreen">0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *        </tr>
  *        <tr><td>char</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>int</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>long</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -64,16 +73,34 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr><td>double</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr>
  *            <td>Boolean</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td style="background-color:lightgreen">当单元格值大写格式和TRUE相同时返回ture,其他情况返回false</td>
+ *            <td style="background-color:lightgreen">false</td>
+ *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
- *        <tr><td>Byte</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Short</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+ *        <tr>
+ *            <td>Byte</td>
+ *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为byte,转换失败返回0</td>
+ *            <td style="background-color:lightgreen">0</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *        </tr>
+ *        <tr>
+ *            <td>Short</td>
+ *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为short,转换失败返回0</td>
+ *            <td style="background-color:lightgreen">0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *            <td>0</td>
+ *        </tr>
  *        <tr><td>Character</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>Integer</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>Long</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
