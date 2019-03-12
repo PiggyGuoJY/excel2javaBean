@@ -6,6 +6,7 @@ import com.github.piggyguojy.parser.excel.rule.parse.XlsExcelParser;
 import com.github.piggyguojy.parser.excel.rule.parse.XlsxExcelParser;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelAnnotationHandler;
 import com.github.piggyguojy.parser.excel.rule.type.ExcelTransformerRule;
+import com.github.piggyguojy.parser.excel.rule.type.ExcelTransformerRulePrimitiveSupported;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,7 +45,10 @@ public class ExcelParserFactory {
         return builder().setPath(path).build();
     }
 
-
+    /**
+     * 使用工厂自定义Excel解析器
+     * @return Excel解析器构建器
+     */
     public static ExcelParserBuilder builder() {
         return new ExcelParserBuilder();
     }
@@ -238,7 +242,7 @@ public class ExcelParserFactory {
          * @return 类型转换器
          */
         private ExcelTransformerRule decideExcelTransformerRule() {
-            return notNull(excelTransformerRule)?excelTransformerRule:ExcelTransformerRule.of();
+            return notNull(excelTransformerRule)?excelTransformerRule:ExcelTransformerRulePrimitiveSupported.of();
         }
     }
 }

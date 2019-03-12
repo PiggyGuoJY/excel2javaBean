@@ -1,4 +1,3 @@
-
 package com.github.piggyguojy.parser.rule.type;
 
 import com.github.piggyguojy.Msg;
@@ -7,14 +6,15 @@ import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 可转换的
- *
- *
- * <p> 创建时间：2019/2/19
+ * <p>
+ *     本接口定义了类型转换的基础功能
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ * @since JDK1.8
  * */
 public interface Transformable {
+
     /**
      * 转换方法
      *
@@ -32,6 +32,6 @@ public interface Transformable {
      * @return 包含目标实例的消息
      * */
     default <G> Msg<G> transform(Class<G> gClass) {
-        return msg((G)null);
+        return transform(null, gClass);
     }
 }

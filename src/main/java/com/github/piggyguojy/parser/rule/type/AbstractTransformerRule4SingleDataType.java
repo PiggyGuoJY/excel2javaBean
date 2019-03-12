@@ -1,4 +1,3 @@
-
 package com.github.piggyguojy.parser.rule.type;
 
 import com.github.piggyguojy.Assert;
@@ -18,8 +17,6 @@ import static java.lang.String.format;
 /**
  * 单数据源类型转换器基类
  *
- * <p> 创建时间：2019/2/19
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -27,6 +24,9 @@ import static java.lang.String.format;
 public abstract class AbstractTransformerRule4SingleDataType<O>
         implements TransformableAndRuleAddable<AbstractTransformerRule4SingleDataType> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> AbstractTransformerRule4SingleDataType addRule4Transformer(
             Class<G> gClass,
@@ -38,6 +38,9 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
         }
         return this;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> transform(
             Object object,
@@ -70,7 +73,13 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
     }
 
 
-
+    /**
+     * 增加自定义规则
+     *
+     * @param <G> 目标泛型
+     * @param gClass 目标类型
+     * @param ogFunction 转换函数
+     * */
     protected  <G> void addDefaultRule4Transformer(
             Class<G> gClass,
             Function<O,G> ogFunction

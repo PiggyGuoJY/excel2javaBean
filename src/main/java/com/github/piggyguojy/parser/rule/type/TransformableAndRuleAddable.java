@@ -1,15 +1,15 @@
-
 package com.github.piggyguojy.parser.rule.type;
 
 import java.util.function.Function;
 
 /**
  * 可转换并可增加转换规则的
- *
- * <p> 创建时间：2019/2/1
+ * <p>
+ *     允许增加用户自定义的类型转换规则
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ * @since JDK1.8
  * */
 public interface TransformableAndRuleAddable<T extends TransformableAndRuleAddable>
         extends Transformable {

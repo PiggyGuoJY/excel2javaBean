@@ -37,41 +37,6 @@ import static com.github.piggyguojy.Assert.isNull;
  *            <th>default</th>
  *        </tr>
  *        <tr>
- *            <td>boolean</td>
- *            <td>false</td>
- *            <td style="background-color:lightgreen">当单元格值大写格式和TRUE相同时返回ture,其他情况返回false</td>
- *            <td style="background-color:lightgreen">false</td>
- *            <td>false</td>
- *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>false</td>
- *            <td>false</td>
- *        </tr>
- *        <tr>
- *            <td>byte</td>
- *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
- *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为byte,转换失败返回0</td>
- *            <td style="background-color:lightgreen">0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
- *        </tr>
- *        <tr>
- *            <td>short</td>
- *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
- *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为short,转换失败返回0</td>
- *            <td style="background-color:lightgreen">0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
- *        </tr>
- *        <tr><td>char</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>int</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>long</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>float</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>double</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr>
  *            <td>Boolean</td>
  *            <td>null</td>
  *            <td style="background-color:lightgreen">当单元格值大写格式和TRUE相同时返回ture,其他情况返回false</td>
@@ -114,14 +79,6 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr><td>Date</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>LocalDate</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>Class</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>boolean[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>byte[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>short[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>char[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>int[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>long[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>float[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>double[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *        <tr><td>Object[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
  *    </table>
  *
@@ -137,52 +94,15 @@ import static com.github.piggyguojy.Assert.isNull;
 public class ExcelTransformerRule
         extends AbstractTransformerRule4SingleDataType<Cell> {
 
+    /**
+     * 获取一个支持常用类型的转换器
+     * @return 转换器
+     */
     public static ExcelTransformerRule of() {
         return new ExcelTransformerRule(DEFAULT_EXCEL_TRANSFORMER_RULE.getDefaultTransformerRule());
     }
 
-    // 对基本数据类型,void和Object及其数组类型的默认转换, 可以通过继承该类进行规则改写; 对数组类型, 默认不支持转换;
 
-    protected boolean cell2boolean(Cell cell) {
-        Boolean b = this.cell2Boolean(cell);
-        return isNull(b) ? false : b;
-    }
-    protected boolean[] cell2booleans(Cell cell) { return new boolean[]{};}
-    protected byte cell2byte(Cell cell) {
-        Byte b = this.cell2Byte(cell);
-        return isNull(b) ? 0 : b;
-    }
-    protected byte[] cell2bytes(Cell cell) { return new byte[]{};}
-    protected short cell2short(Cell cell) {
-        Short s = this.cell2Short(cell);
-        return isNull(s) ? 0 : s;
-    }
-    protected short[] cell2shorts(Cell cell) { return new short[]{};}
-    protected char cell2char(Cell cell)  {
-        Character c = this.cell2Character(cell);
-        return isNull(c) ? '\u0000' : c;
-    }
-    protected char[] cell2chars(Cell cell) { return new char[]{};}
-    protected int cell2int(Cell cell) {
-        Integer i = this.cell2Integer(cell);
-        return isNull(i) ? 0 : i;
-    }
-    protected int[] cell2ints(Cell cell) { return new int[]{};}
-    protected long cell2long(Cell cell) {
-        Long l = this.cell2Long(cell);
-        return isNull(l) ? 0 : l;
-    }
-    protected long[] cell2longs(Cell cell) { return new long[]{};}
-    protected float cell2float(Cell cell) {
-        Float f = this.cell2Float(cell);
-        return isNull(f) ? 0 : f;
-    }
-    protected float[] cell2floats(Cell cell) { return new float[]{};}
-    protected double cell2double(Cell cell) {
-        Double d = this.cell2Double(cell);
-        return isNull(d) ? 0 : d;
-    }
-    protected double[] cell2doubles(Cell cell) {return new double[]{};}
 
     protected Void cell2Void(Cell cell) { return null;}
     protected Object cell2Object(Cell cell) {return null;}
@@ -345,36 +265,33 @@ public class ExcelTransformerRule
             default: return null;
         }
     }
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER_DEFAULT = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    private static final ExcelTransformerRule DEFAULT_EXCEL_TRANSFORMER_RULE = new ExcelTransformerRule();
-    private ExcelTransformerRule() { initSuperDefaultRule(); }
-    private ExcelTransformerRule(Map<Class<?>,Function<Cell,?>> defaultTransformerRule) {
-        super.setDefaultTransformerRule(defaultTransformerRule);
+    /**
+     * 生效父类配置的默认构造器
+     */
+    protected ExcelTransformerRule() {
+        this.initSuperDefaultRule();
     }
 
+
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_DEFAULT = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     /**
-     * 初始化对常用数据类型的转化规则
+     * 单例化一个转换器
+     */
+    private static final ExcelTransformerRule DEFAULT_EXCEL_TRANSFORMER_RULE = new ExcelTransformerRule();
+    /**
+     * 使用特定规则的构造器
+     * @param defaultTransformerRule 默认规则
+     */
+    private ExcelTransformerRule(
+            Map<Class<?>,Function<Cell,?>> defaultTransformerRule
+    ) {
+        super.setDefaultTransformerRule(defaultTransformerRule);
+    }
+    /**
+     * 初始化默认规则
      */
     private void initSuperDefaultRule() {
-
-        super.addDefaultRule4Transformer( boolean.class,    this::cell2boolean);
-        super.addDefaultRule4Transformer( boolean[].class,  this::cell2booleans);
-        super.addDefaultRule4Transformer( byte.class,       this::cell2byte);
-        super.addDefaultRule4Transformer( byte[].class,     this::cell2bytes);
-        super.addDefaultRule4Transformer( short.class,      this::cell2short);
-        super.addDefaultRule4Transformer( short[].class,    this::cell2shorts);
-        super.addDefaultRule4Transformer( char.class,       this::cell2char);
-        super.addDefaultRule4Transformer( char[].class,     this::cell2chars);
-        super.addDefaultRule4Transformer( int.class,        this::cell2int);
-        super.addDefaultRule4Transformer( int[].class,      this::cell2ints);
-        super.addDefaultRule4Transformer( long.class,       this::cell2long);
-        super.addDefaultRule4Transformer( long[].class,     this::cell2longs);
-        super.addDefaultRule4Transformer( float.class,      this::cell2float);
-        super.addDefaultRule4Transformer( float[].class,    this::cell2floats);
-        super.addDefaultRule4Transformer( double.class,     this::cell2double);
-        super.addDefaultRule4Transformer( double[].class,   this::cell2doubles);
-
         super.addDefaultRule4Transformer( void.class,       this::cell2Void);
         super.addDefaultRule4Transformer( Void.class,       this::cell2Void);
         super.addDefaultRule4Transformer( Object.class,     this::cell2Object);
