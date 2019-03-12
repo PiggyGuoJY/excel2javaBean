@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.rule.type;
 
 import java.util.function.Function;

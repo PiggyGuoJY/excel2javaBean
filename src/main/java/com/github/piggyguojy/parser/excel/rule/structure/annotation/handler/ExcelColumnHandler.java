@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
 import com.github.piggyguojy.ClassUtil;

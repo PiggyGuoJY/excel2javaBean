@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.rule.parse;
 
 import com.github.piggyguojy.Msg;
@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.function.Function;
+
+import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
@@ -37,7 +39,7 @@ public abstract class AbstractParser<P extends AbstractParser>
             Class<G> gClass,
             Object ... args
     ) {
-        Msg<?> msg = Msg.MsgError.ILLEGAL_STATE_INIT.getMsg();
+        Msg<?> msg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
         Object[] params = new Object[]{gClass,this,args,msg};
         for( Process process : processes) {
             log.info("执行过程 {}", process.name);

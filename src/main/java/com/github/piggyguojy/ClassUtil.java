@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy;
 
 import com.google.common.primitives.*;
@@ -138,7 +138,7 @@ public final class ClassUtil {
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesExtendClassUseReflections(tUpperBoundClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesExtendClassUseReflections(tUpperBoundClass,
 packagePath4Seek, isRecursive);
     }
     /**
@@ -155,7 +155,7 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesSuperClassUseReflections(tLowerBoundClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesSuperClassUseReflections(tLowerBoundClass,
 packagePath4Seek, isRecursive);
     }
     /**
@@ -172,7 +172,7 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithAnnotationUseReflections(annotationClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesWithAnnotationUseReflections(annotationClass,
 packagePath4Seek, isRecursive);
     }
     /**
@@ -188,7 +188,7 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithInterfaceUseReflections(interfaceClass, /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesWithInterfaceUseReflections(interfaceClass,
 packagePath4Seek, isRecursive);
     }
 
@@ -481,7 +481,7 @@ packagePath4Seek, isRecursive);
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 packagePath4Seek,
                                 isRecursive))))
                 .getResources(resourceName -> true)
@@ -500,7 +500,7 @@ packagePath4Seek,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesUseReflections(
 packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tUpperBoundClass.equals(selfClass) && ClassUtils.isAssignable(selfClass,tUpperBoundClass))
@@ -513,7 +513,7 @@ packagePath4Seek, isRecursive)
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return getClassesUseReflections(
 packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tLowerBoundClass.equals(selfClass) && ClassUtils.isAssignable(tLowerBoundClass,selfClass))
@@ -528,7 +528,7 @@ packagePath4Seek, isRecursive)
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 packagePath4Seek,
                                 isRecursive))))
                 .getTypesAnnotatedWith(annotationClass);
@@ -542,7 +542,7 @@ packagePath4Seek,
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
                         .include(filter(
-                                /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 packagePath4Seek,
                                 isRecursive))))
                 .getSubTypesOf(interfaceClass);
@@ -551,8 +551,8 @@ packagePath4Seek,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return isRecursive ? FilterBuilder.prefix(/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
-packagePath4Seek) :  /* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+        return isRecursive ? FilterBuilder.prefix(
+packagePath4Seek) :
 packagePath4Seek.replace(".","\\.")+"\\.[a-zA-Z0-9$_]+\\.class";
     }
 

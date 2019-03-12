@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
 import com.github.piggyguojy.Msg;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.lang.annotation.Annotation;
 
+import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -28,7 +29,7 @@ public final class DefaultAnnotationHandler
             AbstractParser abstractParser,
             Object... args
     ) {
-        return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg();
+        return msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
     }
     @Override
     public Msg<?> onType(
@@ -37,7 +38,7 @@ public final class DefaultAnnotationHandler
             AbstractParser abstractParser,
             Object... args
     ) {
-        return Msg.msg(new IllegalStateException(format(
+        return msg(new IllegalStateException(format(
                 "没有找到对应注解 %s 的处理器",
                 annotation.getClass().getName())));
     }
@@ -48,7 +49,7 @@ public final class DefaultAnnotationHandler
             AbstractParser abstractParser,
             Object... args
     ) {
-        return Msg.msg(new IllegalStateException(format(
+        return msg(new IllegalStateException(format(
                 "没有找到对应注解 %s 的处理器",
                 annotation.getClass().getName())));
     }

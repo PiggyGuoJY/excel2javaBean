@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.excel;
 
 import com.github.piggyguojy.JsonUtil;
@@ -68,5 +68,4 @@ public class ExcelParserFactoryTest {
         assertFalse(basicTypeClassMsg.isException());
         log.info(JsonUtil.javaBean2Json(basicTypeClassMsg.getT()));
     }
-
 }

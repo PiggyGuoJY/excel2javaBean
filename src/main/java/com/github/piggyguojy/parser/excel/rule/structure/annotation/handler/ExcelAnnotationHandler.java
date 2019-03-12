@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.excel.rule.structure.annotation.handler;
 
 import com.github.piggyguojy.ClassUtil;
@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.github.piggyguojy.Assert.isNull;
+import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -34,21 +35,25 @@ import static java.lang.String.format;
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
-@Slf4j @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExcelAnnotationHandler<A extends Annotation>
         extends AbstractAnnotationHandler<A, ExcelParser>
         implements Inheritable<A>, BiInheritableRule<A, ExcelBean> {
 
+    public static ExcelAnnotationHandler of() {
+        return new ExcelAnnotationHandler();
+    }
+
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> handle(Class<G> gClass, ExcelParser excelParser, Object... args) {
         Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(gClass,ANNOTATIONS_ON_TYPE);
-        if ( isNull(annotationClass)) { return Msg.msg(new IllegalArgumentException(format("%s 应使用下列注解之一标注 %s", gClass.getCanonicalName(), ANNOTATIONS_ON_TYPE.toString()))); }
+        if ( isNull(annotationClass)) { return msg(new IllegalArgumentException(format("%s 应使用下列注解之一标注 %s", gClass.getCanonicalName(), ANNOTATIONS_ON_TYPE.toString()))); }
         return getAnnotationHandlerRegistered(annotationClass).onType(gClass, gClass.getDeclaredAnnotation(annotationClass), excelParser, args[StructureHandler.ARGS_INIT], args[StructureHandler.VALUE_RETURNED]);
     }
     @Override
-    public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
+    public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return msg(Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE_ACCESSED.getE()); }
     @Override
-    public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE.getMsg(); }
+    public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return msg(Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE_ACCESSED.getE()); }
     @Override
     public A decideRuleOnParentFirst(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.PARENT_FIRST);

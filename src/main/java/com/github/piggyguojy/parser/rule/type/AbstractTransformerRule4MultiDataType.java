@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy.parser.rule.type;
 
 import com.github.piggyguojy.Assert;
@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 多数据源类型转换器基类
@@ -45,7 +47,7 @@ public abstract class AbstractTransformerRule4MultiDataType
             Object object,
             Class<G> gClass) {
         AbstractTransformerRule4SingleDataType<?> abstractSingleDataTypeTransformerRule;
-        Msg<G> gMsg = (Msg<G>) Msg.MsgError.ILLEGAL_STATE_INIT.getMsg();
+        Msg<G> gMsg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
         abstractSingleDataTypeTransformerRule = customerTransformerRule.get(object.getClass());
         if (Assert.notNull(abstractSingleDataTypeTransformerRule)) {
             gMsg = abstractSingleDataTypeTransformerRule.transform(object,gClass);

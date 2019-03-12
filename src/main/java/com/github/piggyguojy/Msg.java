@@ -1,4 +1,4 @@
-/* Copyright (c) 2019, Guo Jinyang. All rights reserved. */
+
 package com.github.piggyguojy;
 
 import com.google.gson.annotations.Expose;
@@ -41,16 +41,23 @@ public final class Msg<T> implements Serializable {
         /**
          * 程序执行到不应该到达的位置
          * */
-        ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE(msg(new IllegalStateException(
-                "程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查."))),
+        ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE_ACCESSED(new IllegalStateException(
+                "程序逻辑错误, 正常情况下无法到达这里. 请根据程序执行堆栈进行排查.")),
+
+        /**
+         * 程序不接受空参数
+         */
+        ILLEGAL_ARGS_NULL(new IllegalArgumentException(
+                "这里不允许使用空参数")),
+
         /**
          * 前置校验出错导致的程序提前中断
          * */
-        ILLEGAL_STATE_INIT(msg(new IllegalStateException(
-                "Msg尚未赋值, 程序异常导致的提前结束")));
+        ILLEGAL_STATE_INIT(new IllegalStateException(
+                "Msg尚未赋值, 程序异常导致的提前结束"));
 
         @Getter
-        Msg<?> msg;
+        Exception e;
     }
     /**
      * 全参构造器
