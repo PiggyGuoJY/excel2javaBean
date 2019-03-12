@@ -21,6 +21,26 @@
     - [2.4 使用嵌套注解](#24-使用嵌套注解)
     - [2.5 使用其他继承规则](#25-使用其他继承规则)
 - [3. 附](#3-附-回到目录)
+    - [3.1 未来建设计划](#31-未来建设计划)
+
+## 引用方式
+<details>
+<summary>代码较多, 点击查看</summary>
+
+- maven
+```xml
+<dependency>
+  <groupId>com.github.piggyguojy</groupId>
+  <artifactId>excel2javaBean</artifactId>
+  <version>1.0.2</version>
+</dependency>
+```
+- Gradle
+```gradle
+implementation 'com.github.piggyguojy:excel2javaBean:1.0.2'
+```
+	
+</details>
 
 ---
 ## 1. 快速入门 <sup>[回到目录](#目录)</sup>
@@ -330,7 +350,7 @@ public class ExcelParserFactoryTest {
 ### 3.1 未来建设计划
 - 进一步完善readme和测试案例 (进行中...)
 - 实现用户自定义数据处理脚本化
-- 完善对基本数据类型的自动处理
+- 完善对基本数据类型的自动处理 (进行中...)
 - 实现xml式配置
 - 实现对csv格式文件的转化与解析
 - 利用ByteBuf优化底层实现
