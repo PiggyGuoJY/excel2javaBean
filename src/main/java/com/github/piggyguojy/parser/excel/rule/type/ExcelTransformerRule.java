@@ -99,7 +99,7 @@ public class ExcelTransformerRule
      * @return 转换器
      */
     public static ExcelTransformerRule of() {
-        return new ExcelTransformerRule(DEFAULT_EXCEL_TRANSFORMER_RULE.getDefaultTransformerRule());
+        return DEFAULT_EXCEL_TRANSFORMER_RULE;
     }
 
 
@@ -269,6 +269,7 @@ public class ExcelTransformerRule
      * 生效父类配置的默认构造器
      */
     protected ExcelTransformerRule() {
+        super();
         this.initSuperDefaultRule();
     }
 
@@ -279,15 +280,6 @@ public class ExcelTransformerRule
      * 单例化一个转换器
      */
     private static final ExcelTransformerRule DEFAULT_EXCEL_TRANSFORMER_RULE = new ExcelTransformerRule();
-    /**
-     * 使用特定规则的构造器
-     * @param defaultTransformerRule 默认规则
-     */
-    private ExcelTransformerRule(
-            Map<Class<?>,Function<Cell,?>> defaultTransformerRule
-    ) {
-        super.setDefaultTransformerRule(defaultTransformerRule);
-    }
     /**
      * 初始化默认规则
      */

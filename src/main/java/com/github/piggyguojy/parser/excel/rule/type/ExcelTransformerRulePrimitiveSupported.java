@@ -82,8 +82,7 @@ public class ExcelTransformerRulePrimitiveSupported
      * @return 转换器
      */
     public static ExcelTransformerRulePrimitiveSupported of() {
-        return new ExcelTransformerRulePrimitiveSupported(
-                DEFALUT_EXCEL_TRANSFORMER_RULE_PRIMITIVE_SUPPORTED.getDefaultTransformerRule());
+        return DEFALUT_EXCEL_TRANSFORMER_RULE_PRIMITIVE_SUPPORTED;
     }
 
 
@@ -145,15 +144,6 @@ public class ExcelTransformerRulePrimitiveSupported
      */
     private static final ExcelTransformerRulePrimitiveSupported DEFALUT_EXCEL_TRANSFORMER_RULE_PRIMITIVE_SUPPORTED
             = new ExcelTransformerRulePrimitiveSupported();
-    /**
-     * 使用特定规则的构造器
-     * @param defaultTransformerRule 默认规则
-     */
-    private ExcelTransformerRulePrimitiveSupported(
-            Map<Class<?>,Function<Cell,?>> defaultTransformerRule
-    ) {
-        super.setDefaultTransformerRule(defaultTransformerRule);
-    }
     /**
      * 初始化默认规则
      */

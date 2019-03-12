@@ -111,7 +111,7 @@ public class ExcelParserFactory {
         /**
          * 使用自定义处理器
          *
-         * @param <T> StructureHandler<ExcelParser>子类的泛型
+         * @param <T> StructureHandler&lt;ExcelParser&gt;子类的泛型
          * @param t 自定义处理器
          * @return Excel解析器构建器
          */

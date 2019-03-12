@@ -85,7 +85,7 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
             Function<O,G> ogFunction
     ) {
         if (Assert.notNull(defaultTransformerRule.put(gClass,ogFunction))) {
-            log.debug("类 {} 的默认转换规则已被替换", gClass);
+            log.warn("类 {} 的默认转换规则已被替换", gClass);
         }
     }
 
