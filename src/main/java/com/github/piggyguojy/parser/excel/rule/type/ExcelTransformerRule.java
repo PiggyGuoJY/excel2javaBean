@@ -17,13 +17,14 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Map;
-import java.util.function.Function;
 
 import static com.github.piggyguojy.Assert.isNull;
 
 /**
- * 基于Excel单元格类型的类型转换类
+ * 基于Excel单元格类型的转换器
+ * <p>
+ *     本类提供了对常用类型的转换规则(规则特定是对应才能转, 不支持公式计算)
+ * </p>
  *    <table border="1">
  *        <caption>常用类型的转换规则</caption>
  *        <tr>
@@ -39,8 +40,8 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>Boolean</td>
  *            <td>null</td>
- *            <td style="background-color:lightgreen">当单元格值大写格式和TRUE相同时返回ture,其他情况返回false</td>
- *            <td style="background-color:lightgreen">false</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *            <td>null</td>
  *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>null</td>
@@ -49,8 +50,8 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>Byte</td>
  *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
- *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为byte,转换失败返回0</td>
- *            <td style="background-color:lightgreen">0</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -59,27 +60,153 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>Short</td>
  *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
- *            <td style="background-color:lightgreen">单元格值转换为整数后强制转换为short,转换失败返回0</td>
- *            <td style="background-color:lightgreen">0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
- *            <td>0</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
- *        <tr><td>Character</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Integer</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Long</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>BigInteger</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Float</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Double</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>BigDecimal</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Void</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Object</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>String</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Date</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>LocalDate</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Class</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
- *        <tr><td>Object[]</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+ *        <tr>
+ *            <td>Character</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *        </tr>
+ *        <tr>
+ *            <td>Integer</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Long</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>BigInteger</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Float</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Double</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>BigDecimal</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>String</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Date</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>LocalDate</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Class</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Void</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Object</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
+ *        <tr>
+ *            <td>Object[]</td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *            <td></td>
+ *        </tr>
  *    </table>
  *
  *
@@ -103,10 +230,6 @@ public class ExcelTransformerRule
     }
 
 
-
-    protected Void cell2Void(Cell cell) { return null;}
-    protected Object cell2Object(Cell cell) {return null;}
-    protected Object[] cell2Objects(Cell cell) {return new Object[]{};}
 
     protected Boolean cell2Boolean(Cell cell) {
         if(isNull(cell)) { return null; }
@@ -265,6 +388,9 @@ public class ExcelTransformerRule
             default: return null;
         }
     }
+    protected Void cell2Void(Cell cell) { return null;}
+    protected Object cell2Object(Cell cell) {return null;}
+    protected Object[] cell2Objects(Cell cell) {return new Object[]{};}
     /**
      * 生效父类配置的默认构造器
      */
