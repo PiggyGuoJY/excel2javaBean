@@ -116,8 +116,18 @@ public final class Msg<T> implements Serializable {
      * @param t 负载实体
      * @param msg 附加消息
      * */
+    @SuppressWarnings("unchecked")
     public Msg( T t, String msg) {
-        this( CODE_SUCCESS, msg, "无详细信息", t);
+        if ( Exception.class.isAssignableFrom(t.getClass())) {
+            this.code = CODE_RAW_EXCEPTION;
+            this.detail = t.toString();
+            this.t = null;
+        } else  {
+            this.code = CODE_SUCCESS;
+            this.detail = "无详细信息";
+            this.t = t;
+        }
+        this.msg = msg;
     }
     /**
      * 使用异常创建一个失败返回

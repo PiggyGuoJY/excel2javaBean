@@ -39,126 +39,126 @@ public final class Assert{
     public static boolean isNull(Object object) { return object==null; }
     
     /**
-     * 断言byte数组为空(null对象且长度等于0)
+     * 断言byte数组为空(null对象或长度等于0)
      *
      * @param bytes byte数组
      * @return byte数组是否为空
      */
-    public static boolean isNul(byte[] bytes) { return notNull(bytes)&&bytes.length==0; }
+    public static boolean isNul(byte[] bytes) { return isNull(bytes)||bytes.length==0; }
     /**
-     * 断言byte数组非空(null对象且长度不等于0)
+     * 断言byte数组非空(非null对象且长度不等于0)
      * 
      * @param bytes byte数组
      * @return byte数组是否非空
      */
     public static boolean notNul(byte[] bytes) { return notNull(bytes)&&bytes.length!=0; }
     /**
-     * 断言short数组为空(null对象且长度等于0)
+     * 断言short数组为空(null对象或长度等于0)
      *
      * @param shorts short数组
      * @return short数组是否为空
      */
-    public static boolean isNul(short[] shorts) { return notNull(shorts)&&shorts.length==0; }
+    public static boolean isNul(short[] shorts) { return isNull(shorts)||shorts.length==0; }
     /**
-     * 断言short数组非空(null对象且长度不等于0)
+     * 断言short数组非空(非null对象且长度不等于0)
      *
      * @param shorts short数组
      * @return short数组是否非空
      */
     public static boolean notNul(short[] shorts) { return notNull(shorts)&&shorts.length!=0; }
     /**
-     * 断言int数组为空(null对象且长度等于0)
+     * 断言int数组为空(null对象或长度等于0)
      * 
      * @param ints int数组
      * @return int数组是否为空
      */
-    public static boolean isNul(int[] ints) { return notNull(ints)&&ints.length==0;}
+    public static boolean isNul(int[] ints) { return isNull(ints)||ints.length==0;}
     /**
-     * 断言int数组非空(null对象且长度不等于0)
+     * 断言int数组非空(非null对象且长度不等于0)
      *
      * @param ints int数组
      * @return int数组是否非空
      */
     public static boolean notNul(int[] ints) { return notNull(ints)&&ints.length!=0; }
     /**
-     * 断言long数组为空(null对象且长度等于0)
+     * 断言long数组为空(null对象或长度等于0)
      *
      * @param longs byte数组
      * @return long数组是否为空
      */
-    public static boolean isNul(long[] longs) { return notNull(longs)&&longs.length==0; }
+    public static boolean isNul(long[] longs) { return isNull(longs)||longs.length==0; }
     /**
-     * 断言long数组非空(null对象且长度不等于0)
+     * 断言long数组非空(非null对象且长度不等于0)
      *
      * @param longs byte数组
      * @return long数组是否非空
      */
     public static boolean notNul(long[] longs) { return notNull(longs)&&longs.length!=0; }
     /**
-     * 断言float数组为空(null对象且长度等于0)
+     * 断言float数组为空(null对象或长度等于0)
      *
      * @param floats float数组
      * @return float数组是否为空
      */
-    public static boolean isNul(float[] floats) { return notNull(floats)&&floats.length==0; }
+    public static boolean isNul(float[] floats) { return isNull(floats)||floats.length==0; }
     /**
-     * 断言float数组非空(null对象且长度不等于0)
+     * 断言float数组非空(非null对象且长度不等于0)
      *
      * @param floats float数组
      * @return float数组是否非空
      */
     public static boolean notNul(float[] floats) { return notNull(floats)&&floats.length!=0; }
     /**
-     * 断言double数组为空(null对象且长度等于0)
+     * 断言double数组为空(null对象或长度等于0)
      *
      * @param doubles double数组
      * @return double数组是否为空
      */
-    public static boolean isNul(double[] doubles) { return notNull(doubles)&&doubles.length==0; }
+    public static boolean isNul(double[] doubles) { return isNull(doubles)||doubles.length==0; }
     /**
-     * 断言double数组非空(null对象且长度不等于0)
+     * 断言double数组非空(非null对象且长度不等于0)
      *
      * @param doubles double数组
      * @return double数组是否非空
      */
     public static boolean notNul(double[] doubles) { return notNull(doubles)&&doubles.length!=0; }
     /**
-     * 断言char数组为空(null对象且长度等于0)
+     * 断言char数组为空(null对象或长度等于0)
      *
      * @param chars char数组
      * @return char数组是否为空
      */
-    public static boolean isNul(char[] chars) { return notNull(chars)&&chars.length==0; }
+    public static boolean isNul(char[] chars) { return isNull(chars)||chars.length==0; }
     /**
-     * 断言char数组非空(null对象且长度不等于0)
+     * 断言char数组非空(非null对象且长度不等于0)
      *
      * @param chars char数组
      * @return char数组是否非空
      */
     public static boolean notNul(char[] chars) { return notNull(chars)&&chars.length!=0; }
     /**
-     * 断言boolean数组为空(null对象且长度等于0)
+     * 断言boolean数组为空(null对象或长度等于0)
      *
      * @param booleans boolean数组
      * @return boolean数组是否为空
      */
-    public static boolean isNul(boolean[] booleans) { return notNull(booleans)&&booleans.length==0; }
+    public static boolean isNul(boolean[] booleans) { return isNull(booleans)||booleans.length==0; }
     /**
-     * 断言boolean数组非空(null对象且长度不等于0)
+     * 断言boolean数组非空(非null对象且长度不等于0)
      *
      * @param booleans boolean数组
      * @return boolean数组是否非空
      */
     public static boolean notNul(boolean[] booleans) { return notNull(booleans)&&booleans.length!=0; }
     /**
-     * 断言{@code Object}数组为空(null对象且长度等于0)
+     * 断言{@code Object}数组为空(null对象或长度等于0)
      *
      * @param objects {@code Object}数组
      * @return {@code Object}数组是否为空
      */
-    public static boolean isNul(Object[] objects) { return notNull(objects)&&objects.length==0; }
+    public static boolean isNul(Object[] objects) { return isNull(objects)||objects.length==0; }
     /**
-     * 断言{@code Object}数组非空(null对象且长度不等于0)
+     * 断言{@code Object}数组非空(非null对象且长度不等于0)
      *
      * @param objects {@code Object}数组
      * @return {@code Object}数组是否非空
@@ -173,7 +173,7 @@ public final class Assert{
      */
     public static boolean isNul(String string) { return StringUtils.isEmpty(string); }
     /**
-     * 断言字符串非空(null对象且长度不等于0)
+     * 断言字符串非空(非null对象且长度不等于0)
      *
      * @param string 字符串
      * @return 字符串是否非空
