@@ -1,7 +1,7 @@
 
 package com.github.piggyguojy.parser.excel.rule.structure.annotation;
 
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 
 import java.lang.annotation.*;
 

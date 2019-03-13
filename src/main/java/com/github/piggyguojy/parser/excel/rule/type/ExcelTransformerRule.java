@@ -79,140 +79,140 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Integer</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Long</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>BigInteger</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Float</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Double</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>BigDecimal</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>String</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Date</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>LocalDate</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Class</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Void</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Object</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Object[]</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *    </table>
  *
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  *
  * @see AbstractTransformerRule4SingleDataType
  *

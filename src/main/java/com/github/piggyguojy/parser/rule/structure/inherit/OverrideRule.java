@@ -1,10 +1,8 @@
 
-package com.github.piggyguojy.parser.rule.structure;
+package com.github.piggyguojy.parser.rule.structure.inherit;
 
 /**
- * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
- *
- * <p> 创建时间：2019/2/22
+ * 继承规则
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0

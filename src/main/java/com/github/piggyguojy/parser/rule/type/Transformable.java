@@ -11,7 +11,7 @@ import static com.github.piggyguojy.Msg.msg;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  * */
 public interface Transformable {
 

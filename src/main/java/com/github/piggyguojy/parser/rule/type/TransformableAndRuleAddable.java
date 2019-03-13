@@ -9,7 +9,7 @@ import java.util.function.Function;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  * */
 public interface TransformableAndRuleAddable<T extends TransformableAndRuleAddable>
         extends Transformable {

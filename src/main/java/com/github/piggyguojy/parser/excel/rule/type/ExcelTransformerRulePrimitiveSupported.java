@@ -184,7 +184,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  *
  * @see AbstractTransformerRule4SingleDataType
  * */

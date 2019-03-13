@@ -200,7 +200,7 @@ import java.util.Date;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  * */
 public class ExcelTransformerRuleTypeAdvanced
         extends ExcelTransformerRulePrimitiveSupported {

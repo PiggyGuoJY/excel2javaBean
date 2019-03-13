@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  *
  * @see GsonBuilderStrategy
  * @see GsonBean
@@ -111,7 +111,7 @@ public final class JsonUtil {
      *
      * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
-     * @since JDK1.8
+     *
      *
      * @see JsonUtil
      * @see GsonBuilderStrategy
@@ -126,7 +126,7 @@ public final class JsonUtil {
      *
      * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
-     * @since JDK1.8
+     *
      *
      * @see JsonUtil
      * @see GsonBean
@@ -212,7 +212,7 @@ public final class JsonUtil {
          *
          * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
          * @version 1.0
-         * @since JDK1.8
+         *
          * @see GsonBuilderStrategy
          * */
         private static final class GsonDefaultSerializationExclusionStrategy
@@ -239,7 +239,7 @@ public final class JsonUtil {
          *
          * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
          * @version 1.0
-         * @since JDK1.8
+         *
          * @see GsonBuilderStrategy
          * */
         private static final class GsonDefaultDeserializationExclusionStrategy

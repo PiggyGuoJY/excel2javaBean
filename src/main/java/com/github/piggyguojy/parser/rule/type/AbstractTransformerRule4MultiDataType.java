@@ -15,16 +15,20 @@ import static com.github.piggyguojy.Msg.msg;
 
 /**
  * 多数据源类型转换器基类
- * 
- * <p> 创建时间：2019/2/19
- * 
+ *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ *
+ *
+ * @see AbstractTransformerRule4SingleDataType
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTransformerRule4MultiDataType 
         implements TransformableAndRuleAddable<AbstractTransformerRule4MultiDataType> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> AbstractTransformerRule4MultiDataType addRule4Transformer(
             Class<G> gClass,
@@ -42,6 +46,9 @@ public abstract class AbstractTransformerRule4MultiDataType
         }
         return this;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> transform(
             Object object,

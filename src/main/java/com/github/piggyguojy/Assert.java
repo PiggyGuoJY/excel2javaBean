@@ -14,7 +14,6 @@ import java.util.Collection;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
  *
  * @see ClassUtil
  * @see JsonUtil

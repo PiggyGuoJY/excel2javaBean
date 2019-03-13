@@ -1,5 +1,5 @@
 
-package com.github.piggyguojy.parser.rule.structure;
+package com.github.piggyguojy.parser.rule.structure.inherit;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
@@ -73,5 +73,4 @@ public interface BiInheritableRule<X,Y> {
             default: return decideBiRuleOnParentForce(son, parent);
         }
     }
-
 }

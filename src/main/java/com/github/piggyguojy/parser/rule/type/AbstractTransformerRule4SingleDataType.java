@@ -19,6 +19,7 @@ import static java.lang.String.format;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ *
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractTransformerRule4SingleDataType<O>

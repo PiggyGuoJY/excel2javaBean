@@ -4,7 +4,7 @@ package com.github.piggyguojy.parser.rule.structure.annotation;
 import com.github.piggyguojy.ClassUtil;
 import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,8 +23,6 @@ import static com.github.piggyguojy.Assert.notNull;
 
 /**
  * 注解形式规则处理器基类
- * 
- * <p> 创建时间：2019/2/13
  * 
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
@@ -125,6 +123,7 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             return son;
         }
     }
+
     /**
      * 用于TYPE类型的注解处理器
      *
@@ -156,7 +155,9 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
      * @param annotationClass 注解类型
      * @return 对应的注解处理器或默认注解处理器(当找不到时)
      * */
-    protected static AbstractAnnotationHandler getAnnotationHandlerRegistered(Class<? extends Annotation> annotationClass) {
+    protected static AbstractAnnotationHandler getAnnotationHandlerRegistered(
+            Class<? extends Annotation> annotationClass
+    ) {
         return MAP_ANNOTATION_HANDLER.getOrDefault(
                 annotationClass,
                 DefaultAnnotationHandler.DEFAULT_ANNOTATION_HANDLER);

@@ -7,8 +7,6 @@ import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 /**
  * 规则处理器(用于处理定义数据来源的规则.一般而言,需要使用解析器传递某些中间参数)
  *
- * <p> 创建时间：2019/2/15
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */

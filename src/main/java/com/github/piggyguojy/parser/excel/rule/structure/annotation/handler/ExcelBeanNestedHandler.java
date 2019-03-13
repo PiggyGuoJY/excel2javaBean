@@ -5,7 +5,7 @@ import com.github.piggyguojy.ClassUtil;
 import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.excel.rule.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.BiInheritableRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

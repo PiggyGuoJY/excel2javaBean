@@ -1,11 +1,9 @@
 
-package com.github.piggyguojy.parser.rule.structure;
+package com.github.piggyguojy.parser.rule.structure.inherit;
 
 /**
  * 可继承的
- * 
- * <p> 创建时间：2019/2/23
- * 
+ *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -43,6 +41,7 @@ public interface Inheritable<X> {
      * @return 最终规则
      */
     X decideRuleOnSonForce(X son, X parent);
+
     /**
      * 决定规则
      *

@@ -8,9 +8,9 @@ import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelColumn;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelRow;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
-import com.github.piggyguojy.parser.rule.structure.Inheritable;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.BiInheritableRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.Inheritable;
+import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler;
 import com.google.common.collect.ImmutableMap;
@@ -28,12 +28,14 @@ import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
- * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * Excel注解形式处理器
  * 
- * <p> 创建时间：2019/2/15
- * 
+ *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ *
+ *
+ *
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExcelAnnotationHandler<A extends Annotation>
@@ -44,6 +46,9 @@ public class ExcelAnnotationHandler<A extends Annotation>
         return new ExcelAnnotationHandler();
     }
 
+    /**
+     *
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> handle(Class<G> gClass, ExcelParser excelParser, Object... args) {
         Class<? extends Annotation> annotationClass = ClassUtil.getTheOnlyOneAnnotation(gClass,ANNOTATIONS_ON_TYPE);

@@ -24,13 +24,12 @@ import java.nio.file.StandardOpenOption;
 /**
  * Excel解析器
  *
- * <p> 创建时间：2018/10/30
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExcelParser extends DefaultParser<ExcelParser>
+public class ExcelParser
+        extends DefaultParser<ExcelParser>
         implements AutoCloseable {
 
     public static class ExcelParserHelper {

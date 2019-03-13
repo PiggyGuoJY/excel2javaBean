@@ -30,7 +30,7 @@ import static java.lang.String.format;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExcelParserFactory {
@@ -58,7 +58,7 @@ public class ExcelParserFactory {
      *
      * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
      * @version 1.0
-     * @since JDK1.8
+     *
      * */
     public static class ExcelParserBuilder {
 

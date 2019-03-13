@@ -9,9 +9,9 @@ import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.Exce
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelBeanHandler;
 import com.github.piggyguojy.parser.excel.rule.structure.annotation.handler.ExcelColumnHandler;
 import com.github.piggyguojy.parser.rule.parse.Parseable;
-import com.github.piggyguojy.parser.rule.structure.BiInheritableRule;
-import com.github.piggyguojy.parser.rule.structure.Inheritable;
-import com.github.piggyguojy.parser.rule.structure.OverrideRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.BiInheritableRule;
+import com.github.piggyguojy.parser.rule.structure.inherit.Inheritable;
+import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.reflect.TypeToken;
 import lombok.SneakyThrows;

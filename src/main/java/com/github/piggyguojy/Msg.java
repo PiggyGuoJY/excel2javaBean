@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- * @since JDK1.8
+ *
  *
  * @see Assert
  * @see ClassUtil
