@@ -16,11 +16,10 @@ import java.lang.annotation.*;
 import java.lang.reflect.Type;
 
 /**
- * 类{@code JsonUtil}提供了一套基于Gson的json序列化/反序列化工具
+ *      类{@code JsonUtil}提供了一套基于Gson的json序列化/反序列化工具
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- *
  *
  * @see GsonBuilderStrategy
  * @see GsonBean

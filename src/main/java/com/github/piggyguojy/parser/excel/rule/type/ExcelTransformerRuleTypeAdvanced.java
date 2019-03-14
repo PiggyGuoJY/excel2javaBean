@@ -11,10 +11,10 @@ import java.util.Date;
 /**
  * 基于Excel单元格类型的高级转换器
  * <p>
- *     本类提供了对常用类型的转换规则(规则特定是对应才能转, 不支持公式计算)
+ *     本类提供了对常用类型的拓展转换规则(支持公式计算)
  * </p>
  *    <table border="1">
- *        <caption>常用类型的转换规则</caption>
+ *        <caption>常用类型的转换规则(当cell为null时总是返回null)</caption>
  *        <tr>
  *            <th></th>
  *            <th>NUMERIC</th>
@@ -67,133 +67,133 @@ import java.util.Date;
  *        </tr>
  *        <tr>
  *            <td>Integer</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">按int强制类型转换后的单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Long</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>BigInteger</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Float</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">按float强制类型转换后的单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Double</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>BigDecimal</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>String</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Date</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">单元格值(转换异常时返回null)</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>LocalDate</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td style="background-color:lightgreen">单元格值(转换异常时返回null)</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Class</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值描述类类型, 获取失败时返回null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Void</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Object</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Object[]</td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
- *            <td></td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
+ *            <td>null</td>
  *        </tr>
  *    </table>
  *

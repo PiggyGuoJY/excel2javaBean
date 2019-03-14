@@ -42,7 +42,7 @@ public abstract class AbstractParser<P extends AbstractParser>
         Msg<?> msg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
         Object[] params = new Object[]{gClass,this,args,msg};
         for( Process process : processes) {
-            log.info("执行过程 {}", process.name);
+            log.debug("执行过程 {}", process.name);
             msg = process.processor.apply(params);
             if (msg.isException()) {
                 log.warn("执行过程 {} 出错, 中断流程", process.name);

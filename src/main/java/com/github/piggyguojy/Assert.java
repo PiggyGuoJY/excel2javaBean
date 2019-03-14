@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Collection;
 
 /**
- * 类{@code Assert}主要提供两类非空断言(notNul和notNull)和部分空断言(isNull和isNul)
+ *      类{@code Assert}主要提供两类非空断言(notNul和notNull)和部分空断言(isNull和isNul)
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0

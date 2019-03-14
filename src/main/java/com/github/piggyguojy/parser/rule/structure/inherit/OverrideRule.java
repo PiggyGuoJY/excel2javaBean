@@ -6,6 +6,9 @@ package com.github.piggyguojy.parser.rule.structure.inherit;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
+ *
+ * @see BiInheritableRule
+ * @see Inheritable
  * */
 public enum OverrideRule {
 

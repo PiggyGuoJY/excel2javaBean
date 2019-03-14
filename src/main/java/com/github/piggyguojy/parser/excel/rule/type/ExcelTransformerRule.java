@@ -3,19 +3,17 @@ package com.github.piggyguojy.parser.excel.rule.type;
 
 
 import com.github.piggyguojy.parser.rule.type.AbstractTransformerRule4SingleDataType;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
-import com.google.common.primitives.Ints;
-import com.google.common.primitives.Longs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.FormulaError;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import static com.github.piggyguojy.Assert.isNull;
@@ -26,7 +24,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *     本类提供了对常用类型的转换规则(规则特定是对应才能转, 不支持公式计算)
  * </p>
  *    <table border="1">
- *        <caption>常用类型的转换规则</caption>
+ *        <caption>常用类型的转换规则(当cell为null时总是返回null)</caption>
  *        <tr>
  *            <th></th>
  *            <th>NUMERIC</th>
@@ -79,7 +77,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Integer</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按int强制类型转换后的单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -89,7 +87,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Long</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -99,7 +97,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>BigInteger</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -109,7 +107,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Float</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按float强制类型转换后的单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -119,7 +117,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Double</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -129,7 +127,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>BigDecimal</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -140,7 +138,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>String</td>
  *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -149,7 +147,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>Date</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值(转换异常时返回null)</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -159,7 +157,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        </tr>
  *        <tr>
  *            <td>LocalDate</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值(转换异常时返回null)</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -170,7 +168,7 @@ import static com.github.piggyguojy.Assert.isNull;
  *        <tr>
  *            <td>Class</td>
  *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值描述类类型, 获取失败时返回null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -234,12 +232,7 @@ public class ExcelTransformerRule
     protected Boolean cell2Boolean(Cell cell) {
         if(isNull(cell)) { return null; }
         switch ( cell.getCellType()) {
-            case NUMERIC: return null;
-            case STRING: return "true".equalsIgnoreCase( cell.getStringCellValue().trim());
-            case FORMULA:
-            case BLANK: return null;
             case BOOLEAN: return cell.getBooleanCellValue();
-            case ERROR:
             default: return null;
         }
     }
@@ -247,11 +240,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null; }
         switch (cell.getCellType()) {
             case NUMERIC: return (byte) cell.getNumericCellValue();
-            case STRING:
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -259,11 +247,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return (short)cell.getNumericCellValue();
-            case STRING:
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -272,11 +255,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return (int)cell.getNumericCellValue();
-            case STRING: return Ints.tryParse(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -284,11 +262,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return (long)cell.getNumericCellValue();
-            case STRING: return Longs.tryParse(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -296,11 +269,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return BigInteger.valueOf((long)cell.getNumericCellValue());
-            case STRING: return new BigInteger(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -308,11 +276,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return (float)cell.getNumericCellValue();
-            case STRING: return Floats.tryParse(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -320,11 +283,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) { return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return cell.getNumericCellValue();
-            case STRING: return Doubles.tryParse(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -332,11 +290,6 @@ public class ExcelTransformerRule
         if(isNull(cell)) {return null;}
         switch ( cell.getCellType()) {
             case NUMERIC: return BigDecimal.valueOf(cell.getNumericCellValue());
-            case STRING: return new BigDecimal(cell.getStringCellValue());
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
             default: return null;
         }
     }
@@ -344,12 +297,7 @@ public class ExcelTransformerRule
     protected String cell2String(Cell cell) {
         if(isNull(cell)) {return null;}
         switch ( cell.getCellType()) {
-            case NUMERIC: return Double.toString( cell.getNumericCellValue());
             case STRING: return cell.getStringCellValue();
-            case FORMULA: return cell.getCellFormula();
-            case BLANK: return null;
-            case BOOLEAN: return Boolean.toString( cell.getBooleanCellValue());
-            case ERROR: return FormulaError.forInt( cell.getErrorCellValue()).getString();
             default: return null;
         }
     }
@@ -357,34 +305,38 @@ public class ExcelTransformerRule
         if(isNull(cell)) {return null;}
         switch ( cell.getCellType()) {
             case NUMERIC:
-            case STRING:
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
+                try {
+                    return cell.getDateCellValue();
+                } catch (NumberFormatException e) {
+                    log.error(e.getMessage(),e);
+                    return null;
+                }
             default: return null;
         }
     }
     protected LocalDate cell2LocalDate(Cell cell) {
         if(isNull(cell)) {return null;}
         switch ( cell.getCellType()) {
-            case NUMERIC:return null;
-            case STRING: return LocalDate.parse( cell.getStringCellValue(), DATE_TIME_FORMATTER_DEFAULT);
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
+            case NUMERIC:
+                try {
+                    ZonedDateTime zonedDateTime = cell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault());
+                    return LocalDate.of(zonedDateTime.getYear(),zonedDateTime.getMonth(),zonedDateTime.getDayOfMonth());
+                } catch (NumberFormatException|DateTimeParseException e) {
+                    log.error(e.getMessage(),e);
+                    return null;
+                }
             default: return null;
         }}
     protected Class<?> cell2Class(Cell cell) {
         if(isNull(cell)) {return null;}
         switch ( cell.getCellType()) {
-            case NUMERIC: return null;
-            case STRING: try { return ClassUtils.getClass( cell.getStringCellValue()); } catch ( ClassNotFoundException e) { log.error( e.getMessage(), e); return null;}
-            case FORMULA:
-            case BLANK:
-            case BOOLEAN:
-            case ERROR:
+            case STRING:
+                try {
+                    return ClassUtils.getClass( cell.getStringCellValue());
+                } catch ( ClassNotFoundException e) {
+                    log.error( e.getMessage(), e);
+                    return null;
+                }
             default: return null;
         }
     }
@@ -401,7 +353,6 @@ public class ExcelTransformerRule
 
 
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER_DEFAULT = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     /**
      * 单例化一个转换器
      */

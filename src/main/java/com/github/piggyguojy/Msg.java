@@ -14,18 +14,26 @@ import java.util.Set;
 
 
 /**
- * 统一消息实体
+ *      统一消息实体
  *
- * 该实体类主要作后台向前台传输数据的容器, 在程序中的不同层次之间也可以使用此类.
- *
- * 关于消息实体中状态码和状态消息的约定
- *
- *  0~100
- *
+ *<table border="1">
+ *     <caption>编码与对应的错误</caption>
+ *     <tr>
+ *         <th>编码</th>
+ *         <th>含义</th>
+ *     </tr>
+ *     <tr>
+ *         <td>0</td>
+ *         <td>广义成功</td>
+ *     </tr>
+ *     <tr>
+ *         <td>100</td>
+ *         <td>广义失败</td>
+ *     </tr>
+ *</table>
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- *
  *
  * @see Assert
  * @see ClassUtil

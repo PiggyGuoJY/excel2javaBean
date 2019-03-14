@@ -107,7 +107,6 @@ import java.util.stream.Stream;
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  *
- *
  * @see Assert
  * @see JsonUtil
  * @see Msg
@@ -138,8 +137,10 @@ public final class ClassUtil {
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesExtendClassUseReflections(tUpperBoundClass,
-packagePath4Seek, isRecursive);
+        return getClassesExtendClassUseReflections(
+                tUpperBoundClass,
+                packagePath4Seek,
+                isRecursive);
     }
     /**
      * 获取指定类在特定位置下的所有父类类型
@@ -155,8 +156,10 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesSuperClassUseReflections(tLowerBoundClass,
-packagePath4Seek, isRecursive);
+        return getClassesSuperClassUseReflections(
+                tLowerBoundClass,
+                packagePath4Seek,
+                isRecursive);
     }
     /**
      * 在特定位置下查找所有标注特定注解的类类型
@@ -172,8 +175,10 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithAnnotationUseReflections(annotationClass,
-packagePath4Seek, isRecursive);
+        return getClassesWithAnnotationUseReflections(
+                annotationClass,
+                packagePath4Seek,
+                isRecursive);
     }
     /**
      * 在特定位置下查找所有实现特定注接口的类类型
@@ -188,8 +193,10 @@ packagePath4Seek, isRecursive);
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesWithInterfaceUseReflections(interfaceClass,
-packagePath4Seek, isRecursive);
+        return getClassesWithInterfaceUseReflections(
+                interfaceClass,
+                packagePath4Seek,
+                isRecursive);
     }
 
     /**
@@ -286,7 +293,10 @@ packagePath4Seek, isRecursive);
     public static <O> Class<?> getGenericClass(
             final TypeToken<O> oTypeToken,
             final int ... pos) {
-        if (!(oTypeToken.getType() instanceof ParameterizedType)) { log.warn("类型 {} 没有泛型参数", oTypeToken.getType()); return null;}
+        if (!(oTypeToken.getType() instanceof ParameterizedType)) {
+            log.warn("类型 {} 没有泛型参数", oTypeToken.getType());
+            return null;
+        }
         return getGenericClass(((ParameterizedType)oTypeToken.getType()), pos);
     }
 
@@ -480,10 +490,7 @@ packagePath4Seek, isRecursive);
     ) {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
-                        .include(filter(
-
-packagePath4Seek,
-                                isRecursive))))
+                        .include(filter(packagePath4Seek, isRecursive))))
                 .getResources(resourceName -> true)
                 .stream()
                 .map(resourceName -> resourceName.replaceAll("/",".").replaceAll("^(.*)\\.class$","$1"))
@@ -500,8 +507,7 @@ packagePath4Seek,
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(
-packagePath4Seek, isRecursive)
+        return getClassesUseReflections(packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tUpperBoundClass.equals(selfClass) && ClassUtils.isAssignable(selfClass,tUpperBoundClass))
                 .map(selfClass -> (Class<? extends T>) selfClass)
@@ -513,8 +519,7 @@ packagePath4Seek, isRecursive)
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return getClassesUseReflections(
-packagePath4Seek, isRecursive)
+        return getClassesUseReflections(packagePath4Seek, isRecursive)
                 .stream()
                 .filter(selfClass -> Assert.notNull(selfClass) && !tLowerBoundClass.equals(selfClass) && ClassUtils.isAssignable(tLowerBoundClass,selfClass))
                 .map(selfClass -> (Class<? super T>)selfClass)
@@ -527,10 +532,7 @@ packagePath4Seek, isRecursive)
     ) {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
-                        .include(filter(
-
-packagePath4Seek,
-                                isRecursive))))
+                        .include(filter(packagePath4Seek, isRecursive))))
                 .getTypesAnnotatedWith(annotationClass);
     }
     @SuppressWarnings("unchecked")
@@ -541,19 +543,14 @@ packagePath4Seek,
     ) {
         return new Reflections(CONFIGURATION_BUILDER
                 .filterInputsBy(new FilterBuilder()
-                        .include(filter(
-
-packagePath4Seek,
-                                isRecursive))))
+                        .include(filter(packagePath4Seek, isRecursive))))
                 .getSubTypesOf(interfaceClass);
     }
     private static String filter(
             final String packagePath4Seek,
             final boolean isRecursive
     ) {
-        return isRecursive ? FilterBuilder.prefix(
-packagePath4Seek) :
-packagePath4Seek.replace(".","\\.")+"\\.[a-zA-Z0-9$_]+\\.class";
+        return isRecursive ? FilterBuilder.prefix(packagePath4Seek) : packagePath4Seek.replace(".","\\.")+"\\.[a-zA-Z0-9$_]+\\.class";
     }
 
     private static Class<?> getGenericClass(
