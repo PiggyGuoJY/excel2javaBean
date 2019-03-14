@@ -21,6 +21,7 @@ import org.junit.Test;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,11 +81,23 @@ public class ClassUtilTest {
     @Test
     public void test6() {
         assertNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class, XmlRootElement.class, Slf4j.class));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class, XmlRootElement.class, ExcelBean.class));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(ClassUtilTest.class, XmlRootElement.class, Slf4j.class));
         assertNotNull(ClassUtil.getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class));
         assertEquals(ClassUtil.getTheOnlyOneAnnotation(Msg.class, Deprecated.class, GsonBean.class),GsonBean.class);
         assertNull(ClassUtil.getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(Slf4j.class).build()));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(
+                Msg.class,
+                ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(ExcelBean.class).build()));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(
+                Msg.class,
+                Collections.emptySet()));
+        assertNull(ClassUtil.getTheOnlyOneAnnotation(
+                ClassUtilTest.class,
+                ImmutableSet.<Class<? extends Annotation>>builder().add(XmlRootElement.class).add(ExcelBean.class).build()));
         assertNotNull(ClassUtil.getTheOnlyOneAnnotation(
                 Msg.class,
                 ImmutableSet.<Class<? extends Annotation>>builder().add(Deprecated.class).add(GsonBean.class).build()));
@@ -150,6 +163,11 @@ public class ClassUtilTest {
         assertEquals(ClassUtil.getGenericClass(
                 new TypeToken<Map<List<Map<String,Long>>,Set<Map<Map<BigDecimal,Msg>,Set<Integer>>>>>(){},
                 1,0,1,0),Integer.class);
+
+        assertNull(ClassUtil.getGenericClass(
+                new TypeToken<String>(){},
+                1,0,1,0)
+        );
     }
 
     @Test

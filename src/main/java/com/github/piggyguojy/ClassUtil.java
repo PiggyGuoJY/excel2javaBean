@@ -24,6 +24,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.github.piggyguojy.Assert.notNul;
+
 
 /**
  *      类{@code ClassUtil}主要提供了获取特定类集合、动态修改注解参数、注解分析和泛型动态分析等工具.
@@ -224,8 +226,8 @@ public final class ClassUtil {
                 .collect(Collectors.toSet());
         @SuppressWarnings("unchecked")
         Class<? extends Annotation> annotationClass =
-                (Assert.notNul(annotationsSetOfField) &&
-                Assert.notNul(annotationsSetOfParam) &&
+                (notNul(annotationsSetOfField) &&
+                notNul(annotationsSetOfParam) &&
                 annotationsSetOfParam.retainAll(annotationsSetOfField)&&
                 annotationsSetOfParam.size()==1) ?
                         (Class<? extends Annotation>)annotationsSetOfParam.toArray()[0] :
@@ -255,8 +257,8 @@ public final class ClassUtil {
                 .collect(Collectors.toSet());
         @SuppressWarnings("unchecked")
         Class<? extends Annotation> annotationClass =
-                (Assert.notNul(annotationsSetOfField) &&
-                Assert.notNul(annotationsSetOfParam) &&
+                (notNul(annotationsSetOfField) &&
+                notNul(annotationsSetOfParam) &&
                 annotationsSetOfParam.retainAll(annotationsSetOfField)&&
                 annotationsSetOfParam.size()==1) ?
                         (Class<? extends Annotation>)annotationsSetOfParam.toArray()[0] :
