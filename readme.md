@@ -7,6 +7,8 @@
 [![license](https://img.shields.io/github/license/PiggyGuoJY/excel2javaBean.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 > excel2javaBean是一个便捷的Excel数据读取和处理工具. 工具的目标是让开发者能更加专注于业务逻辑和数据处理本身.
 
+#### [点击这里查看主要注解参数的使用](https://www.jianshu.com/p/b71fab68933d)
+
 ## 目录
 - [1. 快速入门](#1-快速入门-回到目录)
     - [1.1 准备Excel文件](#11-准备excel文件)
