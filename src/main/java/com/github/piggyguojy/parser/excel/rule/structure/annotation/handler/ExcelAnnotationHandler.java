@@ -33,9 +33,6 @@ import static java.lang.String.format;
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
- *
- *
- *
  * */
 @Slf4j @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExcelAnnotationHandler<A extends Annotation>
@@ -47,7 +44,7 @@ public class ExcelAnnotationHandler<A extends Annotation>
     }
 
     /**
-     *
+     * {@inheritDoc}
      */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> handle(Class<G> gClass, ExcelParser excelParser, Object... args) {
@@ -55,38 +52,68 @@ public class ExcelAnnotationHandler<A extends Annotation>
         if ( isNull(annotationClass)) { return msg(new IllegalArgumentException(format("%s 应使用下列注解之一标注 %s", gClass.getCanonicalName(), ANNOTATIONS_ON_TYPE.toString()))); }
         return getAnnotationHandlerRegistered(annotationClass).onType(gClass, gClass.getDeclaredAnnotation(annotationClass), excelParser, args[StructureHandler.ARGS_INIT], args[StructureHandler.VALUE_RETURNED]);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <G> Msg<?> onType(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return msg(Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE_ACCESSED.getE()); }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <G> Msg<?> onField(Class<G> gClass, A a, ExcelParser excelParser, Object... args) { return msg(Msg.MsgError.ILLEGAL_STATE_SEGMENT_SHOULD_NOT_BE_ACCESSED.getE()); }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideRuleOnParentFirst(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.PARENT_FIRST);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideRuleOnParentForce(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.PARENT_FORCE);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideRuleOnSonFirst(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.SON_FIRST);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideRuleOnSonForce(A son, A parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, getCustomerInheritableField(), OverrideRule.SON_FORCE);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideBiRuleOnParentFirst(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.PARENT_FIRST);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideBiRuleOnParentForce(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.PARENT_FORCE);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideBiRuleOnSonFirst(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.SON_FIRST);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public A decideBiRuleOnSonForce(A son, ExcelBean parent) {
         return AbstractAnnotationHandlerHelper.decideAnnotationRule(son, parent, INHERITABLE_FIELD, OverrideRule.SON_FORCE);

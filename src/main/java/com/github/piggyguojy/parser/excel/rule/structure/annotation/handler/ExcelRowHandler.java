@@ -29,8 +29,6 @@ import static java.lang.String.format;
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  *
- * <p> 创建时间：2019/2/15
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -38,6 +36,9 @@ import static java.lang.String.format;
 public final class ExcelRowHandler
         extends ExcelAnnotationHandler<ExcelRow> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<?> onField(
             Class<G> gClass,
@@ -48,6 +49,9 @@ public final class ExcelRowHandler
         onFieldHandler((Class<Collection>)gClass,excelRow,excelParser,args);
         return Msg.msg();
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <G> Msg<?> onType(
             Class<G> gClass,
@@ -59,7 +63,9 @@ public final class ExcelRowHandler
     }
 
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Map<String, Object> getCustomerInheritableField() { return ExcelRowHandler.INHERITABLE_FIELD; }
 

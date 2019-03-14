@@ -4,8 +4,8 @@ package com.github.piggyguojy.parser.rule.structure.annotation;
 import com.github.piggyguojy.ClassUtil;
 import com.github.piggyguojy.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
-import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
+import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +17,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static com.github.piggyguojy.Assert.isNull;
 import static com.github.piggyguojy.Assert.notNull;
@@ -188,7 +189,25 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
 
     private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER = new HashMap<>();
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
-    static { init( ClassUtil.getTopPackageName());}
+    private static final String BANNER =
+            "                                                             \n" +
+                    "                                                             \n" +
+                    "                 .  .-.                  .--.                \n" +
+                    "                 | (   )o                |   )               \n" +
+                    " .-. -. ,-.-..-. |   .' . .-..    ._.-.  |--:  .-. .-.  .--. \n" +
+                    "(.-'   : (  (.-' |  /   |(   )\\  / (   ) |   )(.-'(   ) |  | \n" +
+                    " `--'-' `-`-'`--'`-'---'| `-'`-`'   `-'`-'--'  `--'`-'`-'  `-\n" +
+                    "                        ;                                    \n" +
+                    "                     `-'                                     ";
+    static {
+        long begin = System.currentTimeMillis();
+        log.info(BANNER);
+        init( ClassUtil.getTopPackageName());
+        long finish = System.currentTimeMillis();
+        log.info("excel2javaBean初始化完成, 用时 {} ms, 获取到对以下注解的支持:\n {}",
+                finish - begin,
+                MAP_ANNOTATION_HANDLER.keySet().parallelStream().map(Class::getSimpleName).collect(Collectors.toSet()).toString());
+    }
     private static void init(String packagePath) {
         if (ATOMIC_INTEGER.addAndGet(1)<=2) {
             ClassUtil

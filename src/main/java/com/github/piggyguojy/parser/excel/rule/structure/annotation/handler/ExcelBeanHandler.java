@@ -50,7 +50,7 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
         final ExcelBean finalExcelBean = notNull(nestedParent) ? AbstractAnnotationHandlerHelper.decideAnnotationRule(
                 excelBean, nestedParent, INHERITABLE_FIELD, nestedParent.overideRule()) : excelBean;
         if ( notNull(nestedParent) && nestedParent.stepBy()>0) {
-            ClassUtil.addValueToAnnotationArrayField(finalExcelBean,"sheet",finalExcelBean.sheet()+nestedParent.stepBy());
+            ClassUtil.changeAnnotationFieldValue(finalExcelBean,"sheet",finalExcelBean.sheet()+nestedParent.stepBy());
         }
         // 3.当根据sheet和sheetName不能判断Sheet页时, 停止解析
         if ( isNull(ExcelParser.ExcelParserHelper.decideSheet(finalExcelBean.sheet(),finalExcelBean.sheetName(),excelParser.getWorkbook()))) {
