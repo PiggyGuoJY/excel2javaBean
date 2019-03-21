@@ -2,8 +2,6 @@ package com.github.piggyguojy.parser.rule.type;
 
 import com.github.piggyguojy.Msg;
 
-import static com.github.piggyguojy.Msg.msg;
-
 /**
  * 可转换的
  * <p>

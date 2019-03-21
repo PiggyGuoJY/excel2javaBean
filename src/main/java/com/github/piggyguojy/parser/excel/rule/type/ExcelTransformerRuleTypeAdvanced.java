@@ -1,6 +1,5 @@
 package com.github.piggyguojy.parser.excel.rule.type;
 
-import com.github.piggyguojy.parser.rule.type.AbstractTransformerRule4SingleDataType;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.math.BigDecimal;
