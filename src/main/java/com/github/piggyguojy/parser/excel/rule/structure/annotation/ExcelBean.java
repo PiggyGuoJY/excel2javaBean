@@ -26,21 +26,22 @@ public @interface ExcelBean {
      * @return sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
      * */
     String sheetName() default "";
-
     /**
      * @return sheet页号码(从1开始);不设置时使用1;可继承
      * */
     int sheet() default -1;
 
+
+
     /**
      * @return 本JavaBean是否允许作为属性被嵌套在其他使用{@code ExcelBean}注解标注的JavaBean中, 默认不允许; 本注解影响{@code ExcelBean.Nested}的使用
      * */
     boolean isNestable() default false;
-
     /**
      * @return 设置继承属性(默认冲突时优先使用子配置)
      * */
     OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
+
 
 
     /**
@@ -77,11 +78,12 @@ public @interface ExcelBean {
          * @return sheet页名称;不设置时使用外层{@code ExcelBean}的sheetName;可继承(优先使用sheet(当其存在时))
          * */
         String sheetName() default "";
-
         /**
          * @return sheet页号码(从1开始);不设置时使用外层{@code ExcelBean}的sheet;可继承
          * */
         int sheet() default -1;
+
+
 
         /**
          * @return 使用步进值确定下一个类型{@code ExcelBean}的sheet(前提是下一个的未设置, 否则子配置不继承)

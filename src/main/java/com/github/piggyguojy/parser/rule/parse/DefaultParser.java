@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 /**
  * 默认实现解析器
  *
- * <p> 创建时间：2019/2/23
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -23,8 +21,15 @@ public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
             TransformableAndRuleAddable abstractDataTypeTransformerRule) {
         super(structureHandler, abstractDataTypeTransformerRule);
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected <T> Msg<T> beforeParse(Object... args) { return Msg.msg(); }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     protected <T> Msg<T> doParse(Object... args) {
         Msg<?> msg = structureHandler.handle(
@@ -34,6 +39,9 @@ public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
                 args[VALUE_RETURNED]);
         return (Msg<T>)msg;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     protected <T> Msg<T> afterParse(Object... args) { return (Msg<T>)args[VALUE_RETURNED]; }
 }

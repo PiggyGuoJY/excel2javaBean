@@ -20,11 +20,10 @@ import java.util.stream.Stream;
 import static com.github.piggyguojy.Assert.isNull;
 import static com.github.piggyguojy.Assert.notNull;
 import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.decideAnnotationRule;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
- *
- * <p> 创建时间：2019/2/14
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
@@ -32,6 +31,9 @@ import static com.github.piggyguojy.Msg.msg;
 @Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<?> onType(
             Class<G> gClass,
@@ -47,8 +49,7 @@ public final class ExcelBeanHandler extends ExcelAnnotationHandler<ExcelBean> {
         }
         // 2.ExcelBean注解只有可能从上一个ExcelBean.Nested上继承规则sheetName和sheet
         final ExcelBean.Nested nestedParent = getAnnotationParent(ExcelBean.Nested.class, args);
-        final ExcelBean finalExcelBean = notNull(nestedParent) ? AbstractAnnotationHandlerHelper.decideAnnotationRule(
-                excelBean, nestedParent, INHERITABLE_FIELD, nestedParent.overideRule()) : excelBean;
+        final ExcelBean finalExcelBean = notNull(nestedParent) ? decideAnnotationRule(excelBean, nestedParent, INHERITABLE_FIELD, nestedParent.overideRule()) : excelBean;
         if ( notNull(nestedParent) && nestedParent.stepBy()>0) {
             ClassUtil.changeAnnotationFieldValue(finalExcelBean,"sheet",finalExcelBean.sheet()+nestedParent.stepBy());
         }

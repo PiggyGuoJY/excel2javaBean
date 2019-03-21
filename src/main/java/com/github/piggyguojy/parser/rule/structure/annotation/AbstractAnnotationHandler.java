@@ -59,12 +59,13 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
                 return son;
             }
             if ( isNull(son)) {
+                log.error("缺少要处理的参数 {}, 直接返回parent", "son");
                 return (A)parent;
             }
             A a = son;
             for(Map.Entry entry : stringObjectMap.entrySet()) {
                 a = decideAnnotationRule(a, parent, (String)entry.getKey(), entry.getValue(), overrideRule);
-                if ( isNull(a)) { log.error("处理 {} 时出错, 中断执行", entry.getKey()); return son; }
+                if ( isNull(a)) { log.error("处理 {} 时出错, 中断执行并返回 {}", entry.getKey(), "son"); return son; }
             }
             return a;
         }
@@ -175,13 +176,10 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
             Class<A> annotationClass,
             AbstractAnnotationHandler<A,P> abstractAnnotationHandler
     ) {
-        AbstractAnnotationHandler previous = MAP_ANNOTATION_HANDLER.put(annotationClass, abstractAnnotationHandler);
-        if ( notNull( previous)) {
-            log.warn(
-                    "注解 {} 的处理器已由 {} 替换为 {}",
-                    annotationClass.getCanonicalName(),
-                    previous.getClass().getCanonicalName(),
-                    abstractAnnotationHandler.getClass().getCanonicalName());
+        if ( notNull(MAP_ANNOTATION_HANDLER.put(annotationClass, abstractAnnotationHandler))) {
+            log.debug(
+                    "注解 {} 的处理器已被替换",
+                    annotationClass.getCanonicalName());
         }
     }
 

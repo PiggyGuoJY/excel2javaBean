@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.github.piggyguojy.Assert.isNull;
+import static com.github.piggyguojy.Assert.notNull;
+import static com.github.piggyguojy.Msg.msg;
 import static java.lang.String.format;
 
 /**
@@ -34,7 +37,7 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
             Class zlass,
             Function<?, G> ogFunction
     ) {
-        if(Assert.notNull(customerTransformerRule.put(gClass,(Function<O,?>)ogFunction))) {
+        if(notNull(customerTransformerRule.put(gClass,(Function<O,?>)ogFunction))) {
             log.debug("类 {} 的自定义转换规则已被替换", gClass);
         }
         return this;
@@ -47,28 +50,28 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
             Object object,
             Class<G> gClass
     ) {
-        if (Assert.isNull(object)|| Assert.isNull(gClass)) {
+        if (isNull(object)|| isNull(gClass)) {
             return transform(gClass);
         }
         Function<O,?> transformer;
         G g;
         // 1. 先去自定义的转换规则里查
         transformer = customerTransformerRule.get(gClass);
-        if (Assert.notNull(transformer)) {
+        if (notNull(transformer)) {
             g = (G)transformer.apply((O)object);
-            if (Assert.notNull(g)) { return Msg.msg(g); }
+            if (notNull(g)) { return msg(g); }
         }
         // 2. 再去默认的规则里查
         transformer = defaultTransformerRule.get(gClass);
-        if (Assert.notNull(transformer)) {
+        if (notNull(transformer)) {
             g = (G) transformer.apply((O)object);
-            if (Assert.notNull(g)){ return Msg.msg(g); }
+            if (notNull(g)){ return msg(g); }
         }
         // 3. 如果都查不到的话, 返回异常
         log.warn(
                 "未能在默认转换规则和自定义转换规则中找到对应类型 {} 的转换规则或虽找到规则但解析过程异常", 
                 gClass.getName());
-        return Msg.msg(new IllegalStateException(format(
+        return msg(new IllegalStateException(format(
                 "未能在默认转换规则和自定义转换规则中找到对应类型 %s 的转换规则或虽找到规则但解析过程异常", 
                 gClass.getName())));
     }
@@ -85,7 +88,7 @@ public abstract class AbstractTransformerRule4SingleDataType<O>
             Class<G> gClass,
             Function<O,G> ogFunction
     ) {
-        if (Assert.notNull(defaultTransformerRule.put(gClass,ogFunction))) {
+        if (notNull(defaultTransformerRule.put(gClass,ogFunction))) {
             log.warn("类 {} 的默认转换规则已被替换", gClass);
         }
     }

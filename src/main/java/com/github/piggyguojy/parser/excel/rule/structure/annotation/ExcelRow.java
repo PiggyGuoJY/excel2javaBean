@@ -25,11 +25,12 @@ public @interface ExcelRow {
      * @return sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
      * */
     String sheetName() default "";
-
     /**
      * @return sheet页号码(从1开始);不设置时使用1;可继承
      * */
     int sheet() default -1;
+
+
 
     /**
      * @return 起始行行数(以1开始)
@@ -52,7 +53,14 @@ public @interface ExcelRow {
     OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
 
 
+
+    /**
+     * @return 设置起始列
+     */
     int columnBegin() default -1;
+    /**
+     * @return 设置起始列名
+     */
     String columnNameBegin() default "";
     @Retention( RetentionPolicy.RUNTIME)
     @Target( {ElementType.FIELD})
@@ -61,7 +69,6 @@ public @interface ExcelRow {
          * @return 跳至(优先使用)
          * */
         String skipTo() default "";
-
         /**
          *
          * @return 跳过

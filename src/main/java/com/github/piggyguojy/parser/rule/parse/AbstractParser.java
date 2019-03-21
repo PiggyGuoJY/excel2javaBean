@@ -17,8 +17,7 @@ import static com.github.piggyguojy.Msg.msg;
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  * 
- * <p> 创建时间：2019/2/18
- * 
+ *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -27,13 +26,8 @@ public abstract class AbstractParser<P extends AbstractParser>
         implements TransformableAndRuleAddable<AbstractParser> , Parseable {
 
     /**
-     * 解析入口
-     *
-     * @param <G> 目标类型
-     * @param gClass 目标类类型
-     * @param args 附加参数
-     * @return 含有目标实例的消息
-     * */
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> parse(
             Class<G> gClass,
@@ -45,12 +39,15 @@ public abstract class AbstractParser<P extends AbstractParser>
             log.debug("执行过程 {}", process.name);
             msg = process.processor.apply(params);
             if (msg.isException()) {
-                log.warn("执行过程 {} 出错, 中断流程", process.name);
+                log.warn("执行过程 {} 出错, 中断并退出流程", process.name);
                 break;
             } else { params = new Object[]{gClass,this,args,msg}; }
         }
         return (Msg<G>)msg;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> AbstractParser addRule4Transformer(
             Class<G> gClass,
@@ -61,9 +58,12 @@ public abstract class AbstractParser<P extends AbstractParser>
                 abstractDataTypeTransformerRule.addRule4Transformer(gClass, zlass, ogFunction);
         return this;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> transform(Object object,  Class<G> gClass) {
-        return abstractDataTypeTransformerRule.transform(object,gClass);
+        return abstractDataTypeTransformerRule.transform(object, gClass);
     }
     @SuppressWarnings("unchecked")
     public P addProcessorBefore(
@@ -79,7 +79,7 @@ public abstract class AbstractParser<P extends AbstractParser>
         Process beforeProcess = new Process(beforeProcessorName,null);
         Process process = new Process(processorName, processor);
         if (!processes.contains(beforeProcess)) {
-            log.warn("处理器 {} 不存在", beforeProcessorName);
+            log.warn("处理器 {} 不存在, 无法进行操作", beforeProcessorName);
             return (P)this;
         }
         boolean exist = processes.contains(process);
@@ -93,16 +93,16 @@ public abstract class AbstractParser<P extends AbstractParser>
             String processorName,
             Function<Object[],Msg<?>> processor
     ) {
-        return addProcessorBefore(processorName, processor, null, false);
+        return addProcessorBefore(processorName, processor, "afterParse", true);
     }
     @SuppressWarnings("unchecked")
     public P removeProcess( String processorName) {
         if (PROCESS_CANT_BE_REMORED.contains(processorName)) {
-            log.error("处理器 {} 只能被替换,不能被移除", processorName);
+            log.warn("处理器 {} 只能被替换,不能被移除", processorName);
             return (P)this;
         }
         if ( !processes.remove( new Process( processorName, null))) {
-            log.warn("处理器 {} 不存在", processorName);
+            log.warn("处理器 {} 不存在, 移除失败", processorName);
         }
         return (P)this;
     }

@@ -22,11 +22,12 @@ public @interface ExcelColumn {
      * @return sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
      * */
     String sheetName() default "";
-
     /**
      * @return sheet页号码(从1开始);不设置时使用1;可继承
      * */
     int sheet() default -1;
+
+
 
     /**
      * @return 起始列列数(以1开始)
@@ -51,12 +52,6 @@ public @interface ExcelColumn {
      * @return 属性名到列的映射
      * */
     String map() default  "";
-
-    /**
-     * @return 起始行(优先使用map(当其存在且有效时))
-     * */
-    int rowBegin() default -1;
-
     /**
      * @return 设置继承属性(默认冲突时优先使用子配置)
      * */
@@ -64,6 +59,10 @@ public @interface ExcelColumn {
 
 
 
+    /**
+     * @return 起始行(优先使用map(当其存在且有效时))
+     * */
+    int rowBegin() default -1;
     @Retention( RetentionPolicy.RUNTIME)
     @Target( {ElementType.FIELD})
     @interface Skip{

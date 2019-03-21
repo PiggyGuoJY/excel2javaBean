@@ -14,8 +14,6 @@ import static java.lang.String.format;
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
  *
- * <p> 创建时间：2019/2/19
- *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
  * */
@@ -23,6 +21,9 @@ import static java.lang.String.format;
 public final class DefaultAnnotationHandler
         extends AbstractAnnotationHandler{
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Msg handle(
             Class aClass,
@@ -31,6 +32,10 @@ public final class DefaultAnnotationHandler
     ) {
         return msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Msg<?> onType(
             Class aClass,
@@ -42,6 +47,10 @@ public final class DefaultAnnotationHandler
                 "没有找到对应注解 %s 的处理器",
                 annotation.getClass().getName())));
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Msg<?> onField(
             Class aClass,

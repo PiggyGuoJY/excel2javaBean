@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.github.piggyguojy.Assert.notNull;
 import static com.github.piggyguojy.Msg.msg;
 
 /**
@@ -37,7 +38,7 @@ public abstract class AbstractTransformerRule4MultiDataType
     ) {
         AbstractTransformerRule4SingleDataType<?> abstractSingleDataTypeTransformerRule
                 = customerTransformerRule.get(zlass);
-        if (Assert.notNull(abstractSingleDataTypeTransformerRule)) {
+        if (notNull(abstractSingleDataTypeTransformerRule)) {
             abstractSingleDataTypeTransformerRule.addRule4Transformer(gClass,zlass,ogFunction);
         } else {
             abstractSingleDataTypeTransformerRule
@@ -52,16 +53,17 @@ public abstract class AbstractTransformerRule4MultiDataType
     @Override @SuppressWarnings("unchecked")
     public <G> Msg<G> transform(
             Object object,
-            Class<G> gClass) {
+            Class<G> gClass
+    ) {
         AbstractTransformerRule4SingleDataType<?> abstractSingleDataTypeTransformerRule;
         Msg<G> gMsg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
         abstractSingleDataTypeTransformerRule = customerTransformerRule.get(object.getClass());
-        if (Assert.notNull(abstractSingleDataTypeTransformerRule)) {
+        if (notNull(abstractSingleDataTypeTransformerRule)) {
             gMsg = abstractSingleDataTypeTransformerRule.transform(object,gClass);
             if(!gMsg.isException()) { return gMsg; }
         }
         abstractSingleDataTypeTransformerRule = defaultTransformerRule.get(object.getClass());
-        if (Assert.notNull(abstractSingleDataTypeTransformerRule)) {
+        if (notNull(abstractSingleDataTypeTransformerRule)) {
             gMsg = abstractSingleDataTypeTransformerRule.transform(object,gClass);
             if(!gMsg.isException()) { return gMsg; }
         }
@@ -84,7 +86,7 @@ public abstract class AbstractTransformerRule4MultiDataType
     ) {
         AbstractTransformerRule4SingleDataType<?> abstractTransformerRule4SingleDataType
                 = defaultTransformerRule.get(oClass);
-        if (Assert.notNull(abstractTransformerRule4SingleDataType)) {
+        if (notNull(abstractTransformerRule4SingleDataType)) {
             abstractTransformerRule4SingleDataType.addRule4Transformer(gClass,oClass,ogFunction);
         } else {
             abstractTransformerRule4SingleDataType =

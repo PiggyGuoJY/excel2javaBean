@@ -20,6 +20,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+import static com.github.piggyguojy.Assert.isNull;
+import static com.github.piggyguojy.Assert.notNul;
+import static com.github.piggyguojy.Assert.notNull;
+
 
 /**
  * Excel解析器
@@ -37,10 +41,10 @@ public class ExcelParser
             return son >= 0 ? son : ( parent>=0 ? parent : 0);
         }
         public static String decideSheetName( String parent,  String son) {
-            return Assert.notNul(son) ? son : ( Assert.notNul(parent) ? parent : "");
+            return notNul(son) ? son : ( notNul(parent) ? parent : "");
         }
         public static Sheet decideSheet(int sheetNo, String sheetName, Workbook workbook) {
-            if ( Assert.isNull(workbook)) { return null;}
+            if ( isNull(workbook)) { return null;}
             Sheet sheet;
             if ( sheetNo<0||sheetNo>workbook.getNumberOfSheets()) {
                 return workbook.getSheet(sheetName);
@@ -60,7 +64,7 @@ public class ExcelParser
             return ( decimal = alphabet2decimal( columnName))<0 ? ( columnNo<1 ? 1 : columnNo) : decimal;
         }
         private static int alphabet2decimal( String str) {
-            if ( Assert.notNul( str) && str.matches( "^[a-zA-Z]+$")) {
+            if ( notNul( str) && str.matches( "^[a-zA-Z]+$")) {
                 int dec = 0;
                 char[] chars = str.toUpperCase().toCharArray();
                 for ( int i=1, length=chars.length; i<=length; i++) {
@@ -71,22 +75,28 @@ public class ExcelParser
             return -1;
         }
         public static Cell decideCell(int columnNo, int rowNo, Sheet sheet) {
-            if ( Assert.isNull( sheet)) { return null; }
+            if ( isNull( sheet)) { return null; }
             Row row  = sheet.getRow( rowNo<1 ? 0 : rowNo-1);
-            if ( Assert.isNull( row)) { return null; }
+            if ( isNull( row)) { return null; }
             return row.getCell( decideColumnNo( "", columnNo)-1);
         }
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() throws IOException {
-        if ( Assert.notNull( workbook)) { workbook.close(); this.workbook = null; }
-        if ( Assert.notNul( file)) { file = null;}
-        if ( Assert.notNull( inputStream)) { inputStream.close(); this.inputStream = null; }
-        if ( Assert.notNull( path)) { this.path = null; }
+        if ( notNull( workbook)) { workbook.close(); this.workbook = null; }
+        if ( notNul( file)) { file = null;}
+        if ( notNull( inputStream)) { inputStream.close(); this.inputStream = null; }
+        if ( notNull( path)) { this.path = null; }
     }
 
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override @SuppressWarnings("unchecked")
     protected <T> Msg<T> afterParse(Object... args) {
         try {
@@ -105,7 +115,6 @@ public class ExcelParser
         this.path = path;
         try {
             this.inputStream = Files.newInputStream( path, StandardOpenOption.READ);
-            // todo 之后考虑询问密码的情况
             this.workbook = WorkbookFactory.create( this.inputStream, null);
         } catch ( IOException e) {
             log.error( e.getMessage(), e);
