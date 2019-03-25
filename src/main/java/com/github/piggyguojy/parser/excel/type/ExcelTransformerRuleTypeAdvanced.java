@@ -1,4 +1,4 @@
-package com.github.piggyguojy.parser.excel.rule.type;
+package com.github.piggyguojy.parser.excel.type;
 
 import org.apache.poi.ss.usermodel.Cell;
 

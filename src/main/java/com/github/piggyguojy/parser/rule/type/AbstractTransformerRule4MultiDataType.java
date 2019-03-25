@@ -1,8 +1,7 @@
 
 package com.github.piggyguojy.parser.rule.type;
 
-import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.Assert.notNull;
+import static com.github.piggyguojy.util.Msg.msg;
 
 /**
  * 多数据源类型转换器基类

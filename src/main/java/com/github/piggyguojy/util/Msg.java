@@ -1,5 +1,5 @@
 
-package com.github.piggyguojy;
+package com.github.piggyguojy.util;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

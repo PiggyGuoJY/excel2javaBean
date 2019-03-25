@@ -1,7 +1,7 @@
 
 package com.github.piggyguojy.parser.rule.parse;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import com.google.common.collect.ImmutableSet;
@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.function.Function;
 
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.Msg.msg;
 
 /**
  * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭

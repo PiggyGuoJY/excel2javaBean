@@ -1,5 +1,5 @@
 
-package com.github.piggyguojy;
+package com.github.piggyguojy.util;
 
 import com.google.common.primitives.*;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.piggyguojy.Assert.notNul;
+import static com.github.piggyguojy.util.Assert.notNul;
 
 
 /**

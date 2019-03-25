@@ -1,12 +1,12 @@
 
-package com.github.piggyguojy.parser.excel.rule.structure.annotation;
+package com.github.piggyguojy.parser.excel.structure.annotation;
 
 import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 
 import java.lang.annotation.*;
 
 /**
- * 单元格类型
+ * 行类型
  *
  * 备注:
  *  1. 该注解可以配合{@code ExcelBean}使用, 也可以单独使用
@@ -19,7 +19,7 @@ import java.lang.annotation.*;
 @Documented
 @Retention( RetentionPolicy.RUNTIME)
 @Target( {ElementType.FIELD, ElementType.TYPE})
-public @interface ExcelCell {
+public @interface ExcelRow {
 
     /**
      * @return sheet页名称;不设置时使用第一页;可继承(优先使用sheet(当其存在时))
@@ -33,23 +33,46 @@ public @interface ExcelCell {
 
 
     /**
-     * @return 单元格所在列的列名(优先使用column(当其存在时))
+     * @return 起始行行数(以1开始)
      * */
-    String columnName() default  "";
+    int rowBegin() default -1;
+
     /**
-     * @return 单元格所在的列位置(以1开始)
+     * @return 终止行行数(以1开始, -1表示直至行内容为NULL)
      * */
-    int column() default -1;
+    int rowEnd() default -1;
+
     /**
-     * @return 单元格所在的行位置(以1开始)
+     * @return 属性名到列的映射
      * */
-    int row() default -1;
-    /**
-     * @return 单元格位置(总是以绝对定位对待里面的值, 这就意味着A1和$A$1都代表$A$1, 优先使用row, column和columnName的组合(当其存在且有效时))
-     * */
-    String address() default "";
+    String map() default  "";
+
     /**
      * @return 设置继承属性(默认冲突时优先使用子配置)
      * */
     OverrideRule overrideRule() default OverrideRule.PARENT_FORCE;
+
+
+
+    /**
+     * @return 设置起始列
+     */
+    int columnBegin() default -1;
+    /**
+     * @return 设置起始列名
+     */
+    String columnNameBegin() default "";
+    @Retention( RetentionPolicy.RUNTIME)
+    @Target( {ElementType.FIELD})
+    @interface Skip{
+        /**
+         * @return 跳至(优先使用)
+         * */
+        String skipTo() default "";
+        /**
+         *
+         * @return 跳过
+         */
+        int skip() default -1;
+    }
 }

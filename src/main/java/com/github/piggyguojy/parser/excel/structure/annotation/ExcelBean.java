@@ -1,5 +1,5 @@
 
-package com.github.piggyguojy.parser.excel.rule.structure.annotation;
+package com.github.piggyguojy.parser.excel.structure.annotation;
 
 import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
 

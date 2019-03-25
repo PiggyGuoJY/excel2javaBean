@@ -1,14 +1,14 @@
 
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.lang.annotation.Annotation;
 
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.Msg.msg;
 import static java.lang.String.format;
 
 /**

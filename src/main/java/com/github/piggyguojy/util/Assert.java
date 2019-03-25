@@ -1,4 +1,4 @@
-package com.github.piggyguojy;
+package com.github.piggyguojy.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

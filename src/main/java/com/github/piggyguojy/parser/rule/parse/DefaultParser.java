@@ -1,7 +1,7 @@
 
 package com.github.piggyguojy.parser.rule.parse;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import lombok.AccessLevel;

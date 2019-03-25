@@ -1,7 +1,7 @@
 
 package com.github.piggyguojy.parser.rule.structure;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 
 /**

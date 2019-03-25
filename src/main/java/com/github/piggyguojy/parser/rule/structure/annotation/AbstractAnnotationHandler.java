@@ -1,8 +1,8 @@
 
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.ClassUtil;
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.ClassUtil;
+import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static com.github.piggyguojy.Assert.isNull;
-import static com.github.piggyguojy.Assert.notNull;
+import static com.github.piggyguojy.util.Assert.isNull;
+import static com.github.piggyguojy.util.Assert.notNull;
 
 /**
  * 注解形式规则处理器基类

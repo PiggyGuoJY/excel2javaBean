@@ -1,6 +1,6 @@
 package com.github.piggyguojy.parser.rule.type;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 
 /**
  * 可转换的
@@ -11,7 +11,7 @@ import com.github.piggyguojy.Msg;
  * @version 1.0
  *
  * */
-public interface Transformable {
+public interface  Transformable {
 
     /**
      * 转换方法

@@ -1,7 +1,7 @@
 
 package com.github.piggyguojy.parser.rule.parse;
 
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 
 /**
  * 可解析的

@@ -1,10 +1,12 @@
 package com.github.piggyguojy;
 
+import com.github.piggyguojy.util.Assert;
+import com.github.piggyguojy.util.Msg;
 import org.junit.Test;
 
 import java.util.Date;
 
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.Msg.msg;
 import static org.junit.Assert.*;
 
 public class MsgTest {

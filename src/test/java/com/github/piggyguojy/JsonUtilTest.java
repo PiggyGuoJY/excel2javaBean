@@ -2,14 +2,16 @@
 package com.github.piggyguojy;
 
 import com.github.piggyguojy.model.test.Student;
+import com.github.piggyguojy.util.JsonUtil;
+import com.github.piggyguojy.util.Msg;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
-import static com.github.piggyguojy.JsonUtil.GsonBuilderStrategy;
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.JsonUtil.GsonBuilderStrategy;
+import static com.github.piggyguojy.util.Msg.msg;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

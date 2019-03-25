@@ -1,7 +1,6 @@
 package com.github.piggyguojy.parser.rule.type;
 
-import com.github.piggyguojy.Assert;
-import com.github.piggyguojy.Msg;
+import com.github.piggyguojy.util.Msg;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.piggyguojy.Assert.isNull;
-import static com.github.piggyguojy.Assert.notNull;
-import static com.github.piggyguojy.Msg.msg;
+import static com.github.piggyguojy.util.Assert.isNull;
+import static com.github.piggyguojy.util.Assert.notNull;
+import static com.github.piggyguojy.util.Msg.msg;
 import static java.lang.String.format;
 
 /**

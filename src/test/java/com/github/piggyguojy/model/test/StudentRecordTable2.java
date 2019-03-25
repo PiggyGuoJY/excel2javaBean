@@ -1,9 +1,9 @@
 
 package com.github.piggyguojy.model.test;
 
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelBean;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelCell;
-import com.github.piggyguojy.parser.excel.rule.structure.annotation.ExcelColumn;
+import com.github.piggyguojy.parser.excel.structure.annotation.ExcelBean;
+import com.github.piggyguojy.parser.excel.structure.annotation.ExcelCell;
+import com.github.piggyguojy.parser.excel.structure.annotation.ExcelColumn;
 import lombok.Data;
 
 import java.time.LocalDate;

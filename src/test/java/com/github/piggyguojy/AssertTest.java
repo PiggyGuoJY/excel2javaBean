@@ -1,5 +1,6 @@
 package com.github.piggyguojy;
 
+import com.github.piggyguojy.util.Assert;
 import org.junit.Test;
 
 import java.io.File;
