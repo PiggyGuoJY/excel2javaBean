@@ -1,11 +1,11 @@
 
 package com.github.piggyguojy.parser.excel.structure.annotation.handler;
 
-import com.github.piggyguojy.util.ClassUtil;
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.excel.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelColumn;
+import com.github.piggyguojy.util.ClassUtil;
+import com.github.piggyguojy.util.Msg;
 import com.google.common.collect.ImmutableMap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -27,9 +27,7 @@ import static com.github.piggyguojy.util.Assert.notNull;
 import static java.lang.String.format;
 
 /**
- * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
- *
- * <p> 创建时间：2019/2/15
+ * {@link ExcelColumn}注解处理器
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0

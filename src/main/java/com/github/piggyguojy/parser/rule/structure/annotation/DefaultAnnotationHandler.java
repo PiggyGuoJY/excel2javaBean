@@ -1,8 +1,8 @@
 
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
+import com.github.piggyguojy.util.Msg;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

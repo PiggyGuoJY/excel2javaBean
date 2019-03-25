@@ -22,7 +22,7 @@ import static com.github.piggyguojy.util.Assert.isNull;
  * <p>
  *     本类提供了对常用类型的转换规则(规则特定是对应才能转, 不支持公式计算)
  * </p>
- *    <table border="1">
+ *    <table border="1" cellspacing="0">
  *        <caption>常用类型的转换规则(当cell为null时总是返回null)</caption>
  *        <tr>
  *            <th></th>

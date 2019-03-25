@@ -1,10 +1,10 @@
 
 package com.github.piggyguojy.parser.excel.parse;
 
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.DefaultParser;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
+import com.github.piggyguojy.util.Msg;
 import com.google.common.math.IntMath;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,9 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-import static com.github.piggyguojy.util.Assert.isNull;
-import static com.github.piggyguojy.util.Assert.notNul;
-import static com.github.piggyguojy.util.Assert.notNull;
+import static com.github.piggyguojy.util.Assert.*;
 
 
 /**

@@ -1,6 +1,9 @@
 package com.github.piggyguojy.parser.excel.type;
 
+import com.google.common.primitives.Ints;
+import com.google.common.primitives.Shorts;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaError;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -12,63 +15,55 @@ import java.util.Date;
  * <p>
  *     本类提供了对常用类型的拓展转换规则(支持公式计算)
  * </p>
- *    <table border="1">
+ *    <table border="1" cellspacing="0">
  *        <caption>常用类型的转换规则(当cell为null时总是返回null)</caption>
  *        <tr>
  *            <th></th>
- *            <th>NUMERIC</th>
- *            <th>STRING</th>
- *            <th>FORMULA</th>
- *            <th>BLANK</th>
- *            <th>BOOLEAN</th>
- *            <th>ERROR</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#NUMERIC}</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#STRING}</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#FORMULA}</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#BLANK}</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#BOOLEAN}</th>
+ *            <th>{@link org.apache.poi.ss.usermodel.CellType#ERROR}</th>
  *            <th>default</th>
  *        </tr>
  *        <tr>
- *            <td>Boolean</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td>{@link Boolean}</td>
+ *            <td style="background-color:lightgreen">非0时为{@code true}</td>
+ *            <td style="background-color:lightgreen">在忽略大小写的情况下与“true”相同时为{@code true}</td>
+ *            <td style="background-color:lightgreen" rowspan="17">计算后再走一遍本逻辑</td>
+ *            <td style="background-color:khaki">{@link Boolean#FALSE}</td>
  *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:khaki">{@link Boolean#FALSE}</td>
+ *            <td style="background-color:lightpink" rowspan="17">{@code null}</td>
  *        </tr>
  *        <tr>
- *            <td>Byte</td>
- *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td>{@link Byte}</td>
+ *            <td style="background-color:lightgreen">按{@code byte}强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">{@link Byte#decode(String)}</td>
+ *            <td style="background-color:khaki">{@link Byte#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Byte#MIN_VALUE}({@code true})或0({@code false})</td>
+ *            <td style="background-color:lightgreen">错误码,含义见{@link FormulaError}</td>
  *        </tr>
  *        <tr>
- *            <td>Short</td>
- *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td>{@link Short}</td>
+ *            <td style="background-color:lightgreen">按{@code short}强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">{@link Short#decode(String)}</td>
+ *            <td style="background-color:khaki">{@link Short#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Short#MIN_VALUE}({@code true})或0({@code false})</td>
+ *            <td style="background-color:lightgreen">错误码,含义见{@link FormulaError}</td>
  *        </tr>
  *        <tr>
- *            <td>Character</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td>{@link Character}</td>
+ *            <td style="background-color:lightpink">{@code null}</td>
+ *            <td style="background-color:lightgreen">{@link Character#MIN_VALUE}(字符串长度为0时)或字符串的第一个字符</td>
+ *            <td style="background-color:khaki">{@link Character#MIN_VALUE}</td>
+ *            <td style="background-color:lightgreen">'T'({@code true})或'F'({@code false})</td>
+ *            <td style="background-color:khaki">{@link Character#MIN_VALUE}</td>
  *        </tr>
  *        <tr>
  *            <td>Integer</td>
  *            <td style="background-color:lightgreen">按int强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -81,14 +76,10 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>BigInteger</td>
  *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -101,14 +92,10 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Double</td>
  *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -121,8 +108,6 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>String</td>
@@ -131,14 +116,10 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Date</td>
  *            <td style="background-color:lightgreen">单元格值(转换异常时返回null)</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -151,8 +132,6 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Class</td>
@@ -161,13 +140,9 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Void</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -181,13 +156,9 @@ import java.util.Date;
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
  *        </tr>
  *        <tr>
  *            <td>Object[]</td>
- *            <td>null</td>
- *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
  *            <td>null</td>
@@ -198,7 +169,7 @@ import java.util.Date;
  *            <td>boolean</td>
  *            <td>false</td>
  *            <td>false</td>
- *            <td>false</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>false</td>
  *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>false</td>
@@ -208,7 +179,7 @@ import java.util.Date;
  *            <td>byte</td>
  *            <td style="background-color:lightgreen">按byte强制类型转换后的单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -218,7 +189,7 @@ import java.util.Date;
  *            <td>short</td>
  *            <td style="background-color:lightgreen">按short强制类型转换后的单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -228,7 +199,7 @@ import java.util.Date;
  *            <td>char</td>
  *            <td>\u0000</td>
  *            <td>\u0000</td>
- *            <td>\u0000</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>\u0000</td>
  *            <td>\u0000</td>
  *            <td>\u0000</td>
@@ -238,7 +209,7 @@ import java.util.Date;
  *            <td>int</td>
  *            <td style="background-color:lightgreen">按int强制类型转换后的单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -248,7 +219,7 @@ import java.util.Date;
  *            <td>long</td>
  *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -258,7 +229,7 @@ import java.util.Date;
  *            <td>float</td>
  *            <td style="background-color:lightgreen">按float强制类型转换后的单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -268,7 +239,7 @@ import java.util.Date;
  *            <td>double</td>
  *            <td style="background-color:lightgreen">单元格值</td>
  *            <td>0</td>
- *            <td>0</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>0</td>
  *            <td>0</td>
  *            <td>0</td>
@@ -278,7 +249,7 @@ import java.util.Date;
  *            <td>boolean[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -288,7 +259,7 @@ import java.util.Date;
  *            <td>byte[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -298,7 +269,7 @@ import java.util.Date;
  *            <td>short[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -308,7 +279,7 @@ import java.util.Date;
  *            <td>char[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -318,7 +289,7 @@ import java.util.Date;
  *            <td>int[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -328,7 +299,7 @@ import java.util.Date;
  *            <td>long[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -338,7 +309,7 @@ import java.util.Date;
  *            <td>float[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -348,7 +319,7 @@ import java.util.Date;
  *            <td>double[]</td>
  *            <td>{}</td>
  *            <td>{}</td>
- *            <td>{}</td>
+ *            <td style="background-color:lightgreen">计算后再走一遍本逻辑</td>
  *            <td>{}</td>
  *            <td>{}</td>
  *            <td>{}</td>
@@ -378,28 +349,60 @@ public class ExcelTransformerRuleTypeAdvanced
      */
     @Override
     protected Boolean cell2Boolean(Cell cell) {
-        return super.cell2Boolean(cell);
+        switch (cell.getCellType()) {
+            case NUMERIC: return cell.getNumericCellValue()!=0D;
+            case STRING: return "true".equalsIgnoreCase(cell.getStringCellValue());
+            case FORMULA: return cell2Boolean(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+            case BLANK: return false;
+            case BOOLEAN: return cell.getBooleanCellValue();
+            case ERROR: return false;
+            default: return null;
+        }
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Byte cell2Byte(Cell cell) {
-        return super.cell2Byte(cell);
+        switch (cell.getCellType()) {
+            case NUMERIC: return (byte)cell.getNumericCellValue();
+            case STRING: return Byte.decode(cell.getStringCellValue());
+            case FORMULA: return cell2Byte(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+            case BLANK: return Byte.MIN_VALUE;
+            case BOOLEAN: return cell.getBooleanCellValue() ? Byte.MIN_VALUE : 0;
+            case ERROR: return cell.getErrorCellValue();
+            default: return null;
+        }
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Short cell2Short(Cell cell) {
-        return super.cell2Short(cell);
+        switch (cell.getCellType()) {
+            case NUMERIC: return (short)cell.getNumericCellValue();
+            case STRING: return Short.decode(cell.getStringCellValue());
+            case FORMULA: return cell2Short(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+            case BLANK: return Short.MIN_VALUE;
+            case BOOLEAN: return cell.getBooleanCellValue() ? Short.MIN_VALUE : 0;
+            case ERROR: return (short)cell.getErrorCellValue();
+            default: return null;
+        }
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Character cell2Character(Cell cell) {
-        return super.cell2Character(cell);
+        switch (cell.getCellType()) {
+            case NUMERIC: return null;
+            case STRING: return cell.getStringCellValue().length()==0 ? Character.MIN_VALUE : cell.getStringCellValue().charAt(0);
+            case FORMULA: return cell2Character(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+            case BLANK: return Character.MIN_VALUE;
+            case BOOLEAN: return cell.getBooleanCellValue() ? 'T' : 'F';
+            case ERROR: return Character.MIN_VALUE;
+            default: return null;
+        }
     }
     /**
      * {@inheritDoc}

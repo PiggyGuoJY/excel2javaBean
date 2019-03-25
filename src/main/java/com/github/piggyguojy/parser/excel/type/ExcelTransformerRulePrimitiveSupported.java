@@ -7,7 +7,7 @@ import static com.github.piggyguojy.util.Assert.isNull;
 
 /**
  * 基于Excel单元格类型且支持Java原生类型的转换器
- *    <table border="1">
+ *    <table border="1" cellspacing="0">
  *        <caption>常用类型的转换规则</caption>
  *        <tr>
  *            <th></th>

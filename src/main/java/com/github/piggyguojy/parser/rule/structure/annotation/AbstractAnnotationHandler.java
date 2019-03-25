@@ -1,11 +1,11 @@
 
 package com.github.piggyguojy.parser.rule.structure.annotation;
 
-import com.github.piggyguojy.util.ClassUtil;
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
+import com.github.piggyguojy.util.ClassUtil;
+import com.github.piggyguojy.util.Msg;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

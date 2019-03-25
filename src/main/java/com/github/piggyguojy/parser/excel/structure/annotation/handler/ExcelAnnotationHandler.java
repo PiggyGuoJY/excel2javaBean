@@ -1,8 +1,6 @@
 
 package com.github.piggyguojy.parser.excel.structure.annotation.handler;
 
-import com.github.piggyguojy.util.ClassUtil;
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.excel.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelCell;
@@ -13,6 +11,8 @@ import com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotation
 import com.github.piggyguojy.parser.rule.structure.inherit.BiInheritableRule;
 import com.github.piggyguojy.parser.rule.structure.inherit.Inheritable;
 import com.github.piggyguojy.parser.rule.structure.inherit.OverrideRule;
+import com.github.piggyguojy.util.ClassUtil;
+import com.github.piggyguojy.util.Msg;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
@@ -23,9 +23,9 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 import java.util.Set;
 
+import static com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.decideAnnotationRule;
 import static com.github.piggyguojy.util.Assert.isNull;
 import static com.github.piggyguojy.util.Msg.msg;
-import static com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.decideAnnotationRule;
 import static java.lang.String.format;
 
 /**

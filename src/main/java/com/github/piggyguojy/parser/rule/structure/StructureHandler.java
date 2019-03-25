@@ -1,8 +1,8 @@
 
 package com.github.piggyguojy.parser.rule.structure;
 
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.rule.parse.AbstractParser;
+import com.github.piggyguojy.util.Msg;
 
 /**
  * 规则处理器(用于处理定义数据来源的规则.一般而言,需要使用解析器传递某些中间参数)

@@ -1,13 +1,13 @@
 
 package com.github.piggyguojy.parser.excel.structure.annotation.handler;
 
-import com.github.piggyguojy.util.ClassUtil;
-import com.github.piggyguojy.util.Msg;
 import com.github.piggyguojy.parser.excel.parse.ExcelParser;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelBean;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelCell;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelColumn;
 import com.github.piggyguojy.parser.excel.structure.annotation.ExcelRow;
+import com.github.piggyguojy.util.ClassUtil;
+import com.github.piggyguojy.util.Msg;
 import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,13 +17,13 @@ import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.decideAnnotationRule;
 import static com.github.piggyguojy.util.Assert.isNull;
 import static com.github.piggyguojy.util.Assert.notNull;
 import static com.github.piggyguojy.util.Msg.msg;
-import static com.github.piggyguojy.parser.rule.structure.annotation.AbstractAnnotationHandler.AbstractAnnotationHandlerHelper.decideAnnotationRule;
 
 /**
- * 程序员（guojy）很懒，关于这个类，ta什么也没写╮(╯▽╰)╭
+ * {@link ExcelBean}注解处理器
  *
  * @author <a href="https://github.com/PiggyGuoJY" target="_blank">PiggyGuoJY</a>
  * @version 1.0
