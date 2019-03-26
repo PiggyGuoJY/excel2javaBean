@@ -1,7 +1,7 @@
 package com.github.piggyguojy.parser.excel.type;
 
-import com.google.common.primitives.Ints;
-import com.google.common.primitives.Shorts;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Floats;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaError;
 
@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.function.Function;
+
+import static com.github.piggyguojy.util.Assert.isNull;
 
 /**
  * 基于Excel单元格类型的高级转换器
@@ -16,7 +19,7 @@ import java.util.Date;
  *     本类提供了对常用类型的拓展转换规则(支持公式计算)
  * </p>
  *    <table border="1" cellspacing="0">
- *        <caption>常用类型的转换规则(当cell为null时总是返回null)</caption>
+ *        <caption>常用类型的转换规则(当cell为{@code null}时总是返回{@code null})</caption>
  *        <tr>
  *            <th></th>
  *            <th>{@link org.apache.poi.ss.usermodel.CellType#NUMERIC}</th>
@@ -43,7 +46,7 @@ import java.util.Date;
  *            <td style="background-color:lightgreen">{@link Byte#decode(String)}</td>
  *            <td style="background-color:khaki">{@link Byte#MIN_VALUE}</td>
  *            <td style="background-color:khaki">{@link Byte#MIN_VALUE}({@code true})或0({@code false})</td>
- *            <td style="background-color:lightgreen">错误码,含义见{@link FormulaError}</td>
+ *            <td style="background-color:khaki" rowspan="2">错误码,含义见{@link FormulaError}</td>
  *        </tr>
  *        <tr>
  *            <td>{@link Short}</td>
@@ -51,7 +54,6 @@ import java.util.Date;
  *            <td style="background-color:lightgreen">{@link Short#decode(String)}</td>
  *            <td style="background-color:khaki">{@link Short#MIN_VALUE}</td>
  *            <td style="background-color:khaki">{@link Short#MIN_VALUE}({@code true})或0({@code false})</td>
- *            <td style="background-color:lightgreen">错误码,含义见{@link FormulaError}</td>
  *        </tr>
  *        <tr>
  *            <td>{@link Character}</td>
@@ -63,59 +65,54 @@ import java.util.Date;
  *        </tr>
  *        <tr>
  *            <td>Integer</td>
- *            <td style="background-color:lightgreen">按int强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按{@code int}强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">{@link Integer#decode(String)}</td>
+ *            <td style="background-color:khaki">{@link Integer#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Integer#MIN_VALUE}({@code true})或0({@code false})</td>
+ *            <td style="background-color:khaki" rowspan="6">错误码,含义见{@link FormulaError}</td>
  *        </tr>
  *        <tr>
  *            <td>Long</td>
- *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按{@code long}强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">{@link Long#decode(String)}</td>
+ *            <td style="background-color:khaki">{@link Long#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Long#MIN_VALUE}({@code true})或0({@code false})</td>
  *        </tr>
  *        <tr>
  *            <td>BigInteger</td>
- *            <td style="background-color:lightgreen">按long强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">按{@code long}强制类型转换后的单元格值</td>
+ *            <td style="background-color:lightgreen">{@code BigInteger::new}</td>
+ *            <td style="background-color:khaki">{@link BigInteger#ONE}</td>
+ *            <td style="background-color:khaki">{@link BigInteger#ONE}({@code true})或{@link BigInteger#ZERO}({@code false})</td>
  *        </tr>
  *        <tr>
  *            <td>Float</td>
  *            <td style="background-color:lightgreen">按float强制类型转换后的单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">{@link Floats#tryParse(String)}</td>
+ *            <td style="background-color:khaki">{@link Float#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Float#MIN_VALUE}({@code true})或0({@code false})</td>
  *        </tr>
  *        <tr>
  *            <td>Double</td>
  *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">{@link Doubles#tryParse(String)}</td>
+ *            <td style="background-color:khaki">{@link Double#MIN_VALUE}</td>
+ *            <td style="background-color:khaki">{@link Double#MIN_VALUE}({@code true})或0({@code false})</td>
  *        </tr>
  *        <tr>
  *            <td>BigDecimal</td>
  *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">{@code BigDecimal::new}</td>
+ *            <td style="background-color:khaki">{@link BigDecimal#ONE}</td>
+ *            <td style="background-color:khaki">{@link BigDecimal#ONE}({@code true})或0({@code false})</td>
  *        </tr>
  *        <tr>
  *            <td>String</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">单元格值的字符串形式</td>
  *            <td style="background-color:lightgreen">单元格值</td>
- *            <td>null</td>
- *            <td>null</td>
- *            <td>null</td>
+ *            <td style="background-color:lightgreen">""</td>
+ *            <td style="background-color:lightgreen">{@link Boolean#toString(boolean)}</td>
+ *            <td style="background-color:lightgreen">{@link FormulaError#name()}</td>
  *        </tr>
  *        <tr>
  *            <td>Date</td>
@@ -349,109 +346,154 @@ public class ExcelTransformerRuleTypeAdvanced
      */
     @Override
     protected Boolean cell2Boolean(Cell cell) {
-        switch (cell.getCellType()) {
-            case NUMERIC: return cell.getNumericCellValue()!=0D;
-            case STRING: return "true".equalsIgnoreCase(cell.getStringCellValue());
-            case FORMULA: return cell2Boolean(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
-            case BLANK: return false;
-            case BOOLEAN: return cell.getBooleanCellValue();
-            case ERROR: return false;
-            default: return null;
-        }
+        return template(
+                cell,
+                c -> c.getNumericCellValue()!=0D,
+                c -> "true".equalsIgnoreCase(c.getStringCellValue()),
+                this::cell2Boolean,
+                c -> false,
+                Cell::getBooleanCellValue,
+                c -> false);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Byte cell2Byte(Cell cell) {
-        switch (cell.getCellType()) {
-            case NUMERIC: return (byte)cell.getNumericCellValue();
-            case STRING: return Byte.decode(cell.getStringCellValue());
-            case FORMULA: return cell2Byte(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
-            case BLANK: return Byte.MIN_VALUE;
-            case BOOLEAN: return cell.getBooleanCellValue() ? Byte.MIN_VALUE : 0;
-            case ERROR: return cell.getErrorCellValue();
-            default: return null;
-        }
+        return template(
+                cell,
+                c -> (byte)c.getNumericCellValue(),
+                c -> Byte.decode(c.getStringCellValue()),
+                this::cell2Byte,
+                c -> Byte.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Byte.MIN_VALUE : 0,
+                Cell::getErrorCellValue);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Short cell2Short(Cell cell) {
-        switch (cell.getCellType()) {
-            case NUMERIC: return (short)cell.getNumericCellValue();
-            case STRING: return Short.decode(cell.getStringCellValue());
-            case FORMULA: return cell2Short(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
-            case BLANK: return Short.MIN_VALUE;
-            case BOOLEAN: return cell.getBooleanCellValue() ? Short.MIN_VALUE : 0;
-            case ERROR: return (short)cell.getErrorCellValue();
-            default: return null;
-        }
+        return template(
+                cell,
+                c -> (short)c.getNumericCellValue(),
+                c -> Short.decode(c.getStringCellValue()),
+                this::cell2Short,
+                c -> Short.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Short.MIN_VALUE : 0,
+                c -> (short)c.getErrorCellValue());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Character cell2Character(Cell cell) {
-        switch (cell.getCellType()) {
-            case NUMERIC: return null;
-            case STRING: return cell.getStringCellValue().length()==0 ? Character.MIN_VALUE : cell.getStringCellValue().charAt(0);
-            case FORMULA: return cell2Character(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
-            case BLANK: return Character.MIN_VALUE;
-            case BOOLEAN: return cell.getBooleanCellValue() ? 'T' : 'F';
-            case ERROR: return Character.MIN_VALUE;
-            default: return null;
-        }
+        return template(
+                cell,
+                c -> null,
+                c -> c.getStringCellValue().length()==0 ? Character.MIN_VALUE : c.getStringCellValue().charAt(0),
+                this::cell2Character,
+                c -> Character.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? 'T' : 'F',
+                c -> Character.MIN_VALUE);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Integer cell2Integer(Cell cell) {
-        return super.cell2Integer(cell);
+        return template(
+                cell,
+                c -> (int)c.getNumericCellValue(),
+                c ->Integer.decode(c.getStringCellValue()),
+                this::cell2Integer,
+                c -> Integer.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Integer.MIN_VALUE : 0,
+                c -> (int)c.getErrorCellValue());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Long cell2Long(Cell cell) {
-        return super.cell2Long(cell);
+        return template(
+                cell,
+                c -> (long)c.getNumericCellValue(),
+                c -> Long.decode(c.getStringCellValue()),
+                this::cell2Long,
+                c -> Long.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Long.MIN_VALUE: 0,
+                c -> (long)c.getErrorCellValue());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected BigInteger cell2BigInteger(Cell cell) {
-        return super.cell2BigInteger(cell);
+        return template(
+                cell,
+                c -> BigInteger.valueOf((long)c.getNumericCellValue()),
+                c -> new BigInteger(c.getStringCellValue()),
+                this::cell2BigInteger,
+                c -> BigInteger.ONE,
+                c -> c.getBooleanCellValue() ? BigInteger.ONE : BigInteger.ZERO,
+                c -> BigInteger.valueOf(c.getErrorCellValue()));
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Float cell2Float(Cell cell) {
-        return super.cell2Float(cell);
+        return template(
+                cell,
+                c -> (float)c.getNumericCellValue(),
+                c -> Floats.tryParse(c.getStringCellValue()),
+                this::cell2Float,
+                c -> Float.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Float.MIN_VALUE : 0,
+                c -> (float)c.getErrorCellValue());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected Double cell2Double(Cell cell) {
-        return super.cell2Double(cell);
+        return template(
+                cell,
+                Cell::getNumericCellValue,
+                c -> Doubles.tryParse(cell.getStringCellValue()),
+                this::cell2Double,
+                c -> Double.MIN_VALUE,
+                c -> c.getBooleanCellValue() ? Double.MIN_VALUE : 0,
+                c -> (double)c.getErrorCellValue());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected BigDecimal cell2BigDecimal(Cell cell) {
-        return super.cell2BigDecimal(cell);
+        return template(
+                cell,
+                c -> BigDecimal.valueOf(c.getNumericCellValue()),
+                c -> new BigDecimal(c.getStringCellValue()),
+                this::cell2BigDecimal,
+                c -> BigDecimal.ONE,
+                c -> c.getBooleanCellValue() ? BigDecimal.ONE : BigDecimal.ZERO,
+                c -> BigDecimal.valueOf(c.getErrorCellValue()));
     }
     /**
      * {@inheritDoc}
      */
     @Override
     protected String cell2String(Cell cell) {
-        return super.cell2String(cell);
+        return template(
+                cell,
+                c -> Double.toString(c.getNumericCellValue()),
+                Cell::getStringCellValue,
+                this::cell2String,
+                c -> "",
+                c -> Boolean.toString(c.getBooleanCellValue()),
+                c -> FormulaError.forInt(c.getErrorCellValue()).name());
     }
     /**
      * {@inheritDoc}
@@ -495,124 +537,32 @@ public class ExcelTransformerRuleTypeAdvanced
     protected Object[] cell2Objects(Cell cell) {
         return super.cell2Objects(cell);
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean cell2boolean(Cell cell) {
-        return super.cell2boolean(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean[] cell2booleans(Cell cell) {
-        return super.cell2booleans(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected byte cell2byte(Cell cell) {
-        return super.cell2byte(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected byte[] cell2bytes(Cell cell) {
-        return super.cell2bytes(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected short cell2short(Cell cell) {
-        return super.cell2short(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected short[] cell2shorts(Cell cell) {
-        return super.cell2shorts(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected char cell2char(Cell cell) {
-        return super.cell2char(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected char[] cell2chars(Cell cell) {
-        return super.cell2chars(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected int cell2int(Cell cell) {
-        return super.cell2int(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected int[] cell2ints(Cell cell) {
-        return super.cell2ints(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected long cell2long(Cell cell) {
-        return super.cell2long(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected long[] cell2longs(Cell cell) {
-        return super.cell2longs(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected float cell2float(Cell cell) {
-        return super.cell2float(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected float[] cell2floats(Cell cell) {
-        return super.cell2floats(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected double cell2double(Cell cell) {
-        return super.cell2double(cell);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected double[] cell2doubles(Cell cell) {
-        return super.cell2doubles(cell);
-    }
+
     /**
      * 生效父类配置的默认构造器
      */
     protected ExcelTransformerRuleTypeAdvanced() { super(); }
 
-
     private static final ExcelTransformerRuleTypeAdvanced DEFAULT_EXCEL_TRANSFORMER_RULE_TYPE_ADVANCED
             = new ExcelTransformerRuleTypeAdvanced();
+    private static <T> T template(
+            Cell cell,
+            Function<Cell,T> numeric,
+            Function<Cell,T> string,
+            Function<Cell,T> formula,
+            Function<Cell,T> blank,
+            Function<Cell,T> bool,
+            Function<Cell,T> error
+    ) {
+        if (isNull(cell)) { return null;}
+        switch (cell.getCellType()) {
+            case NUMERIC: return numeric.apply(cell);
+            case STRING: return string.apply(cell);
+            case FORMULA: return formula.apply(cell.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator().evaluateInCell(cell));
+            case BLANK: return blank.apply(cell);
+            case BOOLEAN: return bool.apply(cell);
+            case ERROR: return error.apply(cell);
+            default: return null;
+        }
+    }
 }
