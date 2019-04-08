@@ -20,6 +20,7 @@ import java.util.Map;
 
 import static com.github.piggyguojy.util.Assert.*;
 import static com.github.piggyguojy.util.Msg.msg;
+import static java.lang.String.format;
 
 /**
  * {@link ExcelCell}注解处理器
@@ -31,6 +32,9 @@ import static com.github.piggyguojy.util.Msg.msg;
 public final class ExcelCellHandler
         extends ExcelAnnotationHandler<ExcelCell> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <G> Msg<?> onField(
             Class<G> gClass,
@@ -38,9 +42,11 @@ public final class ExcelCellHandler
             ExcelParser excelParser,
             Object ... args
     ) {
-        onFieldHandler(gClass,excelCell,excelParser,args);
-        return msg();
+        return onFieldHandler(gClass,excelCell,excelParser,args);
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <G> Msg<?> onType(
             Class<G> gClass,
@@ -62,7 +68,7 @@ public final class ExcelCellHandler
 
 
 
-    private <G> void onFieldHandler(
+    private <G> Msg<?> onFieldHandler(
             Class<G> gClass,
             ExcelCell excelCell,
             ExcelParser excelParser,
@@ -71,9 +77,17 @@ public final class ExcelCellHandler
         // 1.ExcelCell只有可能从属性所在类的ExcelBean上继承属性
         ExcelBean excelBeanParent = getAnnotationParent(ExcelBean.class,args);
         args[ANNOTATION_PARENT] = notNull(excelBeanParent) ? decideBiRule(excelCell, excelBeanParent, excelBeanParent.overrideRule()) : excelCell;
-        Msg<?> msg = onTypeHandler(gClass, gClass.getDeclaredAnnotation( ExcelCell.class), excelParser, args);
-        if ( msg.isException()) { return;}
-        ClassUtil.set( ( Field) args[StructureHandler.FIELD_REF], args[StructureHandler.GOAL_INST], msg.getT());
+        Msg<?> msg = onTypeHandler(
+                gClass,
+                gClass.getDeclaredAnnotation( ExcelCell.class),
+                excelParser,
+                args);
+        if ( msg.isException()) { return msg;}
+        ClassUtil.set(
+                ( Field) args[StructureHandler.FIELD_REF],
+                args[StructureHandler.GOAL_INST],
+                msg.getT());
+        return msg;
     }
     private <G> Msg<G> onTypeHandler(
             Class<G> gClass,
@@ -84,10 +98,20 @@ public final class ExcelCellHandler
         ExcelCell excelCellParent = getAnnotationParent(ExcelCell.class,args);
         ExcelCell finalExcelCell = notNull(excelCellParent) ? decideRule(excelCell, excelCellParent, excelCellParent.overrideRule()) : excelCell;
         // todo finalExcelCell也有可能为null
-        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(finalExcelCell.sheet(), finalExcelCell.sheetName(), excelParser.getWorkbook());
-        if ( isNull( sheet)) { return msg(new IllegalStateException("无法找到Sheet"));}
+        Sheet sheet = ExcelParser.ExcelParserHelper.decideSheet(
+                finalExcelCell.sheet(),
+                finalExcelCell.sheetName(),
+                excelParser.getWorkbook());
+        if ( isNull( sheet)) { return msg(new IllegalStateException(format(
+                "根据[sheet:%d, sheetName:%s]无法在Workbook中找到对应Sheet",
+                finalExcelCell.sheet(),
+                finalExcelCell.sheetName())));
+        }
         Cell cell = ExcelCellHandlerHelper.decideCell(finalExcelCell, sheet);
-        if ( isNull( cell)) { return msg(new IllegalStateException("无法找到Cell")); }
+        if ( isNull( cell)) { return msg(new IllegalStateException(format(
+                "根据[%s]无法在Sheet中找到对应Cell",
+                finalExcelCell.toString())));
+        }
         return excelParser.transform(cell, gClass);
     }
     /**
