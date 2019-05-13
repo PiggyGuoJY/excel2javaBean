@@ -27,5 +27,5 @@ public enum OverrideRule {
     /**
      * 强制使用子配置
      * */
-    SON_FORCE;
+    SON_FORCE
 }
