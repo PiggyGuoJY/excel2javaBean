@@ -122,7 +122,7 @@ public final class ClassUtil {
      * @return 包名
      */
     public static String getTopPackageName() {
-        return ClassUtil.class.getPackage().getName();
+        return "com.github.piggyguojy";
     }
 
     /**

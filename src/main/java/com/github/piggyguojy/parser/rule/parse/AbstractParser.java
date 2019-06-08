@@ -35,6 +35,7 @@ public abstract class AbstractParser<P extends AbstractParser>
     ) {
         Msg<?> msg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
         Object[] params = new Object[]{gClass,this,args,msg};
+
         for( Process process : processes) {
             log.debug("执行过程 {}", process.name);
             msg = process.processor.apply(params);
@@ -113,6 +114,7 @@ public abstract class AbstractParser<P extends AbstractParser>
     protected static final int PARSER_SELF = 1;
     protected static final int ARGS_INIT = 2;
     protected static final int VALUE_RETURNED = 3;
+
     /**
      * 解析前置处理
      *

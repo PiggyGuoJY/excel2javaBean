@@ -5,6 +5,7 @@ import com.github.piggyguojy.util.Msg;
 
 /**
  * 可解析的
+ * @author 郭晋阳
  */
 public interface Parseable {
 
