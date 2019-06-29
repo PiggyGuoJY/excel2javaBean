@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  * */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
+public class DefaultParser<P extends DefaultParser>
+        extends AbstractParser<P> {
 
     protected DefaultParser(
             StructureHandler<P> structureHandler,
@@ -26,22 +27,22 @@ public class DefaultParser<P extends DefaultParser> extends AbstractParser<P> {
      * {@inheritDoc}
      */
     @Override
-    protected <T> Msg<T> beforeParse(Object... args) { return Msg.msg(); }
+    protected <T> Msg<T> beforeParse(Params params) { return Msg.msg(); }
     /**
      * {@inheritDoc}
      */
     @Override @SuppressWarnings("unchecked")
-    protected <T> Msg<T> doParse(Object... args) {
+    protected <T> Msg<T> doParse(Params params) {
         Msg<?> msg = structureHandler.handle(
-                (Class<T>) args[GOAL_CLASS],
-                (P) args[PARSER_SELF],
-                args[ARGS_INIT],
-                args[VALUE_RETURNED]);
+                (Class<T>) params.getZlass(),
+                (P) params.getParser(),
+                params.getArgs(),
+                params.getReturnMsg());
         return (Msg<T>)msg;
     }
     /**
      * {@inheritDoc}
      */
     @Override @SuppressWarnings("unchecked")
-    protected <T> Msg<T> afterParse(Object... args) { return (Msg<T>)args[VALUE_RETURNED]; }
+    protected <T> Msg<T> afterParse(Params params) { return (Msg<T>)params.getReturnMsg(); }
 }

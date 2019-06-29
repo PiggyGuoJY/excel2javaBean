@@ -95,13 +95,13 @@ public class ExcelParser
      * {@inheritDoc}
      */
     @Override @SuppressWarnings("unchecked")
-    protected <T> Msg<T> afterParse(Object... args) {
+    protected <T> Msg<T> afterParse(Params params) {
         try {
-            ((ExcelParser)args[PARSER_SELF]).close();
+            params.<ExcelParser>getParser().close();
         } catch (IOException e) {
             log.error(e.getMessage(),e);
         }
-        return (Msg<T>)args[VALUE_RETURNED];
+        return (Msg<T>)params.getReturnMsg();
     }
     protected ExcelParser(
             final Path path,

@@ -4,6 +4,7 @@ package com.github.piggyguojy.parser.rule.parse;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import com.github.piggyguojy.util.Msg;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,8 @@ public abstract class AbstractParser<P extends AbstractParser>
             Object ... args
     ) {
         Msg<?> msg = msg(Msg.MsgError.ILLEGAL_STATE_INIT.getE());
-        Object[] params = new Object[]{gClass,this,args,msg};
+        Params params = new Params(gClass,this,args,msg);
+
 
         for( Process process : processes) {
             log.debug("执行过程 {}", process.name);
@@ -42,7 +44,7 @@ public abstract class AbstractParser<P extends AbstractParser>
             if (msg.isException()) {
                 log.warn("执行过程 {} 出错, 中断并退出流程", process.name);
                 break;
-            } else { params = new Object[]{gClass,this,args,msg}; }
+            } else { params = new Params(gClass,this,args,msg); }
         }
         return (Msg<G>)msg;
     }
@@ -66,10 +68,46 @@ public abstract class AbstractParser<P extends AbstractParser>
     public <G> Msg<G> transform(Object object,  Class<G> gClass) {
         return abstractDataTypeTransformerRule.transform(object, gClass);
     }
+
+    protected StructureHandler<P> structureHandler;
+    protected TransformableAndRuleAddable abstractDataTypeTransformerRule;
+    protected AbstractParser(
+            StructureHandler<P> structureHandler,
+            TransformableAndRuleAddable abstractDataTypeTransformerRule
+    ) {
+        this.structureHandler = structureHandler;
+        this.abstractDataTypeTransformerRule = abstractDataTypeTransformerRule;
+    }
+
+
+    /**
+     * 解析前置处理
+     *
+     * @param <T> 消息泛型
+     * @param params 参数
+     * @return 消息
+     * */
+    protected abstract <T> Msg<T> beforeParse(Params params);
+    /**
+     * 解析处理
+     *
+     * @param <T> 消息泛型
+     * @param params 参数
+     * @return 消息
+     * */
+    protected abstract  <T> Msg<T> doParse(Params params);
+    /**
+     * 解析后置处理
+     *
+     * @param <T> 消息泛型
+     * @param params 参数
+     * @return 消息
+     * */
+    protected abstract <T> Msg<T> afterParse(Params params);
     @SuppressWarnings("unchecked")
-    public P addProcessorBefore(
+    protected P addProcessorBefore(
             String processorName,
-            Function<Object[],Msg<?>> processor,
+            Function<Params,Msg<?>> processor,
             String beforeProcessorName,
             boolean force
     ) {
@@ -90,14 +128,14 @@ public abstract class AbstractParser<P extends AbstractParser>
         }
         return (P)this;
     }
-    public P addProcessor(
+    protected P addProcessor(
             String processorName,
-            Function<Object[],Msg<?>> processor
+            Function<Params,Msg<?>> processor
     ) {
         return addProcessorBefore(processorName, processor, "afterParse", true);
     }
     @SuppressWarnings("unchecked")
-    public P removeProcess( String processorName) {
+    protected P removeProcess( String processorName) {
         if (PROCESS_CANT_BE_REMORED.contains(processorName)) {
             log.warn("处理器 {} 只能被替换,不能被移除", processorName);
             return (P)this;
@@ -107,60 +145,42 @@ public abstract class AbstractParser<P extends AbstractParser>
         }
         return (P)this;
     }
-
-
-
-    protected static final int GOAL_CLASS = 0;
-    protected static final int PARSER_SELF = 1;
-    protected static final int ARGS_INIT = 2;
-    protected static final int VALUE_RETURNED = 3;
-
     /**
-     * 解析前置处理
+     * 事务处理类
      *
-     * @param <T> 消息泛型
-     * @param args 参数
-     * @return 消息
-     * */
-    protected abstract <T> Msg<T> beforeParse(Object... args);
-    /**
-     * 解析处理
+     * 用于构造各类解析器特有的事务处理顺序
      *
-     * @param <T> 消息泛型
-     * @param args 参数
-     * @return 消息
+     * @author 郭晋阳
+     * @version 1.0
      * */
-    protected abstract  <T> Msg<T> doParse(Object ... args);
-    /**
-     * 解析后置处理
-     *
-     * @param <T> 消息泛型
-     * @param args 参数
-     * @return 消息
-     * */
-    protected abstract <T> Msg<T> afterParse(Object... args);
-    protected StructureHandler<P> structureHandler;
-    protected TransformableAndRuleAddable abstractDataTypeTransformerRule;
-    protected AbstractParser(
-            StructureHandler<P> structureHandler,
-            TransformableAndRuleAddable abstractDataTypeTransformerRule
-    ) {
-        this.structureHandler = structureHandler;
-        this.abstractDataTypeTransformerRule = abstractDataTypeTransformerRule;
-    }
-
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @EqualsAndHashCode(exclude = {"processor"}) @ToString(of = {"name"})
     private static class Process {
         private String name;
-        private Function<Object[],Msg<?>> processor;
+        private Function<Params,Msg<?>> processor;
     }
-    private LinkedList<Process> processes = new LinkedList<>();
+    @AllArgsConstructor
+    @Getter
+    @EqualsAndHashCode
+    @ToString
+    protected static class Params {
+        private Class<?> zlass;
+        private AbstractParser parser;
+        private Object[] args;
+        private Msg<?> returnMsg;
+        @SuppressWarnings("unchecked")
+        public <P extends  AbstractParser> P getParser() {
+            return (P)parser;
+        }
+    }
+    private final Process beforeParse
+            = new Process("beforeParse", this::beforeParse);
+    private final Process doParse
+            = new Process("doParse", this::doParse);
+    private final Process afterParse
+            = new Process("afterParse", this::afterParse);
+    private LinkedList<Process> processes
+            = new LinkedList<>(ImmutableList.of(beforeParse, doParse, afterParse));
     private static final Set<String> PROCESS_CANT_BE_REMORED
-            = ImmutableSet.<String>builder().add("beforeParse").add("doParse").add("afterParse").build();
-    {
-        processes.addLast(new Process("beforeParse", this::beforeParse));
-        processes.addLast(new Process("doParse", this::doParse));
-        processes.addLast(new Process("afterParse", this::afterParse));
-    }
+            = ImmutableSet.of("beforeParse","doParse","afterParse");
 }

@@ -201,11 +201,6 @@ public final class JsonUtil {
             return gsonBuilder.create();
         }
 
-        private static final GsonDefaultSerializationExclusionStrategy GSON_DEFAULT_SERIALIZATION_EXCLUSION_STRATEGY
-                = new GsonDefaultSerializationExclusionStrategy();
-        private static final GsonDefaultDeserializationExclusionStrategy GSON_DEFAULT_DESERIALIZATION_EXCLUSION_STRATEGY
-                = new GsonDefaultDeserializationExclusionStrategy();
-
         /**
          * 自定义GSON序列化策略
          *

@@ -185,7 +185,8 @@ public abstract class AbstractAnnotationHandler<A extends Annotation, P extends 
 
 
 
-    private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER = new HashMap<>();
+    private static final Map<Class<? extends Annotation>, AbstractAnnotationHandler> MAP_ANNOTATION_HANDLER
+            = new HashMap<>();
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
     private static final String BANNER =
             "                                                             \n" +
