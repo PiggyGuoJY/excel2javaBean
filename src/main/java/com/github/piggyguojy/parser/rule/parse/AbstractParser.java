@@ -4,6 +4,8 @@ package com.github.piggyguojy.parser.rule.parse;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import com.github.piggyguojy.util.Msg;
+import com.github.piggyguojy.util.model.Params;
+import com.github.piggyguojy.util.model.Processor;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.*;
@@ -38,11 +40,11 @@ public abstract class AbstractParser<P extends AbstractParser>
         Params params = new Params(gClass,this,args,msg);
 
 
-        for( Process process : processes) {
-            log.debug("执行过程 {}", process.name);
-            msg = process.processor.apply(params);
+        for( Processor processor : processors) {
+            log.debug("执行过程 {}", processor.getName());
+            msg = processor.getProcessor().apply(params);
             if (msg.isException()) {
-                log.warn("执行过程 {} 出错, 中断并退出流程", process.name);
+                log.warn("执行过程 {} 出错, 中断并退出流程", processor.getName());
                 break;
             } else { params = new Params(gClass,this,args,msg); }
         }
@@ -115,16 +117,16 @@ public abstract class AbstractParser<P extends AbstractParser>
             log.warn("processorName {} 不能和 beforeProcessorName {} 相同", processorName, beforeProcessorName);
             return (P)this;
         }
-        Process beforeProcess = new Process(beforeProcessorName,null);
-        Process process = new Process(processorName, processor);
-        if (!processes.contains(beforeProcess)) {
+        Processor beforeProcessor = new Processor(beforeProcessorName,null);
+        Processor process = new Processor(processorName, processor);
+        if (!processors.contains(beforeProcessor)) {
             log.warn("处理器 {} 不存在, 无法进行操作", beforeProcessorName);
             return (P)this;
         }
-        boolean exist = processes.contains(process);
-        processes.add(processes.indexOf(beforeProcess), process);
+        boolean exist = processors.contains(process);
+        processors.add(processors.indexOf(beforeProcessor), process);
         if ( exist && force) {
-            processes.removeFirstOccurrence( process);
+            processors.removeFirstOccurrence( process);
         }
         return (P)this;
     }
@@ -140,46 +142,18 @@ public abstract class AbstractParser<P extends AbstractParser>
             log.warn("处理器 {} 只能被替换,不能被移除", processorName);
             return (P)this;
         }
-        if ( !processes.remove( new Process( processorName, null))) {
+        if ( !processors.remove( new Processor( processorName, null))) {
             log.warn("处理器 {} 不存在, 移除失败", processorName);
         }
         return (P)this;
     }
-    /**
-     * 事务处理类
-     *
-     * 用于构造各类解析器特有的事务处理顺序
-     *
-     * @author 郭晋阳
-     * @version 1.0
-     * */
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    @EqualsAndHashCode(exclude = {"processor"}) @ToString(of = {"name"})
-    private static class Process {
-        private String name;
-        private Function<Params,Msg<?>> processor;
-    }
-    @AllArgsConstructor
-    @Getter
-    @EqualsAndHashCode
-    @ToString
-    protected static class Params {
-        private Class<?> zlass;
-        private AbstractParser parser;
-        private Object[] args;
-        private Msg<?> returnMsg;
-        @SuppressWarnings("unchecked")
-        public <P extends  AbstractParser> P getParser() {
-            return (P)parser;
-        }
-    }
-    private final Process beforeParse
-            = new Process("beforeParse", this::beforeParse);
-    private final Process doParse
-            = new Process("doParse", this::doParse);
-    private final Process afterParse
-            = new Process("afterParse", this::afterParse);
-    private LinkedList<Process> processes
+    private final Processor beforeParse
+            = new Processor("beforeParse", this::beforeParse);
+    private final Processor doParse
+            = new Processor("doParse", this::doParse);
+    private final Processor afterParse
+            = new Processor("afterParse", this::afterParse);
+    private LinkedList<Processor> processors
             = new LinkedList<>(ImmutableList.of(beforeParse, doParse, afterParse));
     private static final Set<String> PROCESS_CANT_BE_REMORED
             = ImmutableSet.of("beforeParse","doParse","afterParse");

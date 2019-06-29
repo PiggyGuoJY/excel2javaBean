@@ -5,6 +5,7 @@ import com.github.piggyguojy.parser.rule.parse.DefaultParser;
 import com.github.piggyguojy.parser.rule.structure.StructureHandler;
 import com.github.piggyguojy.parser.rule.type.TransformableAndRuleAddable;
 import com.github.piggyguojy.util.Msg;
+import com.github.piggyguojy.util.model.Params;
 import com.google.common.math.IntMath;
 import lombok.AccessLevel;
 import lombok.Getter;
