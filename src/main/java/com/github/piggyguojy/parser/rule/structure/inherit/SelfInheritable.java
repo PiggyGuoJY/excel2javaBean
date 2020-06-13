@@ -1,4 +1,3 @@
-
 package com.github.piggyguojy.parser.rule.structure.inherit;
 
 /**
@@ -8,6 +7,6 @@ package com.github.piggyguojy.parser.rule.structure.inherit;
  * @version 1.0
  */
 public interface SelfInheritable<X extends SelfInheritable>
-        extends Inheritable<X> {
+    extends Inheritable<X> {
 
 }
